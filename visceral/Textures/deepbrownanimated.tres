@@ -1,0 +1,53 @@
+[gd_resource type="SpatialMaterial" load_steps=10 format=2]
+
+[sub_resource type="OpenSimplexNoise" id=1]
+seed = 2
+
+[sub_resource type="NoiseTexture" id=2]
+seamless = true
+as_normalmap = true
+bump_strength = 32.0
+noise = SubResource( 1 )
+
+[sub_resource type="OpenSimplexNoise" id=3]
+seed = 3
+
+[sub_resource type="NoiseTexture" id=4]
+seamless = true
+as_normalmap = true
+bump_strength = 32.0
+noise = SubResource( 3 )
+
+[sub_resource type="OpenSimplexNoise" id=5]
+seed = 5
+
+[sub_resource type="NoiseTexture" id=6]
+seamless = true
+as_normalmap = true
+bump_strength = 32.0
+noise = SubResource( 5 )
+
+[sub_resource type="OpenSimplexNoise" id=7]
+seed = 4
+period = 65.5
+
+[sub_resource type="NoiseTexture" id=8]
+seamless = true
+as_normalmap = true
+bump_strength = 32.0
+noise = SubResource( 7 )
+
+[sub_resource type="AnimatedTexture" id=9]
+flags = 7
+frames = 4
+frame_0/texture = SubResource( 2 )
+frame_1/texture = SubResource( 4 )
+frame_1/delay_sec = 0.0
+frame_2/texture = SubResource( 6 )
+frame_2/delay_sec = 0.0
+frame_3/texture = SubResource( 8 )
+frame_3/delay_sec = 0.0
+
+[resource]
+albedo_color = Color( 0.278431, 0.027451, 0.027451, 1 )
+albedo_texture = SubResource( 9 )
