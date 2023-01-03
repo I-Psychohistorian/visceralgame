@@ -8,6 +8,7 @@ var pollenated = false
 var pollen = []
 var holding_item = false
 var item = []
+var item_gamete = []
 
 var dead = false
 var cinematic_pause = false

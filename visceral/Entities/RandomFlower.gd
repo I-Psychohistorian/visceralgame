@@ -1,6 +1,8 @@
 extends KinematicBody
 
 
+var gravity = 1
+
 var budded = false
 var flowered = false
 

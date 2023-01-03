@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Textures/RedNoiseFlesh1.tres" type="Material" id=1]
 [ext_resource path="res://Entities/Player.gd" type="Script" id=2]
+[ext_resource path="res://Entities/Components/Claw.tscn" type="PackedScene" id=3]
 
 [sub_resource type="SphereShape" id=1]
 radius = 0.5
@@ -23,7 +24,25 @@ mesh = SubResource( 2 )
 [node name="centre" type="Spatial" parent="."]
 
 [node name="Camera" type="Camera" parent="centre"]
+current = true
+
+[node name="Claw" parent="centre" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.279578, -0.181814, -0.080573 )
+
+[node name="Bend" parent="centre/Claw/Arm" index="0"]
+transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, -1.49012e-08, -0.26384 )
+
+[node name="Claw2" parent="centre" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28, -0.182, -0.081 )
+
+[node name="Bend" parent="centre/Claw2/Arm" index="0"]
+transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, -1.49012e-08, -0.26384 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="centre"]
 
 [node name="GravCast" type="RayCast" parent="."]
 enabled = true
 cast_to = Vector3( 0, -0.65, 0 )
+
+[editable path="centre/Claw"]
+[editable path="centre/Claw2"]
