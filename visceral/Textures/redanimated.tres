@@ -40,7 +40,6 @@ noise = SubResource( 7 )
 [sub_resource type="AnimatedTexture" id=9]
 flags = 7
 frames = 4
-fps = 1.0
 frame_0/texture = SubResource( 2 )
 frame_1/texture = SubResource( 4 )
 frame_1/delay_sec = 0.0

@@ -11,7 +11,7 @@ material = ExtResource( 1 )
 radius = 0.5
 height = 1.0
 
-[node name="Player" type="KinematicBody"]
+[node name="Player" type="KinematicBody" groups=["Animal", "Player"]]
 script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
@@ -23,3 +23,7 @@ mesh = SubResource( 2 )
 [node name="centre" type="Spatial" parent="."]
 
 [node name="Camera" type="Camera" parent="centre"]
+
+[node name="GravCast" type="RayCast" parent="."]
+enabled = true
+cast_to = Vector3( 0, -0.65, 0 )

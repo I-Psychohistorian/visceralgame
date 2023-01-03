@@ -1,4 +1,4 @@
-[gd_resource type="SpatialMaterial" load_steps=10 format=2]
+[gd_resource type="AnimatedTexture" load_steps=9 format=2]
 
 [sub_resource type="OpenSimplexNoise" id=1]
 seed = 2
@@ -33,7 +33,7 @@ seamless = true
 bump_strength = 32.0
 noise = SubResource( 7 )
 
-[sub_resource type="AnimatedTexture" id=9]
+[resource]
 flags = 7
 frames = 4
 frame_0/texture = SubResource( 10 )
@@ -43,7 +43,3 @@ frame_2/texture = SubResource( 12 )
 frame_2/delay_sec = 0.0
 frame_3/texture = SubResource( 13 )
 frame_3/delay_sec = 0.0
-
-[resource]
-albedo_color = Color( 0.227451, 0, 0.435294, 1 )
-albedo_texture = SubResource( 9 )

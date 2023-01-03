@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Textures/redanimated.tres" type="Material" id=1]
+[ext_resource path="res://Textures/yellowyanimated.tres" type="Material" id=2]
+[ext_resource path="res://Entities/Components/BaseFlower.gd" type="Script" id=3]
+
+[node name="YellowFlower" type="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0111241 )
+script = ExtResource( 3 )
+
+[node name="bud" type="CSGSphere" parent="."]
+transform = Transform( 1, 0, 0, 0, 1.4, 0, 0, 0, 1, 0, 0.02, 0 )
+radius = 0.03
+material = ExtResource( 1 )
+
+[node name="Opening" type="CSGSphere" parent="bud"]
+transform = Transform( 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0.0010961, 0 )
+operation = 2
+radius = 0.015
+material = ExtResource( 2 )
+
+[node name="petal" type="CSGSphere" parent="."]
+transform = Transform( 0.848528, -0.0707107, -1.22474, 0, 0.173205, -1, 0.848528, 0.0707107, 1.22474, 0.023, 0.01, -0.027 )
+radius = 0.02
+material = ExtResource( 2 )
+
+[node name="petal2" type="CSGSphere" parent="."]
+transform = Transform( 0.848528, -0.0707107, 1.22474, 0, 0.173205, 1, -0.848528, -0.0707107, 1.22474, 0.025, 0.01, 0.027 )
+radius = 0.02
+material = ExtResource( 2 )
+
+[node name="petal3" type="CSGSphere" parent="."]
+transform = Transform( -1.19209e-07, 0.1, -1.73205, 0, 0.173205, 1, 1.2, 5.58794e-09, -2.98023e-08, -0.03, 0.01, 0 )
+radius = 0.02
+material = ExtResource( 2 )

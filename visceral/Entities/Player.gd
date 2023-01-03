@@ -1,13 +1,27 @@
 extends KinematicBody
 
-
+#game stats
 var ichor = 10
+var claws = 5
 
-var speed = 1
+var pollenated = false
+var pollen = []
+var holding_item = false
+var item = []
+
+var dead = false
+var cinematic_pause = false
+
+#physics variables
+var speed = 3
+var gravity = 1
+var jump = 0.5
 var direction = Vector3()
+var grav_vec = Vector3()
 
 var mouse_sensitivity = 0.03 
 onready var head = $centre
+onready var fall_line = $GravCast
 
 var mouse_hide = false
 
@@ -20,6 +34,13 @@ func _ready():
 func _process(delta):
 	direction = Vector3()
 	
+	if not is_on_floor():
+		if not fall_line.is_colliding():
+			grav_vec += Vector3.DOWN * gravity * delta
+	else:
+		grav_vec = -get_floor_normal() * gravity
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		grav_vec = Vector3.UP * jump
 	if Input.is_action_pressed("forward"):
 		direction -= transform.basis.z
 	elif Input.is_action_pressed("backward"):
@@ -32,6 +53,7 @@ func _process(delta):
 		toggle_mouse_mode()
 	
 	direction = direction.normalized()
+	direction.y = grav_vec.y
 	move_and_slide(direction*speed, Vector3.UP)
 	
 func _input(event):

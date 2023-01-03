@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Textures/greyredanimated.tres" type="Material" id=1]
+[ext_resource path="res://Assets/RigidSeed.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Pollen.tscn" type="PackedScene" id=3]
+
+[sub_resource type="SphereMesh" id=1]
+material = ExtResource( 1 )
+radius = 0.1
+height = 0.25
+
+[sub_resource type="SphereShape" id=2]
+radius = 0.1
+
+[node name="RigidSeed" type="RigidBody" groups=["Interactable"]]
+script = ExtResource( 2 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1.25, 0, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 2 )
+
+[node name="pollenated" type="Spatial" parent="."]
+
+[node name="Pollen" parent="pollenated" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.057079, 0.0544079, 0 )
+
+[node name="Pollen2" parent="pollenated" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0212307, 0.0544079, 0.0503306 )
+
+[node name="Pollen3" parent="pollenated" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.033317, -0.055855, -0.04364 )
+
+[node name="Pollen4" parent="pollenated" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0186679, 0.017544, -0.0648175 )
+
+[node name="Pollen5" parent="pollenated" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0411674, -0.0330958, 0.0426044 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 30.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
