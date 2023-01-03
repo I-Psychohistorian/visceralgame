@@ -57,8 +57,8 @@ material = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.100353, 0 )
 mesh = SubResource( 8 )
 
-[node name="Area" type="Area" parent="."]
+[node name="WaterHole" type="Area" parent="."]
 
-[node name="CollisionShape" type="CollisionShape" parent="Area"]
+[node name="CollisionShape" type="CollisionShape" parent="WaterHole"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.573086, 0 )
 shape = SubResource( 9 )

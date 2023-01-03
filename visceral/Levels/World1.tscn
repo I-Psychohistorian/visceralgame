@@ -98,4 +98,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.08115 )
 [node name="RandomFlower2" parent="." instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11919, 0, -2.02098 )
 
+[node name="RandomFlower3" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.94195 )
+
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

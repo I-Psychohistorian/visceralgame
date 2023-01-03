@@ -1,6 +1,5 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Textures/deeppurpleanimated.tres" type="Material" id=1]
 [ext_resource path="res://Textures/redpurpleanimated.tres" type="Material" id=2]
 [ext_resource path="res://Entities/Components/BaseFlower.gd" type="Script" id=3]
 
@@ -10,7 +9,7 @@ script = ExtResource( 3 )
 [node name="bud" type="CSGSphere" parent="."]
 transform = Transform( 1, 0, 0, 0, 1.4, 0, 0, 0, 1, 0, 0.02, 0 )
 radius = 0.03
-material = ExtResource( 1 )
+material = ExtResource( 2 )
 
 [node name="Opening" type="CSGSphere" parent="bud"]
 transform = Transform( 1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0.000600991, 0 )

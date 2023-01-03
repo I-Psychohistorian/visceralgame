@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Entities/Components/PurpleFlower.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Entities/Components/DeadFlower.tscn" type="PackedScene" id=2]
@@ -13,6 +13,10 @@ radius = 0.09
 
 [sub_resource type="SphereShape" id=2]
 radius = 0.08
+
+[sub_resource type="CylinderShape" id=3]
+height = 0.0128675
+radius = 0.0606018
 
 [node name="RandomFlower" type="KinematicBody"]
 script = ExtResource( 6 )
@@ -50,14 +54,17 @@ disabled = true
 [node name="LeafCollision" type="CollisionShape" parent="."]
 transform = Transform( -2.9208e-08, 0.0549869, -1.0023, 1.92284e-08, 0.0835251, 0.659842, 0.8, 0, -5.24537e-08, -0.113534, 0.040816, 0.00011912 )
 shape = SubResource( 2 )
+disabled = true
 
 [node name="LeafCollision2" type="CollisionShape" parent="."]
 transform = Transform( -0.565685, -0.0388816, 0.708734, 1.92284e-08, 0.0835251, 0.659842, -0.565685, 0.0388816, -0.708734, 0.0822926, 0.0346552, -0.08706 )
 shape = SubResource( 2 )
+disabled = true
 
 [node name="LeafCollision3" type="CollisionShape" parent="."]
 transform = Transform( 0.60503, -0.0359746, 0.655745, 1.92284e-08, 0.0835251, 0.659842, -0.523392, -0.0415859, 0.758028, 0.0849718, 0.031499, 0.0918127 )
 shape = SubResource( 2 )
+disabled = true
 
 [node name="Seed" parent="." instance=ExtResource( 7 )]
 transform = Transform( 0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -0.00258771, 0, -0.0184473 )
@@ -67,6 +74,10 @@ transform = Transform( 0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -0.0126306, 0, 0.0112
 
 [node name="Seed3" parent="." instance=ExtResource( 7 )]
 transform = Transform( 0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0.0222351, 0, 0.00489938 )
+
+[node name="FlatBottom" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0242122, 0 )
+shape = SubResource( 3 )
 
 [connection signal="openflower" from="." to="BaseFlower" method="_on_RandomFlower_openflower"]
 [connection signal="openflower" from="." to="DeadFlower" method="_on_RandomFlower_openflower"]

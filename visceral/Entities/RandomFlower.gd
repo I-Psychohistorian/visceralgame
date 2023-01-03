@@ -1,14 +1,18 @@
 extends KinematicBody
 
 
-var gravity = 1
+var gravity = 5
+var grav_vec = Vector3()
 
-var budded = false
+
 var flowered = false
 
 var basic_type = false
 var dry_type = false
 var alt = false
+
+var nutrition = 5
+var seeds = 0
 
 var start_rotation = 0
 var wilted = false
@@ -39,7 +43,6 @@ func genome():
 		gene.append("B")
 	elif lele == 3:
 		gene.append("C")
-	print("number is: ", lele)
 	print("current alleles are: ", gene)
 
 func generate_plant():
@@ -61,22 +64,56 @@ func generate_plant():
 	if basic_type == true:
 		if alt == false:
 			baseflower.visible = true
+			nutrition = 5
 		elif alt == true:
 			purpleflower.visible = true
+			nutrition = 10
 	if basic_type == false:
 		if dry_type == true:
 			if alt == false:
 				dryflower.visible = true
+				nutrition = 3
 			elif alt == true:
 				yellowflower.visible = true
+				nutrition = 8
 		else:
 			deadflower.visible = true
 			wilted = true
+			nutrition = 1
+	generate_gametes()
 	emit_signal("startgrowth")
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+
+func generate_gametes():
+	rng.randomize()
+	var gametes = rng.randi_range(1,6)
+	for allele in gene:
+		if allele == "A":
+			gametes += 2
+		elif allele == "C":
+			gametes -= 2
+	print("seedscore number is: ", gametes)
+	if gametes >= 7:
+		seeds = 3
+	elif gametes >= 4:
+		seeds = 2
+		$Seed2.visible = false
+	elif gametes >= 0:
+		seeds = 1
+		$Seed2.visible = false
+		$Seed3.visible = false
+	elif gametes < 0:
+		seeds = 0
+		$Seed.visible = false
+		$Seed2.visible = false
+		$Seed3.visible = false
+func _process(delta):
+	grav_vec = Vector3()
+	if not is_on_floor():
+		grav_vec += Vector3.DOWN * gravity * delta
+		move_and_slide(grav_vec, Vector3.UP)
 
 
 func _on_GrowthTimer_timeout():
 	emit_signal("openflower")
+	

@@ -27,13 +27,13 @@ mesh = SubResource( 2 )
 current = true
 
 [node name="Claw" parent="centre" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.279578, -0.181814, -0.080573 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28, -0.12, -0.081 )
 
 [node name="Bend" parent="centre/Claw/Arm" index="0"]
 transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, -1.49012e-08, -0.26384 )
 
 [node name="Claw2" parent="centre" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28, -0.182, -0.081 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28, -0.12, -0.081 )
 
 [node name="Bend" parent="centre/Claw2/Arm" index="0"]
 transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, -1.49012e-08, -0.26384 )
