@@ -5,7 +5,7 @@ var ichor = 10
 var claws = 5
 
 var pollenated = false
-var pollen = []
+var pollen_gamete = []
 var holding_item = false
 var item = []
 var item_gamete = []
@@ -24,8 +24,11 @@ var mouse_sensitivity = 0.03
 onready var head = $centre
 onready var fall_line = $GravCast
 
+onready var clawpollen1 = $centre/Claw/Claw1Pollen
+onready var clawpollen2 = $centre/Claw2/Claw2Pollen
 var mouse_hide = false
 
+var rng = RandomNumberGenerator.new()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	toggle_mouse_mode()
@@ -63,7 +66,13 @@ func _input(event):
 		head.rotate_x(deg2rad(-event.relative.y * mouse_sensitivity))
 		head.rotation.x = clamp(head.rotation.x, deg2rad(-90), deg2rad(90))
 
-
+func wash_pollen():
+	print('washed off pollen: ', pollen_gamete)
+	pollen_gamete = []
+	print('current pollen is:' , pollen_gamete)
+	clawpollen1.visible = false
+	clawpollen2.visible = false
+	pollenated = false
 
 func toggle_mouse_mode():
 	if mouse_hide == false:
@@ -72,3 +81,17 @@ func toggle_mouse_mode():
 	elif mouse_hide == true:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		mouse_hide = false
+
+
+func _on_PollenTouch_body_entered(body):
+	if body.is_in_group("Pollen"):
+		pollenated = true
+		pollen_gamete = body.gamete
+		rng.randomize()
+		var arm = rng.randi_range(1,2)
+		if arm == 1:
+			clawpollen1.visible = true
+		elif arm == 2:
+			clawpollen2.visible = true
+		print("Current pollen allele on player is: ", pollen_gamete)
+		body.queue_free()

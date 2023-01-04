@@ -18,7 +18,12 @@ var start_rotation = 0
 var wilted = false
 var dead = false
 
+var rando_gene = true
+
 var gene = []
+#for generation of gametes
+var seed_gamete = "Y"
+var pollen_gamete = "X"
 var rng = RandomNumberGenerator.new()
 
 onready var baseflower = $BaseFlower
@@ -29,10 +34,24 @@ onready var deadflower = $DeadFlower
 
 signal startgrowth
 signal openflower
+signal release_seeds
+
+var seed1coord = Vector3()
+var seed2coord = Vector3()
+var seed3coord = Vector3()
+var pollen_coord = Vector3()
+
+var start_coord = Vector3()
+onready var pollen_point = $PollenGenerationPoint
+onready var pollen = preload("res://Entities/PollenBall.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	generate_plant()
+	seed1coord = $Seed.global_transform.origin
+	seed2coord =$Seed2.global_transform.origin 
+	seed3coord = $Seed3.global_transform.origin 
+	pollen_coord = $PollenGenerationPoint.global_transform.origin
+	$StartTimer.start()
 
 func genome():
 	rng.randomize()
@@ -51,8 +70,6 @@ func generate_plant():
 	start_rotation = rng.randi_range(0,-360)
 	rotate_y(deg2rad(start_rotation))
 	#for random genome
-	genome()
-	genome()
 	for allele in gene:
 		if allele == "A":
 			basic_type = true
@@ -113,7 +130,43 @@ func _process(delta):
 		grav_vec += Vector3.DOWN * gravity * delta
 		move_and_slide(grav_vec, Vector3.UP)
 
+func pollen_allele():
+	var flip = rng.randi_range(0,1)
+	pollen_gamete = gene[flip]
+	
+func release_pollen():
+	var pollen_num = rng.randi_range(2,6)
+	print("Pollen number is: ", pollen_num)
+	for i in pollen_num:
+		var p = pollen.instance()
+		pollen_point.add_child(p)
+		pollen_allele()
+		p.gamete.append(pollen_gamete)
+		print('pollenburst')
+
 
 func _on_GrowthTimer_timeout():
 	emit_signal("openflower")
+	release_pollen()
 	
+
+
+func _on_StartTimer_timeout():
+	if rando_gene == false:
+		var new_parent = self.get_parent().get_parent()
+		#for ensuring correct parent is one node up, should be plant controller
+		#print(new_parent)
+		get_parent().remove_child(self)
+		new_parent.add_child(self)
+		#print(get_parent())
+		self.global_transform.origin = start_coord
+		global_rotation.x = 0
+		global_rotation.z = 0
+	elif rando_gene == true:
+		genome()
+		genome()
+	generate_plant()
+
+
+func _on_Timer_timeout():
+	print('alive')

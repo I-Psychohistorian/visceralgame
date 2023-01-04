@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Textures/greyredanimated.tres" type="Material" id=1]
 [ext_resource path="res://Assets/RigidSeed.gd" type="Script" id=2]
@@ -12,7 +12,11 @@ height = 0.25
 [sub_resource type="SphereShape" id=2]
 radius = 0.1
 
+[sub_resource type="SphereShape" id=3]
+radius = 0.260718
+
 [node name="RigidSeed" type="RigidBody" groups=["Interactable"]]
+mass = 0.0540816
 script = ExtResource( 2 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
@@ -23,6 +27,7 @@ transform = Transform( 1, 0, 0, 0, 1.25, 0, 0, 0, 1, 0, 0, 0 )
 shape = SubResource( 2 )
 
 [node name="pollenated" type="Spatial" parent="."]
+visible = false
 
 [node name="Pollen" parent="pollenated" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.057079, 0.0544079, 0 )
@@ -39,8 +44,19 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0186679, 0.017544, -0.06481
 [node name="Pollen5" parent="pollenated" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0411674, -0.0330958, 0.0426044 )
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 30.0
+[node name="Timer" type="Timer" parent="." groups=["Interactable"]]
+wait_time = 15.0
+one_shot = true
+
+[node name="polination_area" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="polination_area"]
+shape = SubResource( 3 )
+
+[node name="Deleter" type="Timer" parent="."]
+wait_time = 0.4
 one_shot = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="body_entered" from="polination_area" to="." method="_on_polination_area_body_entered"]
+[connection signal="timeout" from="Deleter" to="." method="_on_Deleter_timeout"]

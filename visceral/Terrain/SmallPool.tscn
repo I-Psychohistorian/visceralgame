@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Textures/pinkerflesh.tres" type="Material" id=1]
 [ext_resource path="res://Textures/new_opensimplexnoise.tres" type="OpenSimplexNoise" id=2]
+[ext_resource path="res://Terrain/WaterHole.gd" type="Script" id=3]
 
 [sub_resource type="NoiseTexture" id=1]
 noise = ExtResource( 2 )
@@ -58,7 +59,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.100353, 0 )
 mesh = SubResource( 8 )
 
 [node name="WaterHole" type="Area" parent="."]
+script = ExtResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="WaterHole"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.573086, 0 )
 shape = SubResource( 9 )
+
+[connection signal="body_entered" from="WaterHole" to="WaterHole" method="_on_WaterHole_body_entered"]

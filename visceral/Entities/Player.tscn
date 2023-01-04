@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Textures/RedNoiseFlesh1.tres" type="Material" id=1]
 [ext_resource path="res://Entities/Player.gd" type="Script" id=2]
 [ext_resource path="res://Entities/Components/Claw.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Pollen.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/Seed.tscn" type="PackedScene" id=5]
 
 [sub_resource type="SphereShape" id=1]
 radius = 0.5
@@ -11,6 +13,230 @@ radius = 0.5
 material = ExtResource( 1 )
 radius = 0.5
 height = 1.0
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Claw2:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Claw2:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -0.28, -0.12, -0.081 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Claw:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Claw:translation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0.28, -0.12, -0.081 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Seed:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "attack"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Claw:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.28, -0.12, -0.081 ), Vector3( 0.28, -0.12, -0.01 ), Vector3( 0.28, -0.12, -0.167 ), Vector3( 0.28, -0.12, -0.081 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Claw:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, -25.758, -50.273 ), Vector3( 9.4485, 2.62037, -54.4137 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Claw2:translation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -0.28, -0.12, -0.081 ), Vector3( -0.28, -0.12, -0.01 ), Vector3( -0.28, -0.12, -0.167177 ), Vector3( -0.28, -0.12, -0.081 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Claw2:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0.121917, 31.1038, 52.1409 ), Vector3( 7.17749, 4.09477, 63.0163 ), Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "mandibledefault"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Claw2:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Claw2:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -0.28, -0.12, -0.081 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Claw:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Claw:translation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0.28, -0.12, -0.081 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Seed:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "seedhold"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Seed:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Claw:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -2.66243e-08, 6.437, -93.718 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Claw2:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0.13058, -4.00488, 86.7324 ) ]
+}
+
+[sub_resource type="SphereMesh" id=8]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="SphereShape" id=3]
+radius = 0.587959
 
 [node name="Player" type="KinematicBody" groups=["Animal", "Player"]]
 script = ExtResource( 2 )
@@ -32,17 +258,56 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28, -0.12, -0.081 )
 [node name="Bend" parent="centre/Claw/Arm" index="0"]
 transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, -1.49012e-08, -0.26384 )
 
+[node name="Claw1Pollen" type="Spatial" parent="centre/Claw"]
+visible = false
+
+[node name="Pollen" parent="centre/Claw/Claw1Pollen" instance=ExtResource( 4 )]
+transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0.0379699, 0.0394239, -0.456369 )
+
 [node name="Claw2" parent="centre" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28, -0.12, -0.081 )
 
 [node name="Bend" parent="centre/Claw2/Arm" index="0"]
 transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, -1.49012e-08, -0.26384 )
 
+[node name="Claw2Pollen" type="Spatial" parent="centre/Claw2"]
+visible = false
+
+[node name="Pollen" parent="centre/Claw2/Claw2Pollen" instance=ExtResource( 4 )]
+transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0.0540885, 0, -0.292594 )
+
+[node name="Pollen2" parent="centre/Claw2/Claw2Pollen" instance=ExtResource( 4 )]
+transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, -0.0140498, 0.0500483, -0.179266 )
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="centre"]
+anims/RESET = SubResource( 4 )
+anims/attack = SubResource( 5 )
+anims/mandibledefault = SubResource( 6 )
+anims/seedhold = SubResource( 7 )
+
+[node name="Seed" parent="centre" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0273798, -0.118556, -0.774649 )
+visible = false
+
+[node name="Pointer" type="RayCast" parent="centre"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.541429 )
+enabled = true
+cast_to = Vector3( 0, 0, -0.5 )
+
+[node name="DebugPointer" type="MeshInstance" parent="centre/Pointer"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.424432 )
+mesh = SubResource( 8 )
 
 [node name="GravCast" type="RayCast" parent="."]
 enabled = true
 cast_to = Vector3( 0, -0.65, 0 )
+
+[node name="PollenTouch" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="PollenTouch"]
+shape = SubResource( 3 )
+
+[connection signal="body_entered" from="PollenTouch" to="." method="_on_PollenTouch_body_entered"]
 
 [editable path="centre/Claw"]
 [editable path="centre/Claw2"]
