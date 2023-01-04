@@ -22,7 +22,7 @@ radius = 0.0606018
 height = 0.0864486
 radius = 0.327235
 
-[node name="RandomFlower" type="KinematicBody"]
+[node name="RandomFlower" type="KinematicBody" groups=["Interactable"]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0370633, 0 )
 script = ExtResource( 6 )
 
@@ -98,9 +98,11 @@ wait_time = 0.1
 one_shot = true
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 0.5
 one_shot = true
-autostart = true
+
+[node name="WiltTimer" type="Timer" parent="."]
+one_shot = true
 
 [connection signal="openflower" from="." to="BaseFlower" method="_on_RandomFlower_openflower"]
 [connection signal="openflower" from="." to="DeadFlower" method="_on_RandomFlower_openflower"]
@@ -115,3 +117,4 @@ autostart = true
 [connection signal="timeout" from="GrowthTimer" to="." method="_on_GrowthTimer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="WiltTimer" to="." method="_on_WiltTimer_timeout"]

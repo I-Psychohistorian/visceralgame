@@ -10,13 +10,14 @@ radius = 0.1
 height = 0.25
 
 [sub_resource type="SphereShape" id=2]
-radius = 0.1
+radius = 0.25
 
 [sub_resource type="SphereShape" id=3]
-radius = 0.260718
+radius = 0.45
 
 [node name="RigidSeed" type="RigidBody" groups=["Interactable"]]
 mass = 0.0540816
+continuous_cd = true
 script = ExtResource( 2 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
@@ -26,7 +27,7 @@ mesh = SubResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1.25, 0, 0, 0, 1, 0, 0, 0 )
 shape = SubResource( 2 )
 
-[node name="pollenated" type="Spatial" parent="."]
+[node name="pollenated" type="Spatial" parent="." groups=["Interactable"]]
 visible = false
 
 [node name="Pollen" parent="pollenated" instance=ExtResource( 3 )]

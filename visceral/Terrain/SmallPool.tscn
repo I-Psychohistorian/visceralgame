@@ -65,4 +65,7 @@ script = ExtResource( 3 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.573086, 0 )
 shape = SubResource( 9 )
 
+[node name="WaterEffectTimer" type="Timer" parent="WaterHole"]
+autostart = true
+
 [connection signal="body_entered" from="WaterHole" to="WaterHole" method="_on_WaterHole_body_entered"]

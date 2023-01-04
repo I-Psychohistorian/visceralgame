@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Textures/pinkflesh.tres" type="Material" id=1]
 [ext_resource path="res://Textures/purpleanimatedsky1.tres" type="Material" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://Terrain/SmallPool.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Entities/RandomFlower.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Entities/PlantController.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Assets/RigidSeed.tscn" type="PackedScene" id=8]
 
 [sub_resource type="OpenSimplexNoise" id=1]
 period = 25.9
@@ -84,9 +83,6 @@ mesh = SubResource( 4 )
 wait_time = 0.2
 autostart = true
 
-[node name="Player" parent="." instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.567169, 0 )
-
 [node name="CSGCylinder" type="CSGCylinder" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.543655, 0.112868, 17.0772 )
 invert_faces = true
@@ -100,8 +96,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85624, 0 )
 [node name="RandomFlower" parent="PlantController" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.85624, -2.2025 )
 
-[node name="RigidSeed" parent="PlantController" instance=ExtResource( 8 )]
-transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, -0.0662041, -1.36245, -3.52355 )
+[node name="RandomFlower2" parent="PlantController" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.868704, -1.81918, -3.75508 )
+
+[node name="Player" parent="PlantController" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.28907, 0 )
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
-[connection signal="sprout" from="PlantController/RigidSeed" to="PlantController" method="_on_RigidSeed_sprout"]
+[connection signal="release_seeds" from="PlantController/RandomFlower" to="PlantController" method="_on_RandomFlower_release_seeds"]
+[connection signal="release_seeds" from="PlantController/RandomFlower2" to="PlantController" method="_on_RandomFlower2_release_seeds"]

@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Textures/RedNoiseFlesh1.tres" type="Material" id=1]
 [ext_resource path="res://Entities/Player.gd" type="Script" id=2]
 [ext_resource path="res://Entities/Components/Claw.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/Pollen.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/Seed.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Entities/HUD.tscn" type="PackedScene" id=6]
 
 [sub_resource type="SphereShape" id=1]
 radius = 0.5
@@ -216,7 +217,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector3( -2.66243e-08, 6.437, -93.718 ) ]
+"values": [ Vector3( -1.33121e-07, 9.959, -93.718 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Claw2:rotation_degrees")
@@ -228,12 +229,12 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector3( 0.13058, -4.00488, 86.7324 ) ]
+"values": [ Vector3( 0.130579, -5.16488, 86.7324 ) ]
 }
 
 [sub_resource type="SphereMesh" id=8]
-radius = 0.1
-height = 0.2
+radius = 0.05
+height = 0.1
 
 [sub_resource type="SphereShape" id=3]
 radius = 0.587959
@@ -252,6 +253,8 @@ mesh = SubResource( 2 )
 [node name="Camera" type="Camera" parent="centre"]
 current = true
 
+[node name="HUD" parent="centre/Camera" instance=ExtResource( 6 )]
+
 [node name="Claw" parent="centre" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28, -0.12, -0.081 )
 
@@ -265,7 +268,7 @@ visible = false
 transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0.0379699, 0.0394239, -0.456369 )
 
 [node name="Claw2" parent="centre" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28, -0.12, -0.081 )
+transform = Transform( 0.999999, 0, 0, 0, 1, 0, 0, 0, 0.999999, -0.28, -0.12, -0.081 )
 
 [node name="Bend" parent="centre/Claw2/Arm" index="0"]
 transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, -1.49012e-08, -0.26384 )
@@ -286,16 +289,17 @@ anims/mandibledefault = SubResource( 6 )
 anims/seedhold = SubResource( 7 )
 
 [node name="Seed" parent="centre" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0273798, -0.118556, -0.774649 )
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.0273798, -0.118556, -0.774649 )
 visible = false
 
 [node name="Pointer" type="RayCast" parent="centre"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.541429 )
+transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 1, 0, -0.1, -0.541 )
 enabled = true
-cast_to = Vector3( 0, 0, -0.5 )
+cast_to = Vector3( 0, 0, -0.45 )
 
 [node name="DebugPointer" type="MeshInstance" parent="centre/Pointer"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.424432 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.284989 )
+visible = false
 mesh = SubResource( 8 )
 
 [node name="GravCast" type="RayCast" parent="."]
@@ -307,7 +311,12 @@ cast_to = Vector3( 0, -0.65, 0 )
 [node name="CollisionShape" type="CollisionShape" parent="PollenTouch"]
 shape = SubResource( 3 )
 
+[node name="StaminaTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
 [connection signal="body_entered" from="PollenTouch" to="." method="_on_PollenTouch_body_entered"]
+[connection signal="timeout" from="StaminaTimer" to="." method="_on_StaminaTimer_timeout"]
 
 [editable path="centre/Claw"]
 [editable path="centre/Claw2"]
