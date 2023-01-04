@@ -75,6 +75,13 @@ invert_faces = true
 radius = 2.5
 material = ExtResource( 1 )
 
+[node name="CSGCylinder" type="CSGCylinder" parent="CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.543655, 0.112868, 17.0772 )
+invert_faces = true
+radius = 3.90132
+height = 1.72213
+material = ExtResource( 1 )
+
 [node name="skymist" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 5.08828, 0 )
 mesh = SubResource( 4 )
@@ -82,13 +89,6 @@ mesh = SubResource( 4 )
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.2
 autostart = true
-
-[node name="CSGCylinder" type="CSGCylinder" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.543655, 0.112868, 17.0772 )
-invert_faces = true
-radius = 3.90132
-height = 1.72213
-material = ExtResource( 1 )
 
 [node name="PlantController" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85624, 0 )
