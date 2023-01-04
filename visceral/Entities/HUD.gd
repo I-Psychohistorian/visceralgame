@@ -8,6 +8,7 @@ var claws = 0
 
 var holding = false
 var message = "nothing"
+var death_message = "You are dead!"
 
 var interact_viewable = false
 

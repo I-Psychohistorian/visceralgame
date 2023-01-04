@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Entities/Components/PurpleFlower.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Entities/Components/DeadFlower.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Entities/Components/DarkRedFlower.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Entities/RandomFlower.gd" type="Script" id=6]
 [ext_resource path="res://Assets/Seed.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Textures/deadpurpleanimated.tres" type="Material" id=8]
 
 [sub_resource type="SphereShape" id=1]
 radius = 0.09
@@ -22,7 +23,12 @@ radius = 0.0606018
 height = 0.0864486
 radius = 0.327235
 
-[node name="RandomFlower" type="KinematicBody" groups=["Interactable"]]
+[sub_resource type="SphereMesh" id=5]
+material = ExtResource( 8 )
+radius = 0.02
+height = 0.001
+
+[node name="RandomFlower" type="KinematicBody" groups=["Buoyant", "Interactable"]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0370633, 0 )
 script = ExtResource( 6 )
 
@@ -104,6 +110,37 @@ one_shot = true
 [node name="WiltTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="WetTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="deadCCbloom" type="Spatial" parent="."]
+visible = false
+
+[node name="MeshInstance" type="MeshInstance" parent="deadCCbloom"]
+transform = Transform( 0.900412, -0.305638, -0.309586, 0.371796, 0.910135, 0.182819, 0.225888, -0.279715, 0.933131, 0.0750044, 0.0495918, 0.102229 )
+mesh = SubResource( 5 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="deadCCbloom"]
+transform = Transform( 0.86076, 0.472755, 0.188667, -0.494595, 0.864396, 0.0905283, -0.120286, -0.171237, 0.977859, -0.103198, 0.0453972, 0.0223441 )
+mesh = SubResource( 5 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="deadCCbloom"]
+transform = Transform( 0.632278, 0.746175, 0.208442, -0.765347, 0.643352, 0.0185153, -0.120286, -0.171237, 0.977859, -0.133236, 0.0597927, -0.00982447 )
+mesh = SubResource( 5 )
+
+[node name="MeshInstance4" type="MeshInstance" parent="deadCCbloom"]
+transform = Transform( 0.940764, -0.334202, 0.0571991, 0.317008, 0.926815, 0.201293, -0.120286, -0.171237, 0.977859, 0.0973888, 0.0509369, -0.106023 )
+mesh = SubResource( 5 )
+
+[node name="MeshInstance5" type="MeshInstance" parent="deadCCbloom"]
+transform = Transform( 0.816029, 0.554777, -0.162231, -0.54268, 0.831977, 0.115384, 0.198985, -0.00611752, 0.979984, -0.100051, 0.0468721, -0.0173561 )
+mesh = SubResource( 5 )
+
+[node name="MeshInstance6" type="MeshInstance" parent="deadCCbloom"]
+transform = Transform( 0.900412, -0.305638, -0.309586, 0.371796, 0.910135, 0.182819, 0.225888, -0.279715, 0.933131, 0.107733, 0.0648757, 0.107798 )
+mesh = SubResource( 5 )
+
 [connection signal="openflower" from="." to="BaseFlower" method="_on_RandomFlower_openflower"]
 [connection signal="openflower" from="." to="DeadFlower" method="_on_RandomFlower_openflower"]
 [connection signal="openflower" from="." to="PurpleFlower" method="_on_RandomFlower_openflower"]
@@ -118,3 +155,4 @@ one_shot = true
 [connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="WiltTimer" to="." method="_on_WiltTimer_timeout"]
+[connection signal="timeout" from="WetTimer" to="." method="_on_WetTimer_timeout"]

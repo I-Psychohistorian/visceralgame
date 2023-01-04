@@ -8,6 +8,9 @@ var stamina = 60
 var stamina_max = 0
 var points = 0
 var claws = 5
+var hunger = false
+var death_type = "blank"
+
 
 onready var hud = $centre/Camera/HUD
 onready var animator = $centre/AnimationPlayer
@@ -19,6 +22,7 @@ var pollenated = false
 var pollen_gamete = []
 
 var holding_item = false
+var item_id = "blank"
 var item_pollinated = false
 var item_gamete = []
 var item_nutrition = 0
@@ -53,6 +57,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	update_hud()
+	handle_death()
 	interaction()
 	direction = Vector3()
 	
@@ -124,8 +129,15 @@ func Eat():
 		#eat animation?
 		animator.play("mandibledefault")
 		ichor += item_nutrition
+		hunger = false
 		
 	#if carry seed, eat
+
+func handle_death():
+	if ichor < 0:
+		dead = true
+		toggle_mouse_mode()
+		print('you died')
 
 func interaction():
 	if pointer.is_colliding():
@@ -137,10 +149,12 @@ func interaction():
 					hud.turn_on_interact_text()
 					if Input.is_action_just_pressed("interact"):
 						if holding_item == false:
+							#pointed_object.use
 							holding_item = true
 							item_gamete = pointed_object.alleles
 							item_pollinated = pointed_object.pollenated
 							item_nutrition = pointed_object.nutrition
+							item_id = pointed_object.item_id
 							print('Picked up seed, genes are: ', item_gamete, ' pollinated is: ', item_pollinated, ' nutrition is: ', item_nutrition)
 							if item_pollinated == true:
 								held_seed.show_pollen()
@@ -158,6 +172,7 @@ func interaction():
 						stamina += pointed_object.nutrition
 						ichor += pointed_object.nutrition
 						pointed_object.release_seed()
+						hunger = false
 						#munch sound?
 		elif not pointed_object.is_in_group("Interactable"):
 			hud.turn_off_interact_text()
@@ -208,3 +223,13 @@ func _on_StaminaTimer_timeout():
 	stamina_max = ichor
 	if stamina < stamina_max:
 		stamina += 1
+
+
+func _on_HungerTimer_timeout():
+	if hunger == false:
+		hunger = true
+		#update hud to say hungry
+		print('hungry')
+	elif hunger == true:
+		ichor -= 4
+		print('starving')

@@ -19,6 +19,9 @@ var impulsed = true
 
 var start_coord = Vector3()
 var reparented = false
+
+var wet = false
+var in_water = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	rng.randomize()

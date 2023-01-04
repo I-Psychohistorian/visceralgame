@@ -6,7 +6,7 @@
 [sub_resource type="SphereShape" id=1]
 radius = 0.03
 
-[node name="PollenBall" type="KinematicBody" groups=["Pollen"]]
+[node name="PollenBall" type="KinematicBody" groups=["Buoyant", "Pollen"]]
 collision_layer = 0
 script = ExtResource( 1 )
 

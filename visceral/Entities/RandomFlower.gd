@@ -43,8 +43,11 @@ var wilt_time = 0
 onready var WiltTimer = $WiltTimer
 
 #conditions
-var near_water = false
+var fertile_soil = false
+var wet = false
 var in_water = false
+
+var stress = 0
 
 signal startgrowth
 signal openflower
@@ -91,7 +94,7 @@ func generate_plant():
 	rotate_y(deg2rad(start_rotation))
 	#for random blooming and wilting time
 	grow_time = rng.randi_range(5,10)
-	wilt_time = rng.randi_range(90,120)
+	wilt_time = rng.randi_range(9,12) #add a 0 later to increase
 	#for random genome
 	for allele in gene:
 		if allele == "A":
@@ -197,9 +200,15 @@ func release_seed():
 	emit_signal("release_seeds")
 	$Timer.start()
 
+func use():
+	pass
+
 
 func _on_GrowthTimer_timeout():
 	emit_signal("openflower")
+	#marks phenotypic difference between double CC flowers
+	if basic_type == false and dry_type == false:
+		$deadCCbloom.visible = true
 	release_pollen()
 	WiltTimer.set_wait_time(wilt_time)
 	WiltTimer.start()
@@ -238,7 +247,26 @@ func _on_WiltTimer_timeout():
 		deadflower.visible = true
 		nutrition -= 1
 		#wilting
+		var seed_loss = rng.randi_range(0,3)
+		seeds -= seed_loss
+		if seeds < 0:
+			seeds = 0
+		if seeds < 3:
+			$Seed3.visible = false
+		if seeds < 2:
+			$Seed2.visible = false
+		if seeds < 1:
+			$Seed.visible = false
+		print(seed_loss, " seeds lost from wilting")
 	elif wilted == true:
 		release_seed()
 		#die and release seeds
 
+
+
+func _on_WetTimer_timeout():
+	if wet == true:
+		wet = false
+		#water absorbed
+	if in_water == true:
+			wet = true

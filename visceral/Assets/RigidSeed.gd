@@ -15,9 +15,14 @@ var grow_time = 0
 onready var sprout_timer = $Timer
 
 signal sprout
+onready var player_range = $player_range
 onready var plant = preload("res://Entities/RandomFlower.tscn")
 var sprout_location = Vector3()
 var drop_coords = Vector3()
+
+var wet = false
+var in_water = false
+var water_bounce = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print(self.global_transform.origin)
@@ -45,8 +50,11 @@ func reparent():
 	self.global_transform.origin = drop_coords
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	if wet == true:
+		gravity_scale = 0.0
+	elif wet == false:
+		gravity_scale = 0.6
 
 func reorient():
 	global_transform.origin = drop_coords
@@ -62,6 +70,12 @@ func get_pollenated():
 		$pollenated.visible = true
 		sprout_timer.set_wait_time(grow_time)
 		sprout_timer.start()
+
+func use():
+	var nearby = player_range.get_overlapping_bodies()
+	for body in nearby:
+		if body.is_in_group("Player"):
+			pass
 
 func die():
 	queue_free()
@@ -81,7 +95,7 @@ func _on_Timer_timeout():
 	p.rando_gene = false
 	print(p.gene)
 	emit_signal("sprout")
-	#$Deleter.start()
+	$Deleter.start()
 
 
 func _on_polination_area_body_entered(body):
@@ -100,6 +114,7 @@ func _on_polination_area_body_entered(body):
 					grow_time += 5
 			sprout_timer.set_wait_time(grow_time)
 			sprout_timer.start()
+			body.queue_free()
 		elif body.is_in_group("Player"):
 			if body.pollenated == true:
 				alleles.append(body.pollen_gamete[0])
@@ -120,4 +135,15 @@ func _on_polination_area_body_entered(body):
 
 
 func _on_Deleter_timeout():
-	queue_free()
+	die()
+
+
+func _on_Wet_timer_timeout():
+	if in_water == false:
+		if wet == true:
+			wet = false
+			if water_bounce == false:
+				water_bounce = true
+			elif water_bounce == true:
+				sleeping = true
+

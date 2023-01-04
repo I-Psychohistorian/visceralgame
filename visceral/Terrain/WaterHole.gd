@@ -19,3 +19,20 @@ func _ready():
 func _on_WaterHole_body_entered(body):
 	if body.is_in_group("Player"):
 		body.wash_pollen()
+	if body.is_in_group("Buoyant"):
+		body.in_water = true
+		body.wet = true
+
+
+func _on_WaterEffectTimer_timeout():
+	var bodies = self.get_overlapping_bodies()
+	for body in bodies:
+		if body.is_in_group("Buoyant"):
+			if body.wet == true:
+				body.global_transform.origin.y += 0.03
+
+
+
+func _on_WaterHole_body_exited(body):
+	if body.is_in_group("Buoyant"):
+		body.in_water = false

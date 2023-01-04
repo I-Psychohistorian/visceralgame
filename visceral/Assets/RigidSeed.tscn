@@ -1,8 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Textures/greyredanimated.tres" type="Material" id=1]
 [ext_resource path="res://Assets/RigidSeed.gd" type="Script" id=2]
 [ext_resource path="res://Assets/Pollen.tscn" type="PackedScene" id=3]
+
+[sub_resource type="PhysicsMaterial" id=5]
+bounce = 0.2
+absorbent = true
 
 [sub_resource type="SphereMesh" id=1]
 material = ExtResource( 1 )
@@ -15,8 +19,13 @@ radius = 0.25
 [sub_resource type="SphereShape" id=3]
 radius = 0.45
 
-[node name="RigidSeed" type="RigidBody" groups=["Interactable"]]
+[sub_resource type="SphereShape" id=4]
+radius = 8.0
+
+[node name="RigidSeed" type="RigidBody" groups=["Buoyant", "Interactable"]]
 mass = 0.0540816
+physics_material_override = SubResource( 5 )
+gravity_scale = 0.6
 continuous_cd = true
 script = ExtResource( 2 )
 
@@ -55,9 +64,18 @@ one_shot = true
 shape = SubResource( 3 )
 
 [node name="Deleter" type="Timer" parent="."]
-wait_time = 0.4
+wait_time = 0.3
 one_shot = true
+
+[node name="player_range" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="player_range"]
+shape = SubResource( 4 )
+
+[node name="Wet_timer" type="Timer" parent="."]
+autostart = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="body_entered" from="polination_area" to="." method="_on_polination_area_body_entered"]
 [connection signal="timeout" from="Deleter" to="." method="_on_Deleter_timeout"]
+[connection signal="timeout" from="Wet_timer" to="." method="_on_Wet_timer_timeout"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Textures/RedNoiseFlesh1.tres" type="Material" id=1]
 [ext_resource path="res://Entities/Player.gd" type="Script" id=2]
@@ -239,6 +239,9 @@ height = 0.1
 [sub_resource type="SphereShape" id=3]
 radius = 0.587959
 
+[sub_resource type="BoxShape" id=9]
+extents = Vector3( 0.285561, 0.190732, 0.293056 )
+
 [node name="Player" type="KinematicBody" groups=["Animal", "Player"]]
 script = ExtResource( 2 )
 
@@ -315,8 +318,19 @@ shape = SubResource( 3 )
 wait_time = 0.5
 autostart = true
 
+[node name="attack_area" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.880033 )
+
+[node name="CollisionShape" type="CollisionShape" parent="attack_area"]
+shape = SubResource( 9 )
+
+[node name="HungerTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
 [connection signal="body_entered" from="PollenTouch" to="." method="_on_PollenTouch_body_entered"]
 [connection signal="timeout" from="StaminaTimer" to="." method="_on_StaminaTimer_timeout"]
+[connection signal="timeout" from="HungerTimer" to="." method="_on_HungerTimer_timeout"]
 
 [editable path="centre/Claw"]
 [editable path="centre/Claw2"]
