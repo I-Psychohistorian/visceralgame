@@ -34,6 +34,9 @@ signal drop_seed
 var dead = false
 var cinematic_pause = false
 
+#npc variables
+var not_invisible = true
+
 #physics variables
 var speed = 2.0
 var gravity = 1
@@ -87,21 +90,8 @@ func _process(delta):
 		elif Input.is_action_pressed("right"):
 			direction += transform.basis.x
 		if Input.is_action_just_pressed("attack"):
-			if holding_item == false:
-				if action_cooldown == false:
-					action_cooldown = true
-					cooldown_timer.start()
-					var targets = $centre/attack_area.get_overlapping_bodies()
-					print(targets)
-					for target in targets:
-						if target.is_in_group('Destructible'):
-							target.take_damage(claws)
-							if target.is_in_group('Plant'):
-								eat_sounds()
-							if target.is_in_group('Animal'):
-								flesh_damage_sounds()
-
-					animator.play("attack")
+			if action_cooldown == false:
+				Left()
 		if Input.is_action_just_pressed("drop"):
 			Right()
 		if Input.is_action_just_pressed("eat"):
@@ -122,8 +112,24 @@ func update_hud():
 	hud.holding = holding_item
 
 func Left():
-	pass
-	#if not carrying seed, attack, if carrying seed, can't attack
+	action_cooldown = true
+	cooldown_timer.start()
+	if holding_item == false:
+		var targets = $centre/attack_area.get_overlapping_bodies()
+		print(targets)
+		for target in targets:
+			if target.is_in_group('Destructible'):
+				target.take_damage(claws)
+			if target.is_in_group('Plant'):
+				eat_sounds()
+			if target.is_in_group('Animal'):
+				flesh_damage_sounds()
+			if target.is_in_group('SmallBug'):
+				target.scared = true
+				target.player_friend = false
+				target.fear_coords = self.global_transform.origin
+		animator.play("attack")
+
 func Right():
 	if holding_item == true:
 		holding_item = false

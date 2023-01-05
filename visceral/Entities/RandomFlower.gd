@@ -206,19 +206,22 @@ func release_seed():
 	$Seed.visible = false
 	$Seed2.visible = false
 	$Seed3.visible = false
-	emit_signal("release_seeds")
+	if dead == false:
+		emit_signal("release_seeds")
+	dead = true
 	$Timer.start()
 
 func use():
 	var area = $interact_Area.get_overlapping_bodies()
 	for body in area:
 		if body.is_in_group('Player'):
-			body.item_id = item_id
-			body.stamina += nutrition
-			body.ichor += nutrition
-			body.hunger = false
-			body.eat_sounds()
-			release_seed()
+			if dead == false:
+				body.item_id = item_id
+				body.stamina += nutrition
+				body.ichor += nutrition
+				body.hunger = false
+				body.eat_sounds()
+				release_seed()
 
 func take_damage(damage):
 	ichor -= damage
@@ -288,6 +291,8 @@ func _on_WiltTimer_timeout():
 		elif second_chance == true:
 			print('healthy enough to avoid wilting')
 			second_chance = false
+			wilt_time += 30
+			WiltTimer.set_wait_time(wilt_time)
 			WiltTimer.start()
 	elif wilted == true:
 		release_seed()

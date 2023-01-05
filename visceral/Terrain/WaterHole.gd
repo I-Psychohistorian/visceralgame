@@ -19,6 +19,8 @@ func _ready():
 func _on_WaterHole_body_entered(body):
 	if body.is_in_group("Player"):
 		body.wash_pollen()
+	if body.is_in_group("SmallBug"):
+		body.wash_pollen()
 	if body.is_in_group("Buoyant"):
 		body.in_water = true
 		body.wet = true

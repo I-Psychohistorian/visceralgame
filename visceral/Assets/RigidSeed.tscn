@@ -22,7 +22,7 @@ radius = 0.45
 [sub_resource type="SphereShape" id=4]
 radius = 8.0
 
-[node name="RigidSeed" type="RigidBody" groups=["Buoyant", "Interactable"]]
+[node name="RigidSeed" type="RigidBody" groups=["Buoyant", "Interactable", "Seed"]]
 mass = 0.0357143
 physics_material_override = SubResource( 5 )
 gravity_scale = 0.3

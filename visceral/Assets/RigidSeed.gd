@@ -128,7 +128,7 @@ func _on_polination_area_body_entered(body):
 			sprout_timer.set_wait_time(grow_time)
 			sprout_timer.start()
 			body.queue_free()
-		elif body.is_in_group("Player"):
+		elif body.is_in_group("Pollinator"):
 			if body.pollenated == true:
 				alleles.append(body.pollen_gamete[0])
 				pollenated = true

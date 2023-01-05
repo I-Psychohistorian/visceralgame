@@ -243,7 +243,7 @@ extents = Vector3( 0.285561, 0.285298, 0.345304 )
 [sub_resource type="SphereShape" id=3]
 radius = 0.587959
 
-[node name="Player" type="KinematicBody" groups=["Animal", "Player", "Predator", "Prey"]]
+[node name="Player" type="KinematicBody" groups=["Animal", "Player", "Pollinator", "Predator", "Prey"]]
 script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
