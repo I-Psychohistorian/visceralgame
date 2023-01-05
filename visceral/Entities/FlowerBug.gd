@@ -44,6 +44,7 @@ var scared = false
 var enemy_seen = false
 var fear_coords = Vector3()
 var cornered = false
+var fear_boost = 0
 
 var player_habituation_counter = 0
 var player_friend = false
@@ -81,6 +82,7 @@ func _ready():
 	#print(moods[0])
 	current_mood = moods[0]
 	grow()
+	animator.play_backwards("Death")
 
 func reparent():
 	var newparent = get_parent().get_parent()
@@ -128,7 +130,7 @@ func movement():
 	if current_mood == "Scared":
 		var run_direction = (fear_coords - self.global_transform.origin)*-1
 		if cornered == false:
-			move_and_slide(run_direction * (speed/2), Vector3.UP)
+			move_and_slide(run_direction * ((speed/2) + fear_boost), Vector3.UP)
 		elif cornered == true:
 			run_direction.x += idle_x
 			run_direction.y += idle_z
@@ -142,14 +144,14 @@ func handle_moods():
 				current_mood = moods[2]
 			elif food_seen == false:
 				current_mood = moods[0]
-		if hungry == false:
-			current_mood = moods[0]
 		if offspring_counter >= 3:
+			current_mood = moods[1]
 			offspring_counter = 0
 			print('gave birth')
-			ichor -= 3
-			animator.play("Alert") #needs its own setting so it animation happens 
+			ichor -= 3 
 			#egg lay sound
+			if laying_egg == false:
+				animator.play("Alert")
 			laying_egg = true
 			egg_point = egg_patch.global_transform.origin
 			$egg_timer.start()
@@ -159,13 +161,31 @@ func handle_moods():
 			if viable_offspring == 0:
 				fertile = false
 				print('ran out of viable eggs')
-
+		if hungry == false:
+			if laying_egg == false:
+				current_mood = moods[0]
 	elif scared == true:
 		current_mood = moods[3]
+
+func handle_animations():
+	var walk_choice = rng.randi_range(1,6)
+	if walk_choice < 5:
+		is_walking = true
+		if walk_choice <= 2:
+			animator.play("Walk")
+		elif walk_choice >= 3:
+			animator.play("Walk2")
+		elif walk_choice >= 5:
+			if current_mood == "Idle":
+				is_walking = false
+			else:
+				animator.play("Walk")
+	
 
 func handle_death():
 	if ichor < 0:
 		dead = true
+		fertile = false
 		animator.play("Death")
 
 func take_damage(damage):
@@ -197,6 +217,7 @@ func _on_hunger_timer_timeout():
 
 func _on_idle_vector_timer_timeout():
 	if dead == false:
+		
 		var choice = rng.randi_range(0,1)
 		var rotate_integer = rng.randi_range(0,1)
 		if rotate_integer == 1:
@@ -210,18 +231,9 @@ func _on_idle_vector_timer_timeout():
 			rotate_timer.start()
 		idle_x = rng.randi_range(-1,1)
 		idle_z = rng.randi_range(-1,1)
-		var walk_choice = rng.randi_range(1,6)
-		if walk_choice < 5:
-			is_walking = true
-			if walk_choice <= 2:
-				animator.play("Walk")
-			elif walk_choice >= 3:
-				animator.play("Walk2")
-		elif walk_choice >= 5:
-			if current_mood == "Idle":
-				is_walking = false
-			elif current_mood == "Searching":
-				animator.play("Walk")
+		
+		handle_animations()
+
 
 func eat_nearby():
 	var touching = touch.get_overlapping_bodies()
@@ -267,9 +279,11 @@ func _on_Fear_distance_body_entered(body):
 			elif player_friend == false:
 				scared = true
 				fear_coords = body.global_transform.origin
+				handle_animations()
 		else:
 			scared = true
 			fear_coords = body.global_transform.origin
+			handle_animations()
 
 func _on_Eat_distance_body_entered(body):
 	if body.is_in_group("Pollen"):
@@ -339,10 +353,12 @@ func _on_search_timer_timeout():
 						fear_coords = i.global_transform.origin
 						enemy_seen = true
 						scared = true
+						handle_animations()
 				elif player_friend == false:
 					fear_coords = i.global_transform.origin
 					enemy_seen = true
 					scared = true
+					handle_animations()
 	if enemy_seen == false:
 		scared = false
 	enemy_seen = false
@@ -352,3 +368,15 @@ func _on_search_timer_timeout():
 
 func _on_egg_timer_timeout():
 	laying_egg = false
+	animator.play_backwards("Alert")
+
+
+func _on_doublefear_body_entered(body):
+	if body.is_in_group('Predator'):
+		if current_mood == "Scared":
+			fear_boost = 0.1
+
+
+func _on_doublefear_body_exited(body):
+	if body.is_in_group('Predator'):
+		fear_boost = 0

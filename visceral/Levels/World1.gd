@@ -18,3 +18,7 @@ func _ready():
 
 func _on_Timer_timeout():
 	mist.rotate_y(deg2rad(2))
+
+
+func _on_deleter_body_entered(body):
+	body.queue_free()

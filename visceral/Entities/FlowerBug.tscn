@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Entities/Components/BugLeg.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Textures/OrangeNoiseFlesh1.tres" type="Material" id=2]
@@ -979,6 +979,9 @@ radius = 16.8981
 height = 0.786546
 radius = 7.08146
 
+[sub_resource type="SphereShape" id=11]
+radius = 2.37948
+
 [node name="FlowerBug" type="KinematicBody" groups=["Animal", "Buoyant", "Destructible", "Pollinator", "Prey", "SmallBug"]]
 script = ExtResource( 4 )
 
@@ -1112,6 +1115,11 @@ one_shot = true
 [node name="eggspace" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.323694, 0 )
 
+[node name="doublefear" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="doublefear"]
+shape = SubResource( 11 )
+
 [connection signal="body_entered" from="Eat_distance" to="." method="_on_Eat_distance_body_entered"]
 [connection signal="body_entered" from="Fear_distance" to="." method="_on_Fear_distance_body_entered"]
 [connection signal="timeout" from="hunger_timer" to="." method="_on_hunger_timer_timeout"]
@@ -1119,6 +1127,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.323694, 0 )
 [connection signal="timeout" from="rotate_timer" to="." method="_on_rotate_timer_timeout"]
 [connection signal="timeout" from="search_timer" to="." method="_on_search_timer_timeout"]
 [connection signal="timeout" from="egg_timer" to="." method="_on_egg_timer_timeout"]
+[connection signal="body_entered" from="doublefear" to="." method="_on_doublefear_body_entered"]
+[connection signal="body_exited" from="doublefear" to="." method="_on_doublefear_body_exited"]
 
 [editable path="Body/BugLeg1"]
 [editable path="Body/BugLeg2"]

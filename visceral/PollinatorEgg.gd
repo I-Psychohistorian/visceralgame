@@ -5,6 +5,7 @@ onready var flowercrab = preload("res://Entities/FlowerBug.tscn")
 
 var viable = true
 var nutrition = 2
+var ichor = 1
 onready var hatchpoint = $HatchPoint
 var spawn_coords = Vector3()
 
@@ -18,6 +19,9 @@ func _ready():
 #func _process(delta):
 #	pass
 
+func take_damage(damage):
+	ichor -= damage
+	queue_free()
 
 func _on_HatchTime_timeout():
 	if viable == true:
