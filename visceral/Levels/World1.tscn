@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Textures/pinkflesh.tres" type="Material" id=1]
 [ext_resource path="res://Textures/purpleanimatedsky1.tres" type="Material" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Terrain/SmallPool.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Entities/RandomFlower.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Entities/PlantController.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Terrain/rooms/connectortunnel1.tscn" type="PackedScene" id=8]
 
 [sub_resource type="OpenSimplexNoise" id=1]
 period = 25.9
@@ -82,6 +83,9 @@ radius = 3.90132
 height = 1.72213
 material = ExtResource( 1 )
 
+[node name="connectortunnel1" parent="CSGCombiner" instance=ExtResource( 8 )]
+transform = Transform( 0.795304, 0, 0.606211, 0, 1, 0, -0.60621, 0, 0.795304, -8.68426, 0.510693, -2.37631 )
+
 [node name="skymist" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 5.08828, 0 )
 mesh = SubResource( 4 )
@@ -105,3 +109,5 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.28907, 0 )
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="release_seeds" from="PlantController/RandomFlower" to="PlantController" method="_on_RandomFlower_release_seeds"]
 [connection signal="release_seeds" from="PlantController/RandomFlower2" to="PlantController" method="_on_RandomFlower2_release_seeds"]
+
+[editable path="CSGCombiner/connectortunnel1"]

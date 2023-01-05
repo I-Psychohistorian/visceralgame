@@ -196,6 +196,10 @@ func hurt_sounds():
 func flesh_damage_sounds():
 	pass 
 
+func take_damage(damage):
+	ichor -= damage
+	#hurt boolean? hurt sound?
+
 func _input(event):
 	if event is InputEventMouseMotion:
 		rotate_y(deg2rad(-event.relative.x * mouse_sensitivity))

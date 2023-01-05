@@ -73,10 +73,6 @@ var interact_label = "Press E to eat bud"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	seed1coord = $Seed.global_transform.origin
-	seed2coord =$Seed2.global_transform.origin 
-	seed3coord = $Seed3.global_transform.origin 
-	pollen_coord = $PollenGenerationPoint.global_transform.origin
 	#print(seed1coord)
 	$StartTimer.start()
 
@@ -97,7 +93,7 @@ func generate_plant():
 	start_rotation = rng.randi_range(0,-360)
 	rotate_y(deg2rad(start_rotation))
 	#for random blooming and wilting time
-	grow_time = rng.randi_range(3,6)
+	grow_time = rng.randi_range(10,12) #30 and 60
 	wilt_time = rng.randi_range(20,40) 
 	#for random genome
 	for allele in gene:
@@ -184,6 +180,7 @@ func pollen_allele():
 	pollen_gamete = gene[flip]
 	#print("pollen allele is: ", pollen_gamete)
 func release_pollen():
+	pollen_coord = $PollenGenerationPoint.global_transform.origin
 	var release_chance = rng.randi_range(0,1)
 	var pollen_num = rng.randi_range(2,6)
 	if wilted == true:
@@ -202,6 +199,9 @@ func release_pollen():
 		
 #dies + releases seeds
 func release_seed():
+	seed1coord = $Seed.global_transform.origin
+	seed2coord =$Seed2.global_transform.origin 
+	seed3coord = $Seed3.global_transform.origin 
 	seeding = true
 	$Seed.visible = false
 	$Seed2.visible = false
@@ -213,7 +213,7 @@ func use():
 	var area = $interact_Area.get_overlapping_bodies()
 	for body in area:
 		if body.is_in_group('Player'):
-			
+			body.item_id = item_id
 			body.stamina += nutrition
 			body.ichor += nutrition
 			body.hunger = false
@@ -247,13 +247,15 @@ func _on_StartTimer_timeout():
 		new_parent.add_child(self)
 		#print(get_parent())
 		self.global_transform.origin = start_coord
-		var plant_control = get_parent()
-		connect("release_seeds", plant_control, "spawn_seeds")
+		#var plant_control = get_parent()
+		#connect("release_seeds", plant_control, "spawn_seeds")
 		global_rotation.x = 0
 		global_rotation.z = 0
 	elif rando_gene == true:
 		genome()
 		genome()
+	var plant_control = get_parent()
+	connect("release_seeds", plant_control, "spawn_seeds")
 	generate_plant()
 
 
