@@ -23,9 +23,9 @@ radius = 0.45
 radius = 8.0
 
 [node name="RigidSeed" type="RigidBody" groups=["Buoyant", "Interactable"]]
-mass = 0.0540816
+mass = 0.0357143
 physics_material_override = SubResource( 5 )
-gravity_scale = 0.6
+gravity_scale = 0.3
 continuous_cd = true
 script = ExtResource( 2 )
 
@@ -55,7 +55,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0186679, 0.017544, -0.06481
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0411674, -0.0330958, 0.0426044 )
 
 [node name="Timer" type="Timer" parent="." groups=["Interactable"]]
-wait_time = 15.0
+wait_time = 30.0
 one_shot = true
 
 [node name="polination_area" type="Area" parent="."]
@@ -73,6 +73,7 @@ one_shot = true
 shape = SubResource( 4 )
 
 [node name="Wet_timer" type="Timer" parent="."]
+wait_time = 10.0
 autostart = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

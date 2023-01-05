@@ -236,11 +236,11 @@ tracks/2/keys = {
 radius = 0.05
 height = 0.1
 
+[sub_resource type="BoxShape" id=9]
+extents = Vector3( 0.285561, 0.285298, 0.345304 )
+
 [sub_resource type="SphereShape" id=3]
 radius = 0.587959
-
-[sub_resource type="BoxShape" id=9]
-extents = Vector3( 0.285561, 0.190732, 0.293056 )
 
 [node name="Player" type="KinematicBody" groups=["Animal", "Player"]]
 script = ExtResource( 2 )
@@ -305,6 +305,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.284989 )
 visible = false
 mesh = SubResource( 8 )
 
+[node name="attack_area" type="Area" parent="centre"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.880033 )
+
+[node name="CollisionShape" type="CollisionShape" parent="centre/attack_area"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0937793, 0 )
+shape = SubResource( 9 )
+
 [node name="GravCast" type="RayCast" parent="."]
 enabled = true
 cast_to = Vector3( 0, -0.65, 0 )
@@ -318,19 +325,22 @@ shape = SubResource( 3 )
 wait_time = 0.5
 autostart = true
 
-[node name="attack_area" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.880033 )
-
-[node name="CollisionShape" type="CollisionShape" parent="attack_area"]
-shape = SubResource( 9 )
-
 [node name="HungerTimer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 30.0
 autostart = true
+
+[node name="Jump_speed_boost" type="Timer" parent="."]
+one_shot = true
+
+[node name="action_cooldown" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
 
 [connection signal="body_entered" from="PollenTouch" to="." method="_on_PollenTouch_body_entered"]
 [connection signal="timeout" from="StaminaTimer" to="." method="_on_StaminaTimer_timeout"]
 [connection signal="timeout" from="HungerTimer" to="." method="_on_HungerTimer_timeout"]
+[connection signal="timeout" from="Jump_speed_boost" to="." method="_on_Jump_speed_boost_timeout"]
+[connection signal="timeout" from="action_cooldown" to="." method="_on_action_cooldown_timeout"]
 
 [editable path="centre/Claw"]
 [editable path="centre/Claw2"]

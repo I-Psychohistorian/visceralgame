@@ -11,6 +11,8 @@ var claws = 5
 var hunger = false
 var death_type = "blank"
 
+var action_cooldown = false
+onready var cooldown_timer = $action_cooldown
 
 onready var hud = $centre/Camera/HUD
 onready var animator = $centre/AnimationPlayer
@@ -33,9 +35,10 @@ var dead = false
 var cinematic_pause = false
 
 #physics variables
-var speed = 2.5
+var speed = 2.0
 var gravity = 1
 var jump = 0.5
+var jump_dash = false
 var direction = Vector3()
 var grav_vec = Vector3()
 
@@ -71,6 +74,10 @@ func _process(delta):
 			if stamina >= 10:
 				grav_vec = Vector3.UP * jump
 				stamina -= 10
+				if jump_dash == false:
+					$Jump_speed_boost.start()
+					jump_dash = true
+					speed = 3.5
 		if Input.is_action_pressed("forward"):
 			direction -= transform.basis.z
 		elif Input.is_action_pressed("backward"):
@@ -80,7 +87,21 @@ func _process(delta):
 		elif Input.is_action_pressed("right"):
 			direction += transform.basis.x
 		if Input.is_action_just_pressed("attack"):
-			pass
+			if holding_item == false:
+				if action_cooldown == false:
+					action_cooldown = true
+					cooldown_timer.start()
+					var targets = $centre/attack_area.get_overlapping_bodies()
+					print(targets)
+					for target in targets:
+						if target.is_in_group('Destructible'):
+							target.take_damage(claws)
+							if target.is_in_group('Plant'):
+								eat_sounds()
+							if target.is_in_group('Animal'):
+								flesh_damage_sounds()
+
+					animator.play("attack")
 		if Input.is_action_just_pressed("drop"):
 			Right()
 		if Input.is_action_just_pressed("eat"):
@@ -89,7 +110,6 @@ func _process(delta):
 			pass
 	if Input.is_action_just_pressed("hide_mouse"):
 		toggle_mouse_mode()
-	
 	direction = direction.normalized()
 	direction.y = grav_vec.y
 	move_and_slide(direction*speed, Vector3.UP)
@@ -135,8 +155,9 @@ func Eat():
 
 func handle_death():
 	if ichor < 0:
+		if dead == false:
+			toggle_mouse_mode()
 		dead = true
-		toggle_mouse_mode()
 		print('you died')
 
 func interaction():
@@ -144,42 +165,36 @@ func interaction():
 		var pointed_object = pointer.get_collider()
 		if pointed_object.is_in_group("Interactable"):
 			if pointed_object.interactable == true:
-				if pointed_object.item_id == "Seed":
-					hud.message = "E to take seed"
-					hud.turn_on_interact_text()
-					if Input.is_action_just_pressed("interact"):
+				hud.message = pointed_object.interact_label
+				hud.turn_on_interact_text()
+				if Input.is_action_just_pressed("interact"):
+					if action_cooldown == false:
+						action_cooldown = true
+						cooldown_timer.start()
 						if holding_item == false:
-							#pointed_object.use
-							holding_item = true
-							item_gamete = pointed_object.alleles
-							item_pollinated = pointed_object.pollenated
-							item_nutrition = pointed_object.nutrition
-							item_id = pointed_object.item_id
-							print('Picked up seed, genes are: ', item_gamete, ' pollinated is: ', item_pollinated, ' nutrition is: ', item_nutrition)
-							if item_pollinated == true:
-								held_seed.show_pollen()
-							elif item_pollinated == false:
-								held_seed.hide_pollen()
-							pointed_object.queue_free()
-							animator.play("seedhold")
+							pointed_object.use()
+							if item_id == "Seed":
+								if item_pollinated == true:
+									held_seed.show_pollen()
+								elif item_pollinated == false:
+									held_seed.hide_pollen()
+								animator.play("seedhold")
 						elif holding_item == true:
-							pass
-							#can't take another seed
-				elif pointed_object.item_id == "Plant":
-					hud.message = "E to munch on plant"
-					hud.turn_on_interact_text()
-					if Input.is_action_just_pressed("interact"):
-						stamina += pointed_object.nutrition
-						ichor += pointed_object.nutrition
-						pointed_object.release_seed()
-						hunger = false
-						#munch sound?
+							print('Picked up seed, genes are: ', item_gamete, ' pollinated is: ', item_pollinated, ' nutrition is: ', item_nutrition)
 		elif not pointed_object.is_in_group("Interactable"):
 			hud.turn_off_interact_text()
 	elif not pointer.is_colliding():
 		hud.turn_off_interact_text()
 	#e to interact/pickup
 
+func eat_sounds():
+	pass
+
+func hurt_sounds():
+	pass
+	
+func flesh_damage_sounds():
+	pass 
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -233,3 +248,15 @@ func _on_HungerTimer_timeout():
 	elif hunger == true:
 		ichor -= 4
 		print('starving')
+
+
+func _on_Jump_speed_boost_timeout():
+	jump_dash = false
+	speed = 2.0
+
+
+func _on_action_cooldown_timeout():
+	action_cooldown = false
+
+
+

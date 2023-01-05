@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Entities/Components/PurpleFlower.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Entities/Components/DeadFlower.tscn" type="PackedScene" id=2]
@@ -16,8 +16,8 @@ radius = 0.09
 radius = 0.08
 
 [sub_resource type="CylinderShape" id=3]
-height = 0.0128675
-radius = 0.0606018
+height = 0.0374804
+radius = 0.0682586
 
 [sub_resource type="CylinderShape" id=4]
 height = 0.0864486
@@ -28,7 +28,10 @@ material = ExtResource( 8 )
 radius = 0.02
 height = 0.001
 
-[node name="RandomFlower" type="KinematicBody" groups=["Buoyant", "Interactable"]]
+[sub_resource type="SphereShape" id=6]
+radius = 3.0
+
+[node name="RandomFlower" type="KinematicBody" groups=["Buoyant", "Destructible", "Interactable", "Plant"]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0370633, 0 )
 script = ExtResource( 6 )
 
@@ -141,6 +144,15 @@ mesh = SubResource( 5 )
 transform = Transform( 0.900412, -0.305638, -0.309586, 0.371796, 0.910135, 0.182819, 0.225888, -0.279715, 0.933131, 0.107733, 0.0648757, 0.107798 )
 mesh = SubResource( 5 )
 
+[node name="Stress_timer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[node name="interact_Area" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="interact_Area"]
+shape = SubResource( 6 )
+
 [connection signal="openflower" from="." to="BaseFlower" method="_on_RandomFlower_openflower"]
 [connection signal="openflower" from="." to="DeadFlower" method="_on_RandomFlower_openflower"]
 [connection signal="openflower" from="." to="PurpleFlower" method="_on_RandomFlower_openflower"]
@@ -156,3 +168,4 @@ mesh = SubResource( 5 )
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="timeout" from="WiltTimer" to="." method="_on_WiltTimer_timeout"]
 [connection signal="timeout" from="WetTimer" to="." method="_on_WetTimer_timeout"]
+[connection signal="timeout" from="Stress_timer" to="." method="_on_Stress_timer_timeout"]

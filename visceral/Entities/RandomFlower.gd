@@ -3,7 +3,7 @@ extends KinematicBody
 var seeding = false
 #for plant controller to check
 
-var gravity = 5
+var gravity = 4
 var grav_vec = Vector3()
 
 
@@ -15,6 +15,7 @@ var alt = false
 
 var nutrition = 5
 var seeds = 0
+var ichor = 5
 
 var start_rotation = 0
 var wilted = false
@@ -47,7 +48,9 @@ var fertile_soil = false
 var wet = false
 var in_water = false
 
+var water = 0
 var stress = 0
+var second_chance = false
 
 signal startgrowth
 signal openflower
@@ -66,6 +69,7 @@ onready var pollen = preload("res://Entities/PollenBall.tscn")
 #interact variables
 var interactable = true
 var item_id = "Plant"
+var interact_label = "Press E to eat bud"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -93,8 +97,8 @@ func generate_plant():
 	start_rotation = rng.randi_range(0,-360)
 	rotate_y(deg2rad(start_rotation))
 	#for random blooming and wilting time
-	grow_time = rng.randi_range(5,10)
-	wilt_time = rng.randi_range(9,12) #add a 0 later to increase
+	grow_time = rng.randi_range(3,6)
+	wilt_time = rng.randi_range(20,40) 
 	#for random genome
 	for allele in gene:
 		if allele == "A":
@@ -164,7 +168,12 @@ func generate_gametes():
 		$Seed.visible = false
 		$Seed2.visible = false
 		$Seed3.visible = false
+
 func _process(delta):
+	if in_water == true:
+		gravity = -1
+	elif in_water == false:
+		gravity = 4
 	grav_vec = Vector3()
 	if not is_on_floor():
 		grav_vec += Vector3.DOWN * gravity * delta
@@ -201,11 +210,25 @@ func release_seed():
 	$Timer.start()
 
 func use():
-	pass
+	var area = $interact_Area.get_overlapping_bodies()
+	for body in area:
+		if body.is_in_group('Player'):
+			
+			body.stamina += nutrition
+			body.ichor += nutrition
+			body.hunger = false
+			body.eat_sounds()
+			release_seed()
 
+func take_damage(damage):
+	ichor -= damage
+	print('plant ouch')
+	if ichor <= 0:
+		release_seed()
 
 func _on_GrowthTimer_timeout():
 	emit_signal("openflower")
+	interact_label = "Press E to eat flower"
 	#marks phenotypic difference between double CC flowers
 	if basic_type == false and dry_type == false:
 		$deadCCbloom.visible = true
@@ -239,25 +262,31 @@ func _on_Timer_timeout():
 
 
 func _on_WiltTimer_timeout():
+	handle_stress()
 	if wilted == false:
-		baseflower.visible = false
-		purpleflower.visible = false
-		yellowflower.visible = false
-		dryflower.visible = false
-		deadflower.visible = true
-		nutrition -= 1
-		#wilting
-		var seed_loss = rng.randi_range(0,3)
-		seeds -= seed_loss
-		if seeds < 0:
-			seeds = 0
-		if seeds < 3:
-			$Seed3.visible = false
-		if seeds < 2:
-			$Seed2.visible = false
-		if seeds < 1:
-			$Seed.visible = false
-		print(seed_loss, " seeds lost from wilting")
+		if second_chance == false:
+			baseflower.visible = false
+			purpleflower.visible = false
+			yellowflower.visible = false
+			dryflower.visible = false
+			deadflower.visible = true
+			nutrition -= 1
+			#wilting
+			var seed_loss = rng.randi_range(0,3)
+			seeds -= seed_loss
+			if seeds < 0:
+				seeds = 0
+			if seeds < 3:
+				$Seed3.visible = false
+			if seeds < 2:
+				$Seed2.visible = false
+			if seeds < 1:
+				$Seed.visible = false
+			print(seed_loss, " seeds lost from wilting")
+		elif second_chance == true:
+			print('healthy enough to avoid wilting')
+			second_chance = false
+			WiltTimer.start()
 	elif wilted == true:
 		release_seed()
 		#die and release seeds
@@ -268,5 +297,37 @@ func _on_WetTimer_timeout():
 	if wet == true:
 		wet = false
 		#water absorbed
+		if dry_type == true:
+			water += 1
+		if alt == true:
+			water -= 2
+		if basic_type == true:
+			water -= 1
 	if in_water == true:
 			wet = true
+
+#stress accumulates over lifetime, upon wilt check if it is below zero the plant is healthy enough to
+#restart wilt timer
+#some genotypes handle water better than others, it can either add to or remove stress
+func handle_stress():
+	print("stress score: ", stress, ", water score: ", water)
+	var stress_roll = rng.randi_range(5,10)
+	var stress_calc = (water + stress) - stress_roll 
+	print('stress calc is (want it to be less than 0): ', stress_calc)
+	if stress_calc < 0:
+		second_chance = true
+		print('Lifespan extended')
+	elif stress_roll >= 0:
+		second_chance = false
+		print('too stressed, wilting')
+	water = 0
+
+func _on_Stress_timer_timeout():
+	for allele in gene:
+		if allele == "A":
+			stress += rng.randi_range(1,2)
+		elif allele == "B":
+			stress += rng.randi_range(0,1)
+		elif allele == "C":
+			stress += 0
+		

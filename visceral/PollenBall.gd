@@ -63,7 +63,7 @@ func _process(delta):
 			y_speed = 0
 			z_speed = 0
 			x_speed = 0
-			gravity = 0
+			#gravity = 0
 			impulsed = false
 			if reparented == false:
 				reparent()
@@ -73,7 +73,9 @@ func _process(delta):
 		impulse.z += z_speed
 		impulse.x += x_speed
 		decrease_impulse()
-		move_and_slide(impulse, Vector3.UP)
+	if in_water == true:
+			impulse.y += 0.1
+	move_and_slide(impulse, Vector3.UP)
 
 func reparent():
 		start_coord = self.global_transform.origin

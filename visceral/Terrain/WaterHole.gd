@@ -28,8 +28,7 @@ func _on_WaterEffectTimer_timeout():
 	var bodies = self.get_overlapping_bodies()
 	for body in bodies:
 		if body.is_in_group("Buoyant"):
-			if body.wet == true:
-				body.global_transform.origin.y += 0.03
+			pass
 
 
 

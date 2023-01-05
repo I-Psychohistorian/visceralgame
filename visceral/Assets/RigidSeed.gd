@@ -9,9 +9,10 @@ var nutrition = 0
 
 var interactable = true
 var item_id = "Seed"
+var interact_label = "Press E to take seed"
 
 var rng = RandomNumberGenerator.new()
-var grow_time = 0
+var grow_time = 15
 onready var sprout_timer = $Timer
 
 signal sprout
@@ -51,10 +52,16 @@ func reparent():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if wet == true:
-		gravity_scale = 0.0
-	elif wet == false:
-		gravity_scale = 0.6
+	if in_water == true:
+		gravity_scale = 0
+		global_transform.origin.y += 0.001
+	elif in_water == false:
+		if wet == true:
+			gravity_scale = 0
+		elif wet == false:
+			gravity_scale = 0.3
+			
+		gravity_scale = 0.3
 
 func reorient():
 	global_transform.origin = drop_coords
@@ -75,7 +82,13 @@ func use():
 	var nearby = player_range.get_overlapping_bodies()
 	for body in nearby:
 		if body.is_in_group("Player"):
-			pass
+			body.holding_item = true
+			body.item_gamete = self.alleles
+			body.item_pollinated = self.pollenated
+			body.item_nutrition = self.nutrition
+			body.item_id = self.item_id
+			body.hud.message = interact_label
+			queue_free()
 
 func die():
 	queue_free()
