@@ -18,10 +18,11 @@ func _ready():
 func spawn_crab():
 	var crabs = get_children()
 	for crab in crabs:
-		if crab.laying_egg == true:
-			crab_spawn_point = crab.egg_point
-			var egg = crabegg.instance()
-			add_child(egg)
-			egg.scale = Vector3(crab.start_size, crab.start_size, crab.start_size)
-			egg.global_transform.origin = crab_spawn_point
-			print('egg created')
+		if crab.is_in_group('SmallBug'):
+			if crab.laying_egg == true:
+				crab_spawn_point = crab.egg_point
+				var egg = crabegg.instance()
+				add_child(egg)
+				egg.scale = Vector3(crab.start_size, crab.start_size, crab.start_size)
+				egg.global_transform.origin = crab_spawn_point
+				print('egg created')

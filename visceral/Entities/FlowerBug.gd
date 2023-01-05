@@ -86,9 +86,7 @@ func reparent():
 	var newparent = get_parent().get_parent()
 	get_parent().remove_child(self)
 	newparent.add_child(self)
-	print(get_parent())
 	self.global_transform.origin = start_point
-	print(start_point)
 	connect("lay_egg", get_parent(), "spawn_crab")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -310,8 +308,6 @@ func _on_Eat_distance_body_entered(body):
 
 #this ticks on food and enemy location
 func _on_search_timer_timeout():
-	print(global_transform.origin)
-	print(start_point)
 	if hatched == false:
 		connect("lay_egg", get_parent(), "spawn_crab")
 	if current_mood == "Searching":
