@@ -111,7 +111,6 @@ wait_time = 0.5
 one_shot = true
 
 [node name="WiltTimer" type="Timer" parent="."]
-one_shot = true
 
 [node name="WetTimer" type="Timer" parent="."]
 wait_time = 5.0

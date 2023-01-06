@@ -12,6 +12,8 @@ var gib_id = 'none'
 var wet = false
 var in_water = false
 
+var left_water = false
+
 onready var gib1 = $CrabGib1
 onready var gib2 = $Crabgib2
 
@@ -36,9 +38,17 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if in_water == true:
-		self.gravity_scale = -0.1
+		if left_water == true:
+			gravity_scale = -0.01
+		else:
+			gravity_scale = -0.1
 	elif in_water == false:
-		self.gravity_scale = 1
+		if left_water == false:
+			gravity_scale = 0.01
+			left_water = true
+		elif left_water == true:
+			gravity_scale = 1
+			left_water = false
 
 func use():
 	var nearby = $Area.get_overlapping_bodies()

@@ -110,6 +110,8 @@ func _process(delta):
 			grav_vec.y -= (gravity/5)
 	if climb_ray.is_colliding():
 		grav_vec.y = 0
+		if in_water == true:
+			grav_vec.y += 0.1
 	move_and_slide(grav_vec * delta, Vector3.UP)
 	handle_moods()
 
@@ -161,7 +163,7 @@ func movement():
 	if current_mood == "Searching":
 		var target_direction = food_coords - self.global_transform.origin
 		if in_water == true:
-			target_direction.y += 0.06
+			target_direction.y += 0.1
 		move_and_slide(target_direction * (speed/2), Vector3.UP)
 	if current_mood == "Scared":
 		var run_direction = (fear_coords - self.global_transform.origin)*-1
@@ -386,6 +388,10 @@ func _on_search_timer_timeout():
 			elif food.is_in_group("Seed"):
 				food_coords = food.global_transform.origin
 				food_seen = true
+			elif food.is_in_group("Plant"):
+				if food.wilted == true:
+					food_coords = food.global_transform.origin
+					food_seen = true
 	var fear_radius = close.get_overlapping_bodies()
 	for i in fear_radius:
 		if enemy_seen == false:

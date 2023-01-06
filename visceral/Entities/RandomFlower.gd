@@ -148,11 +148,11 @@ func generate_gametes():
 	var gametes = rng.randi_range(1,6)
 	for allele in gene:
 		if allele == "A":
-			gametes += 2
+			gametes += 1
 		elif allele == "C":
-			gametes -= 2
+			gametes -= 1
 	#print("seedscore number is: ", gametes)
-	if gametes >= 7:
+	if gametes >= 6:
 		seeds = 3
 	elif gametes >= 4:
 		seeds = 2
@@ -305,14 +305,13 @@ func _on_WiltTimer_timeout():
 			if seeds < 1:
 				$Seed.visible = false
 			print(seed_loss, " seeds lost from wilting")
+			wilted = true
 		elif second_chance == true:
 			print('healthy enough to avoid wilting')
 			second_chance = false
-			wilt_time += 30
-			WiltTimer.set_wait_time(wilt_time)
-			WiltTimer.start()
 	elif wilted == true:
 		release_seed()
+	print('wilt timer timeout')
 		#die and release seeds
 
 
