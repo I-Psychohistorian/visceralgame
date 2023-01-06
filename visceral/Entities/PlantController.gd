@@ -38,6 +38,18 @@ func spawn_seeds():
 					s.reorient()
 					var choice = rng.randi_range(0,1)
 					s.alleles.append(child.gene[choice])
+					var mutation = rng.randi_range(1, 100)
+					if mutation == 1:
+						print('Seed mutation!')
+						if s.alleles[0] == "A":
+							s.alleles[0] == "B"
+							print('A shifted to B')
+						elif s.alleles[0] == "B":
+							s.alleles[0] == "C"
+							print('B shifted to C')
+						elif s.alleles[0] == "C":
+							s.alleles[0] == "B"
+							print('C shifted to B')
 					s.determine_nutrients()
 				if child.seeds >= 2:
 					self.add_child(s2)
@@ -46,6 +58,18 @@ func spawn_seeds():
 					s2.reorient()
 					var choice = rng.randi_range(0,1)
 					s2.alleles.append(child.gene[choice])
+					var mutation = rng.randi_range(1, 100)
+					if mutation == 1:
+						print('Seed mutation!')
+						if s2.alleles[0] == "A":
+							s2.alleles[0] == "B"
+							print('A shifted to B')
+						elif s2.alleles[0] == "B":
+							s2.alleles[0] == "C"
+							print('B shifted to C')
+						elif s2.alleles[0] == "C":
+							s2.alleles[0] == "B"
+							print('C shifted to B')
 					s2.determine_nutrients()
 				if child.seeds >=3:
 					self.add_child(s3)
@@ -54,6 +78,18 @@ func spawn_seeds():
 					s3.reorient()
 					var choice = rng.randi_range(0,1)
 					s3.alleles.append(child.gene[choice])
+					var mutation = rng.randi_range(1, 100)
+					if mutation == 1:
+						print('Seed mutation!')
+						if s3.alleles[0] == "A":
+							s3.alleles[0] == "B"
+							print('A shifted to B')
+						elif s3.alleles[0] == "B":
+							s3.alleles[0] == "C"
+							print('B shifted to C')
+						elif s3.alleles[0] == "C":
+							s3.alleles[0] == "B"
+							print('C shifted to B')
 					s3.determine_nutrients()
 				child.seeding = false
 				# child seeding set to false seems to have fixed the seed-splosion problem

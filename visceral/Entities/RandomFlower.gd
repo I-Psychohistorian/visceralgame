@@ -180,7 +180,22 @@ func _process(delta):
 func pollen_allele():
 	var flip = rng.randi_range(0,1)
 	pollen_gamete = gene[flip]
+	#mutate
+	var chance = rng.randi_range(1, 100)
+	if chance == 1:
+		print("Pollen Mutation!")
+		if pollen_gamete == "A":
+			pollen_gamete = "B"
+			print('A shifted to B')
+		elif pollen_gamete == "B":
+			pollen_gamete = "C"
+			print('B shifted to C')
+		elif pollen_gamete == "C":
+			pollen_gamete = "A"
+			print('C shifted to A')
 	#print("pollen allele is: ", pollen_gamete)
+
+
 func release_pollen():
 	pollen_coord = $PollenGenerationPoint.global_transform.origin
 	var release_chance = rng.randi_range(0,1)
