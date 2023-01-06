@@ -6,6 +6,10 @@ onready var crabegg = preload("res://Entities/PollinatorEgg.tscn")
 
 var crab_spawn_point = Vector3()
 
+
+#moving these scripts to plantcontrol to allow for item pickups and drops to be unified under one controller
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.

@@ -17,6 +17,8 @@ var nutrition = 5
 var seeds = 0
 var ichor = 5
 
+var sound_type = "vege"
+
 var start_rotation = 0
 var wilted = false
 var dead = false

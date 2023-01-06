@@ -21,4 +21,5 @@ func _on_Timer_timeout():
 
 
 func _on_deleter_body_entered(body):
+	print("Deleted ", body, "that fell through the world.")
 	body.queue_free()

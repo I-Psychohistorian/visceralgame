@@ -4,6 +4,8 @@ var ichor = 10
 var stress = 0
 var hungry = false
 
+var sound_type = "meat"
+
 #starting size for creature
 var start_size = 0.3
 var hunger_num = 0
@@ -59,6 +61,8 @@ onready var sight = $Sight_Distance
 onready var touch = $Eat_distance
 onready var close = $Fear_distance
 
+onready var gib = preload("res://Entities/CrabGib.tscn")
+
 var rng = RandomNumberGenerator.new()
 
 var wet = false
@@ -66,18 +70,21 @@ var in_water = false
 
 var hatched = false
 var start_point = Vector3()
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 
-
+#gibbing stuff
+var carved = false
+var gibbing = false
+onready var w1 = $Body/BodyShape/Wound1
+onready var w2 = $Body/BodyShape/Wound2
+onready var w3 = $Body/BodyShape/Wound3
+onready var w4 = $Body/BodyShape/Wound4
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	rng.randomize()
 	var phenotype = rng.randi_range(1,4)
 	if phenotype == 4:
 		crest.visible = false
-	viable_offspring = rng.randi_range(4,8)
+	viable_offspring = rng.randi_range(3,6)
 	print(start_point)
 	#print(moods[0])
 	current_mood = moods[0]
@@ -106,6 +113,33 @@ func _process(delta):
 	move_and_slide(grav_vec * delta, Vector3.UP)
 	handle_moods()
 
+func gib():
+	w1.visible = true
+	w2.visible = true
+	w3.visible = true
+	w4.visible = true
+	if carved == false:
+		carved = true
+	#sound?
+	elif carved == true:
+		if gibbing == false:
+			gibbing = true
+			var g = gib.instance()
+			var m = gib.instance()
+			var up_coord = self.global_transform.origin
+			up_coord.y += 0.1
+			self.add_child(g)
+			g.drop_coords =  up_coord
+			#scale?
+			g.reparent()
+			self.add_child(m)
+			m.drop_coords = up_coord
+			m.reparent()
+			#scale?
+			$bodybreak_timer.start()
+			#sound?
+		
+
 func grow():
 	self.scale = Vector3(start_size, start_size, start_size)
 	hunger_num += 1
@@ -126,6 +160,8 @@ func movement():
 		move_and_slide(direction * speed, Vector3.UP)
 	if current_mood == "Searching":
 		var target_direction = food_coords - self.global_transform.origin
+		if in_water == true:
+			target_direction.y += 0.06
 		move_and_slide(target_direction * (speed/2), Vector3.UP)
 	if current_mood == "Scared":
 		var run_direction = (fear_coords - self.global_transform.origin)*-1
@@ -153,6 +189,9 @@ func handle_moods():
 			if laying_egg == false:
 				animator.play("Alert")
 			laying_egg = true
+			self.global_transform.origin.y += 0.1
+			if hunger_num > 2:
+				self.global_transform.origin.y += 0.1
 			egg_point = egg_patch.global_transform.origin
 			$egg_timer.start()
 			emit_signal("lay_egg")
@@ -168,18 +207,19 @@ func handle_moods():
 		current_mood = moods[3]
 
 func handle_animations():
-	var walk_choice = rng.randi_range(1,6)
-	if walk_choice < 5:
-		is_walking = true
-		if walk_choice <= 2:
-			animator.play("Walk")
-		elif walk_choice >= 3:
-			animator.play("Walk2")
-		elif walk_choice >= 5:
-			if current_mood == "Idle":
-				is_walking = false
-			else:
+	if dead == false:
+		var walk_choice = rng.randi_range(1,6)
+		if walk_choice < 5:
+			is_walking = true
+			if walk_choice <= 2:
 				animator.play("Walk")
+			elif walk_choice >= 3:
+				animator.play("Walk2")
+			elif walk_choice >= 5:
+				if current_mood == "Idle":
+					is_walking = false
+				else:
+					animator.play("Walk")
 	
 
 func handle_death():
@@ -190,6 +230,8 @@ func handle_death():
 
 func take_damage(damage):
 	ichor -= damage
+	if dead == true:
+		gib()
 	#hurt sound
 
 func wash_pollen():
@@ -273,14 +315,16 @@ func _on_rotate_timer_timeout():
 
 func _on_Fear_distance_body_entered(body):
 	if body.is_in_group('Predator'):
-		if body.is_in_group("Player"):
+		if body.hiding == true:
+			pass
+		elif body.is_in_group("Player"):
 			if player_friend == true:
 				pass
 			elif player_friend == false:
 				scared = true
 				fear_coords = body.global_transform.origin
 				handle_animations()
-		else:
+		elif body.hiding == false:
 			scared = true
 			fear_coords = body.global_transform.origin
 			handle_animations()
@@ -346,19 +390,20 @@ func _on_search_timer_timeout():
 	for i in fear_radius:
 		if enemy_seen == false:
 			if i.is_in_group("Predator"):
-				if player_friend == true:
-					if i.is_in_group('Player'):
-						pass
-					else:
+				if i.hiding == false:
+					if player_friend == true:
+						if i.is_in_group('Player'):
+							pass
+						else:
+							fear_coords = i.global_transform.origin
+							enemy_seen = true
+							scared = true
+							handle_animations()
+					elif player_friend == false:
 						fear_coords = i.global_transform.origin
 						enemy_seen = true
 						scared = true
 						handle_animations()
-				elif player_friend == false:
-					fear_coords = i.global_transform.origin
-					enemy_seen = true
-					scared = true
-					handle_animations()
 	if enemy_seen == false:
 		scared = false
 	enemy_seen = false
@@ -367,7 +412,7 @@ func _on_search_timer_timeout():
 
 
 func _on_egg_timer_timeout():
-	laying_egg = false
+	#laying_egg = false
 	animator.play_backwards("Alert")
 
 
@@ -380,3 +425,11 @@ func _on_doublefear_body_entered(body):
 func _on_doublefear_body_exited(body):
 	if body.is_in_group('Predator'):
 		fear_boost = 0
+
+
+func _on_gib_timer_timeout():
+	pass # Replace with function body.
+
+
+func _on_bodybreak_timer_timeout():
+	queue_free()

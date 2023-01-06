@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Textures/RedNoiseFlesh1.tres" type="Material" id=1]
+[ext_resource path="res://Textures/OrangeNoiseFlesh1.tres" type="Material" id=2]
+
+[node name="CrabGib1" type="Spatial"]
+
+[node name="Gib1" type="CSGSphere" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.3, 0, 0, 0, 1, 0, 0, 0 )
+radius = 0.2
+material = ExtResource( 2 )
+
+[node name="CSGSphere" type="CSGSphere" parent="Gib1"]
+transform = Transform( -0.832908, -0.981566, 0, 4.27767, -0.191122, 0, 0, 0, 2, 0.131774, 0, 0 )
+operation = 2
+radius = 0.107102
+material = ExtResource( 1 )
+
+[node name="CSGCylinder" type="CSGCylinder" parent="Gib1"]
+transform = Transform( 0.121311, -0.291394, 0.20453, 3.30764, 0.123931, 0, -0.0253475, 0.060886, 0.97886, -0.0690297, 0.0664633, -0.113636 )
+operation = 2
+radius = 0.09408
+height = 1.38132
+cone = true
+material = ExtResource( 1 )
+
+[node name="CSGSphere2" type="CSGSphere" parent="Gib1"]
+transform = Transform( 0.983644, -0.0756522, 7.87348e-09, 0, -6.11959e-08, -3.33333, 0.180124, 0.41313, -4.29964e-08, -0.00539267, 0, 0.114242 )
+operation = 2
+radius = 0.2
+material = ExtResource( 1 )

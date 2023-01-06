@@ -1,13 +1,16 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Textures/greyredanimated.tres" type="Material" id=1]
+[ext_resource path="res://Textures/OrangeNoiseFlesh1.tres" type="Material" id=1]
 [ext_resource path="res://PollinatorEgg.gd" type="Script" id=2]
 [ext_resource path="res://Textures/eggtransparent.tres" type="Material" id=3]
 
 [sub_resource type="SphereShape" id=1]
 radius = 0.2
 
-[node name="PollinatorEgg" type="KinematicBody" groups=["Destructible"]]
+[sub_resource type="SphereShape" id=2]
+radius = 3.0
+
+[node name="PollinatorEgg" type="KinematicBody" groups=["Destructible", "Interactable"]]
 script = ExtResource( 2 )
 
 [node name="white" type="CSGSphere" parent="."]
@@ -35,5 +38,15 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.329117, 0 )
 wait_time = 0.3
 one_shot = true
 
+[node name="player_detector" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="player_detector"]
+shape = SubResource( 2 )
+
+[node name="Start_spawn" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
 [connection signal="timeout" from="HatchTime" to="." method="_on_HatchTime_timeout"]
 [connection signal="timeout" from="DespawnTimer" to="." method="_on_DespawnTimer_timeout"]
+[connection signal="timeout" from="Start_spawn" to="." method="_on_Start_spawn_timeout"]

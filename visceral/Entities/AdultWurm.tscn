@@ -1,0 +1,99 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Entities/Components/PinkClaw.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Textures/redanimated.tres" type="Material" id=2]
+[ext_resource path="res://Textures/pinkerflesh.tres" type="Material" id=3]
+
+[sub_resource type="CapsuleShape" id=1]
+height = 1.74407
+
+[sub_resource type="CapsuleShape" id=2]
+radius = 0.672025
+
+[sub_resource type="SphereShape" id=3]
+radius = 1.1
+
+[sub_resource type="CapsuleShape" id=5]
+radius = 0.157646
+height = 1.93803
+
+[sub_resource type="SphereShape" id=6]
+radius = 0.30129
+
+[node name="AdultWurm" type="KinematicBody"]
+
+[node name="Body" type="CSGSphere" parent="."]
+radius = 1.1
+material = ExtResource( 3 )
+
+[node name="Mouth" type="CSGCylinder" parent="Body"]
+transform = Transform( 1, 0, 0, 0, -0.053556, -0.998565, 0, 0.998565, -0.053556, 0, 0, -0.889714 )
+operation = 2
+radius = 0.639594
+height = 1.08077
+cone = true
+material = ExtResource( 2 )
+
+[node name="Tail" type="CSGSphere" parent="Body"]
+transform = Transform( 1, 0, -5.96046e-08, 0, 1, 0, 2.98023e-08, 0, 1.5, 0, 0, 1.01206 )
+material = ExtResource( 3 )
+
+[node name="juveniletail" type="Spatial" parent="Body/Tail"]
+transform = Transform( 0.99998, 0, 0, 0, 0.982485, 0, 0, 0, 1.03837, 0, 0, 0.786732 )
+
+[node name="CSGSphere" type="CSGSphere" parent="Body/Tail/juveniletail"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1.5, 0, 0, 0 )
+radius = 0.5
+material = ExtResource( 3 )
+
+[node name="PinkClaw" parent="Body/Tail/juveniletail" instance=ExtResource( 1 )]
+transform = Transform( 2, 0, 0, 0, -2, 1.20797e-07, 0, -3.01992e-07, -0.8, 0, 0, 0.0724397 )
+
+[node name="PinkClaw" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1.2, 0, 0, 0, 1.2, 0, 0, 0, 1, -1.05, 0, 0 )
+
+[node name="PinkClaw2" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1.2, 0, 0, 0, 1.2, 0, 0, 0, 1, 1.05, 0, 0 )
+
+[node name="BodyCollide" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.787813 )
+shape = SubResource( 1 )
+
+[node name="HindTailCollide" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.10794 )
+shape = SubResource( 2 )
+
+[node name="HeadCollide" type="CollisionShape" parent="."]
+shape = SubResource( 3 )
+
+[node name="TongueCollide" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 0, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="Spike" type="CSGCylinder" parent="TongueCollide"]
+transform = Transform( -1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 0, -1.05554 )
+radius = 0.1
+height = 0.7
+cone = true
+material = ExtResource( 2 )
+
+[node name="Section1" type="CSGSphere" parent="TongueCollide/Spike"]
+transform = Transform( -1, -6.99382e-07, -1.50996e-07, -1.74846e-07, 4, -1.06581e-14, 1.50996e-07, 7.10543e-14, -1, 5.57031e-08, -0.637169, -1.39698e-09 )
+radius = 0.12
+material = ExtResource( 2 )
+
+[node name="Section2" type="CSGSphere" parent="TongueCollide/Spike"]
+transform = Transform( -1, -6.99382e-07, -1.50996e-07, -1.74846e-07, 4, -1.06581e-14, 1.50996e-07, 7.10543e-14, -1, 1.0879e-07, -1.24441, 0 )
+radius = 0.12
+material = ExtResource( 2 )
+
+[node name="Section3" type="CSGSphere" parent="TongueCollide/Spike"]
+transform = Transform( -1, -6.99382e-07, -1.50996e-07, -1.74846e-07, 4, -1.77636e-14, 1.50996e-07, 4.26326e-14, -1, 1.57893e-07, -1.80608, 2.45515e-08 )
+radius = 0.12
+material = ExtResource( 2 )
+
+[node name="stab_zone" type="Area" parent="TongueCollide"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00484902, -1.19602 )
+
+[node name="CollisionShape" type="CollisionShape" parent="TongueCollide/stab_zone"]
+shape = SubResource( 6 )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Textures/RedNoiseFlesh1.tres" type="Material" id=1]
 [ext_resource path="res://Entities/Player.gd" type="Script" id=2]
@@ -7,6 +7,10 @@
 [ext_resource path="res://Assets/Seed.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Entities/HUD.tscn" type="PackedScene" id=6]
 [ext_resource path="res://WhiteCircleCross20x20.png" type="Texture" id=7]
+[ext_resource path="res://Textures/OrangeNoiseFlesh1.tres" type="Material" id=8]
+[ext_resource path="res://Textures/eggtransparent.tres" type="Material" id=9]
+[ext_resource path="res://Entities/Components/Crabgib2.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Entities/Components/CrabGib1.tscn" type="PackedScene" id=11]
 
 [sub_resource type="SphereShape" id=1]
 radius = 0.5
@@ -78,6 +82,18 @@ tracks/4/keys = {
 "update": 0,
 "values": [ false ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("egg:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=5]
 resource_name = "attack"
@@ -128,6 +144,109 @@ tracks/3/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector3( 0, 0, 0 ), Vector3( 0.121917, 31.1038, 52.1409 ), Vector3( 7.17749, 4.09477, 63.0163 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Seed:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("egg:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "egghold"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Seed:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Claw:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -0.446485, 6.40653, -89.748 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Claw2:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0.130579, -3.61788, 86.7324 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("egg:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "generichold"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Claw:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -7.18278, 3.31934, -122.657 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Claw2:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0.130579, -5.16488, 86.7324 ) ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -192,6 +311,18 @@ tracks/4/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("egg:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=7]
 resource_name = "seedhold"
@@ -231,6 +362,18 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Vector3( 0.130579, -5.16488, 86.7324 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("egg:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="SphereMesh" id=8]
@@ -298,12 +441,27 @@ transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, -0.0140498, 0.0500483
 [node name="AnimationPlayer" type="AnimationPlayer" parent="centre"]
 anims/RESET = SubResource( 4 )
 anims/attack = SubResource( 5 )
+anims/egghold = SubResource( 10 )
+anims/generichold = SubResource( 11 )
 anims/mandibledefault = SubResource( 6 )
 anims/seedhold = SubResource( 7 )
 
 [node name="Seed" parent="centre" instance=ExtResource( 5 )]
 transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.0273798, -0.118556, -0.774649 )
 visible = false
+
+[node name="egg" type="Spatial" parent="centre"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0325747, -0.130425, -0.786107 )
+
+[node name="white" type="CSGSphere" parent="centre/egg"]
+transform = Transform( 1, 0, 0, 0, 0.7, 0, 0, 0, 1, 0, 0, 0 )
+radius = 0.11
+material = ExtResource( 9 )
+
+[node name="yolk" type="CSGSphere" parent="centre/egg"]
+transform = Transform( 1, 0, 0, 0, 0.7, 0, 0, 0, 1, 0, 0, 0 )
+radius = 0.06
+material = ExtResource( 8 )
 
 [node name="Pointer" type="RayCast" parent="centre"]
 transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 1, 0, -0.1, -0.541 )
@@ -321,6 +479,14 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.880033 )
 [node name="CollisionShape" type="CollisionShape" parent="centre/attack_area"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0937793, 0 )
 shape = SubResource( 9 )
+
+[node name="CrabGib1" parent="centre" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 0.496762, -0.867887, 0, 0.867887, 0.496762, 0.0405625, -0.128823, -0.665154 )
+visible = false
+
+[node name="Crabgib2" parent="centre" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 0.28965, -0.957133, 0, 0.957133, 0.28965, -0.0268235, -0.0433537, -0.694918 )
+visible = false
 
 [node name="GravCast" type="RayCast" parent="."]
 enabled = true

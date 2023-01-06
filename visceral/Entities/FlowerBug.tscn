@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Entities/Components/BugLeg.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Textures/OrangeNoiseFlesh1.tres" type="Material" id=2]
 [ext_resource path="res://Assets/Pollen.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Entities/FlowerBug.gd" type="Script" id=4]
+[ext_resource path="res://Textures/RedNoiseFlesh1.tres" type="Material" id=5]
 
 [sub_resource type="SphereShape" id=1]
 radius = 0.35
@@ -1048,9 +1049,46 @@ material = ExtResource( 2 )
 
 [node name="Mouth" type="CSGSphere" parent="Body/BodyShape"]
 transform = Transform( 1, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, -0.291379, 0 )
+visible = false
 operation = 2
 radius = 0.05
 material = ExtResource( 2 )
+
+[node name="Wound1" type="CSGCylinder" parent="Body/BodyShape"]
+transform = Transform( 0.84103, -0.21935, -0.316563, 0, -0.585156, 1.62184, -0.540989, -0.341004, -0.492133, 0.125731, 0.119122, 0.0961419 )
+visible = false
+operation = 2
+radius = 0.0657885
+height = 0.3
+cone = true
+material = ExtResource( 5 )
+
+[node name="Wound2" type="CSGCylinder" parent="Body/BodyShape"]
+transform = Transform( 0.878588, 0.0518234, -0.466198, -0.877399, -0.210648, -1.74719, -0.188749, 0.486026, -0.139603, 0.119111, 0.205344, -0.107926 )
+visible = false
+operation = 2
+radius = 0.0626174
+height = 0.346154
+cone = true
+material = ExtResource( 5 )
+
+[node name="Wound3" type="CSGCylinder" parent="Body/BodyShape"]
+transform = Transform( 0.625577, 0.313157, -0.465171, -0.137463, -0.549686, -1.66508, -0.777129, 0.276395, -0.300823, -0.0970951, 0.168183, -0.107926 )
+visible = false
+operation = 2
+radius = 0.05
+height = 0.3
+cone = true
+material = ExtResource( 5 )
+
+[node name="Wound4" type="CSGCylinder" parent="Body/BodyShape"]
+transform = Transform( 0.344906, 0.386958, 0.531126, 1.05282, 0.308997, -1.58419, -0.777129, 0.276395, -0.300823, -0.0970951, 0.168183, 0.152881 )
+visible = false
+operation = 2
+radius = 0.0548548
+height = 0.44493
+cone = true
+material = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Body"]
 root_node = NodePath("../..")
@@ -1120,6 +1158,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.323694, 0 )
 [node name="CollisionShape" type="CollisionShape" parent="doublefear"]
 shape = SubResource( 11 )
 
+[node name="gib_timer" type="Timer" parent="."]
+
+[node name="bodybreak_timer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
 [connection signal="body_entered" from="Eat_distance" to="." method="_on_Eat_distance_body_entered"]
 [connection signal="body_entered" from="Fear_distance" to="." method="_on_Fear_distance_body_entered"]
 [connection signal="timeout" from="hunger_timer" to="." method="_on_hunger_timer_timeout"]
@@ -1129,6 +1173,8 @@ shape = SubResource( 11 )
 [connection signal="timeout" from="egg_timer" to="." method="_on_egg_timer_timeout"]
 [connection signal="body_entered" from="doublefear" to="." method="_on_doublefear_body_entered"]
 [connection signal="body_exited" from="doublefear" to="." method="_on_doublefear_body_exited"]
+[connection signal="timeout" from="gib_timer" to="." method="_on_gib_timer_timeout"]
+[connection signal="timeout" from="bodybreak_timer" to="." method="_on_bodybreak_timer_timeout"]
 
 [editable path="Body/BugLeg1"]
 [editable path="Body/BugLeg2"]

@@ -11,6 +11,9 @@ var claws = 5
 var hunger = false
 var death_type = "blank"
 
+#npc detection
+var hiding = false
+
 var action_cooldown = false
 onready var cooldown_timer = $action_cooldown
 
@@ -19,6 +22,8 @@ onready var animator = $centre/AnimationPlayer
 onready var held_seed = $centre/Seed
 
 onready var seedpod = preload("res://Assets/RigidSeed.tscn")
+onready var crabegg = preload("res://Entities/PollinatorEgg.tscn")
+onready var crabmeat = preload("res://Entities/CrabGib.tscn")
 
 var pollenated = false
 var pollen_gamete = []
@@ -28,8 +33,16 @@ var item_id = "blank"
 var item_pollinated = false
 var item_gamete = []
 var item_nutrition = 0
+#crab egg viability
+var viability = true
+
+#gib model
+var gib_id = "."
+
+#drop item location
 var seed_coord = Vector3()
 signal drop_seed
+signal drop_egg
 
 var dead = false
 var cinematic_pause = false
@@ -57,6 +70,7 @@ var mouse_hide = false
 var rng = RandomNumberGenerator.new()
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	animator.play("mandibledefault")
 	toggle_mouse_mode()
 
 
@@ -134,18 +148,43 @@ func Right():
 	if holding_item == true:
 		holding_item = false
 		animator.play("mandibledefault")
-		var s = seedpod.instance()
-		seed_coord = $centre/Pointer/DebugPointer.global_transform.origin
-		self.add_child(s)
-		s.global_transform.origin = seed_coord
-		s.pollenated = item_pollinated
-		s.alleles = item_gamete
-		s.nutrition = item_nutrition
-		if s.pollenated == true:
-			s.get_pollenated()
-		s.drop_coords = seed_coord
-		s.scale = Vector3(0.15,0.15,0.15)
-		s.reparent()
+		if item_id == "Seed":
+			var s = seedpod.instance()
+			seed_coord = $centre/Pointer/DebugPointer.global_transform.origin
+			self.add_child(s)
+			s.global_transform.origin = seed_coord
+			s.pollenated = item_pollinated
+			s.alleles = item_gamete
+			s.nutrition = item_nutrition
+			if s.pollenated == true:
+				s.get_pollenated()
+			s.drop_coords = seed_coord
+			s.scale = Vector3(0.15,0.15,0.15)
+			s.reparent()
+		if item_id == "Egg":
+			var e = crabegg.instance()
+			seed_coord = $centre/Pointer/DebugPointer.global_transform.origin
+			self.add_child(e)
+			e.global_transform.origin = seed_coord
+			e.nutrition = item_nutrition
+			e.drop_coords = seed_coord
+			e.scale = Vector3(0.3,0.3,0.3)
+			e.viable = viability
+			e.check_viable()
+			e.reparent()
+		if item_id == "Crabmeat":
+			var m = crabmeat.instance()
+			seed_coord = $centre/Pointer/DebugPointer.global_transform.origin
+			self.add_child(m)
+			m.gib_id = gib_id
+			m.global_transform.origin = seed_coord
+			m.nutrition = item_nutrition
+			m.drop_coords = seed_coord
+			m.scale = Vector3(0.3,0.3,0.3)
+			m.reparent()
+			$centre/CrabGib1.visible = false
+			$centre/Crabgib2.visible = false
+			#maybe make a new function that just hides everything?
 		#pollenation, nutrition, and gamete are needed as info
 	#if not carrying seed, nothing, if carrying seed, drop it
 func Eat():
@@ -157,6 +196,8 @@ func Eat():
 		ichor += item_nutrition
 		hunger = false
 		
+		$centre/CrabGib1.visible = false
+		$centre/Crabgib2.visible = false
 	#if carry seed, eat
 
 func handle_death():
@@ -185,6 +226,18 @@ func interaction():
 								elif item_pollinated == false:
 									held_seed.hide_pollen()
 								animator.play("seedhold")
+							elif item_id == "Egg":
+								animator.play("egghold")
+								if pointed_object.viable == false:
+									$centre/egg/yolk.visible = false
+								elif pointed_object.viable == true:
+									$centre/egg/yolk.visible = true
+							elif item_id == "Crabmeat":
+								animator.play("generichold")
+								if pointed_object.gib_id == 'gib1':
+									$centre/CrabGib1.visible = true
+								elif pointed_object.gib_id == 'gib2':
+									$centre/Crabgib2.visible = true
 						elif holding_item == true:
 							print('Picked up seed, genes are: ', item_gamete, ' pollinated is: ', item_pollinated, ' nutrition is: ', item_nutrition)
 		elif not pointed_object.is_in_group("Interactable"):
