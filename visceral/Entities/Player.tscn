@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Textures/RedNoiseFlesh1.tres" type="Material" id=1]
 [ext_resource path="res://Entities/Player.gd" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Textures/eggtransparent.tres" type="Material" id=9]
 [ext_resource path="res://Entities/Components/Crabgib2.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Entities/Components/CrabGib1.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Textures/pinkgreyrock.tres" type="Material" id=12]
 
 [sub_resource type="SphereShape" id=1]
 radius = 0.5
@@ -383,10 +384,14 @@ height = 0.03
 [sub_resource type="BoxShape" id=9]
 extents = Vector3( 0.285561, 0.285298, 0.345304 )
 
+[sub_resource type="SpatialMaterial" id=12]
+flags_transparent = true
+albedo_color = Color( 1, 1, 1, 0 )
+
 [sub_resource type="SphereShape" id=3]
 radius = 0.587959
 
-[node name="Player" type="KinematicBody" groups=["Animal", "Player", "Pollinator", "Predator", "Prey"]]
+[node name="Player" type="KinematicBody" groups=["Animal", "Destructible", "Player", "Pollinator", "Predator", "Prey"]]
 script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
@@ -412,7 +417,7 @@ margin_top = -20.0
 texture = ExtResource( 7 )
 
 [node name="Claw" parent="centre" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28, -0.12, -0.081 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0.28, -0.12, -0.081 )
 
 [node name="Bend" parent="centre/Claw/Arm" index="0"]
 transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, -1.49012e-08, -0.26384 )
@@ -488,6 +493,35 @@ visible = false
 transform = Transform( 1, 0, 0, 0, 0.28965, -0.957133, 0, 0.957133, 0.28965, -0.0268235, -0.0433537, -0.694918 )
 visible = false
 
+[node name="Rock" type="Spatial" parent="centre"]
+transform = Transform( 0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, -0.0958048, -0.78906 )
+visible = false
+
+[node name="CSGCombiner" type="CSGCombiner" parent="centre/Rock"]
+
+[node name="CSGSphere" type="CSGSphere" parent="centre/Rock/CSGCombiner"]
+transform = Transform( 0.8, 0, 0, 0, 1, 0, 0, 0, 0.8, 0, 0, 0 )
+radius = 0.4
+material = ExtResource( 12 )
+
+[node name="Hidden" type="CSGCylinder" parent="centre/Rock/CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.241316, 0 )
+radius = 0.5
+height = 0.4
+material = SubResource( 12 )
+
+[node name="CSGSphere2" type="CSGSphere" parent="centre/Rock/CSGCombiner"]
+transform = Transform( 0.6, 0, 0, 0, 1.1, 0, 0, 0, 0.6, 0, 0, 0.0671593 )
+radius = 0.4
+material = ExtResource( 12 )
+
+[node name="Base" type="CSGCylinder" parent="centre/Rock"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0273526, 0 )
+radius = 0.31
+height = 0.05
+sides = 12
+material = ExtResource( 12 )
+
 [node name="GravCast" type="RayCast" parent="."]
 enabled = true
 cast_to = Vector3( 0, -0.65, 0 )
@@ -502,15 +536,17 @@ wait_time = 0.5
 autostart = true
 
 [node name="HungerTimer" type="Timer" parent="."]
-wait_time = 30.0
+wait_time = 45.0
 autostart = true
 
 [node name="Jump_speed_boost" type="Timer" parent="."]
 one_shot = true
 
 [node name="action_cooldown" type="Timer" parent="."]
-wait_time = 0.4
+wait_time = 0.5
 one_shot = true
+
+[node name="eat_cooldown" type="Timer" parent="."]
 
 [connection signal="body_entered" from="PollenTouch" to="." method="_on_PollenTouch_body_entered"]
 [connection signal="timeout" from="StaminaTimer" to="." method="_on_StaminaTimer_timeout"]

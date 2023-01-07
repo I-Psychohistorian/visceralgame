@@ -1,13 +1,14 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Entities/Components/BugLeg.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Textures/OrangeNoiseFlesh1.tres" type="Material" id=2]
 [ext_resource path="res://Assets/Pollen.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Entities/FlowerBug.gd" type="Script" id=4]
 [ext_resource path="res://Textures/RedNoiseFlesh1.tres" type="Material" id=5]
+[ext_resource path="res://Textures/redanimated.tres" type="Material" id=6]
 
 [sub_resource type="SphereShape" id=1]
-radius = 0.35
+radius = 0.37
 
 [sub_resource type="Animation" id=2]
 resource_name = "Alert"
@@ -167,6 +168,18 @@ tracks/12/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector3( -45, 0, 0 ), Vector3( -15, 0, 0 ) ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("CollisionShape:translation")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0.138834, 0 ) ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -328,6 +341,18 @@ tracks/12/keys = {
 "update": 0,
 "values": [ Vector3( 0, 0, -45 ), Vector3( 0, 0, -3.354 ) ]
 }
+tracks/13/type = "value"
+tracks/13/path = NodePath("CollisionShape:translation")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, -0.227826, 0 ) ]
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "Idle"
@@ -488,6 +513,18 @@ tracks/12/keys = {
 "update": 0,
 "values": [ Vector3( 0, 0, 0 ) ]
 }
+tracks/13/type = "value"
+tracks/13/path = NodePath("CollisionShape:translation")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
 
 [sub_resource type="Animation" id=5]
 length = 0.001
@@ -642,6 +679,18 @@ tracks/12/loop_wrap = true
 tracks/12/imported = false
 tracks/12/enabled = true
 tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("CollisionShape:translation")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
@@ -807,6 +856,18 @@ tracks/12/keys = {
 "update": 0,
 "values": [ Vector3( 0, 0, 0 ) ]
 }
+tracks/13/type = "value"
+tracks/13/path = NodePath("CollisionShape:translation")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
 
 [sub_resource type="Animation" id=7]
 resource_name = "Walk2"
@@ -967,6 +1028,18 @@ tracks/12/keys = {
 "update": 0,
 "values": [ Vector3( 0, 0, 0 ) ]
 }
+tracks/13/type = "value"
+tracks/13/path = NodePath("CollisionShape:translation")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
 
 [sub_resource type="CylinderShape" id=8]
 height = 0.618299
@@ -983,11 +1056,19 @@ radius = 7.08146
 [sub_resource type="SphereShape" id=11]
 radius = 2.37948
 
+[sub_resource type="CylinderShape" id=12]
+height = 0.122579
+radius = 0.532664
+
+[sub_resource type="CylinderShape" id=13]
+height = 0.431455
+radius = 0.229254
+
 [node name="FlowerBug" type="KinematicBody" groups=["Animal", "Buoyant", "Destructible", "Pollinator", "Prey", "SmallBug"]]
 script = ExtResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.6, 0, 0, 0, 1, 0, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 0.4, 0, 0, 0, 1, 0, 0, 0 )
 shape = SubResource( 1 )
 
 [node name="Body" type="Spatial" parent="."]
@@ -1090,6 +1171,12 @@ height = 0.44493
 cone = true
 material = ExtResource( 5 )
 
+[node name="parasite" type="CSGSphere" parent="Body/BodyShape"]
+transform = Transform( 1, 0, 0, 0, 0.195899, 0.402942, 0, -0.0201471, 0.979494, 0, 0.233917, 0.00814275 )
+visible = false
+radius = 0.2
+material = ExtResource( 6 )
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Body"]
 root_node = NodePath("../..")
 anims/Alert = SubResource( 2 )
@@ -1129,10 +1216,10 @@ shape = SubResource( 10 )
 
 [node name="Climb_ray" type="RayCast" parent="."]
 enabled = true
-cast_to = Vector3( 0, -0.4, 0 )
+cast_to = Vector3( 0, -0.6, 0 )
 
 [node name="hunger_timer" type="Timer" parent="."]
-wait_time = 15.0
+wait_time = 60.0
 autostart = true
 
 [node name="idle_vector_timer" type="Timer" parent="."]
@@ -1164,6 +1251,19 @@ shape = SubResource( 11 )
 wait_time = 0.2
 one_shot = true
 
+[node name="wall_detector" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.161576, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="wall_detector"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0231381, 0 )
+shape = SubResource( 12 )
+
+[node name="edge_climber" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="edge_climber"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.176075, 0 )
+shape = SubResource( 13 )
+
 [connection signal="body_entered" from="Eat_distance" to="." method="_on_Eat_distance_body_entered"]
 [connection signal="body_entered" from="Fear_distance" to="." method="_on_Fear_distance_body_entered"]
 [connection signal="timeout" from="hunger_timer" to="." method="_on_hunger_timer_timeout"]
@@ -1175,6 +1275,8 @@ one_shot = true
 [connection signal="body_exited" from="doublefear" to="." method="_on_doublefear_body_exited"]
 [connection signal="timeout" from="gib_timer" to="." method="_on_gib_timer_timeout"]
 [connection signal="timeout" from="bodybreak_timer" to="." method="_on_bodybreak_timer_timeout"]
+[connection signal="body_entered" from="wall_detector" to="." method="_on_wall_detector_body_entered"]
+[connection signal="body_exited" from="wall_detector" to="." method="_on_wall_detector_body_exited"]
 
 [editable path="Body/BugLeg1"]
 [editable path="Body/BugLeg2"]

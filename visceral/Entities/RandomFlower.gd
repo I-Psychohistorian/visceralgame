@@ -95,7 +95,7 @@ func generate_plant():
 	start_rotation = rng.randi_range(0,-360)
 	rotate_y(deg2rad(start_rotation))
 	#for random blooming and wilting time
-	grow_time = rng.randi_range(10,12) #30 and 60
+	grow_time = rng.randi_range(30,60) #30 and 60
 	wilt_time = rng.randi_range(20,40) 
 	#for random genome
 	for allele in gene:
@@ -202,7 +202,7 @@ func release_pollen():
 	var pollen_num = rng.randi_range(2,6)
 	if wilted == true:
 		if release_chance == 0:
-			print("too wilted, no pollen")
+			#print("too wilted, no pollen")
 			pollen_num = 0
 	#print("Pollen number is: ", pollen_num)
 	
@@ -237,12 +237,15 @@ func use():
 				body.stamina += nutrition
 				body.ichor += nutrition
 				body.hunger = false
+				body.hud.notif_text = "food provided nutrition and energy"
+				body.hud.notif_n = String(nutrition)
+				body.hud.notif_ping()
 				body.eat_sounds()
 				release_seed()
 
 func take_damage(damage):
 	ichor -= damage
-	print('plant ouch')
+	#print('plant ouch')
 	if ichor <= 0:
 		release_seed()
 
@@ -311,7 +314,7 @@ func _on_WiltTimer_timeout():
 			second_chance = false
 	elif wilted == true:
 		release_seed()
-	print('wilt timer timeout')
+	#print('wilt timer timeout')
 		#die and release seeds
 
 
@@ -354,3 +357,6 @@ func _on_Stress_timer_timeout():
 		elif allele == "C":
 			stress += 0
 		
+
+
+

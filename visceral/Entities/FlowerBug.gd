@@ -6,6 +6,10 @@ var hungry = false
 
 var sound_type = "meat"
 
+#for test hostile
+var parasitized = false
+
+
 #starting size for creature
 var start_size = 0.3
 var hunger_num = 0
@@ -25,6 +29,8 @@ onready var egg_point = Vector3()
 
 var pollenated = false
 var pollen_gamete = []
+
+var can_climb = true
 
 var moods = ["Idle", "Alert", "Searching", "Scared"]
 var current_mood = "Idle"
@@ -62,6 +68,7 @@ onready var touch = $Eat_distance
 onready var close = $Fear_distance
 
 onready var gib = preload("res://Entities/CrabGib.tscn")
+onready var parasite = preload("res://Entities/CrabParasiteBeta.tscn")
 
 var rng = RandomNumberGenerator.new()
 
@@ -71,6 +78,8 @@ var in_water = false
 var hatched = false
 var start_point = Vector3()
 
+onready var climber = $edge_climber
+
 #gibbing stuff
 var carved = false
 var gibbing = false
@@ -78,6 +87,8 @@ onready var w1 = $Body/BodyShape/Wound1
 onready var w2 = $Body/BodyShape/Wound2
 onready var w3 = $Body/BodyShape/Wound3
 onready var w4 = $Body/BodyShape/Wound4
+
+onready var infection = $Body/BodyShape/parasite
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	rng.randomize()
@@ -85,7 +96,7 @@ func _ready():
 	if phenotype == 4:
 		crest.visible = false
 	viable_offspring = rng.randi_range(3,6)
-	print(start_point)
+	#print(start_point)
 	#print(moods[0])
 	current_mood = moods[0]
 	grow()
@@ -100,19 +111,18 @@ func reparent():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	grav_vec = Vector3()
 	if dead == false:
 		movement()
-		handle_death()
+		handle_death() 
 	if not climb_ray.is_colliding():
 		if in_water == false:
 			grav_vec.y -= gravity
-		if in_water == true:
+		elif in_water == true:
 			grav_vec.y -= (gravity/5)
-	if climb_ray.is_colliding():
-		grav_vec.y = 0
-		if in_water == true:
-			grav_vec.y += 0.1
-	move_and_slide(grav_vec * delta, Vector3.UP)
+	elif climb_ray.is_colliding():
+		pass
+	move_and_slide(grav_vec, Vector3.UP)
 	handle_moods()
 
 func gib():
@@ -130,6 +140,8 @@ func gib():
 			var m = gib.instance()
 			var up_coord = self.global_transform.origin
 			up_coord.y += 0.1
+			if parasitized == true:
+				up_coord.y += 0.3
 			self.add_child(g)
 			g.drop_coords =  up_coord
 			#scale?
@@ -138,6 +150,14 @@ func gib():
 			m.drop_coords = up_coord
 			m.reparent()
 			#scale?
+			if parasitized == true:
+				up_coord.y -= 0.2
+				var p = parasite.instance()
+				self.add_child(p)
+				var para_size = start_size - 0.1
+				p.scale = Vector3(para_size, para_size, para_size)
+				p.start_point = up_coord
+				p.reparent()
 			$bodybreak_timer.start()
 			#sound?
 		
@@ -152,6 +172,8 @@ func movement():
 		speed = 0.6
 	elif ichor <= 10:
 		speed = 0.4
+	if in_water == true:
+		speed += 0.4
 	if current_mood == "Idle":
 		if is_walking == true:
 			direction.x += idle_x
@@ -162,8 +184,6 @@ func movement():
 		move_and_slide(direction * speed, Vector3.UP)
 	if current_mood == "Searching":
 		var target_direction = food_coords - self.global_transform.origin
-		if in_water == true:
-			target_direction.y += 0.1
 		move_and_slide(target_direction * (speed/2), Vector3.UP)
 	if current_mood == "Scared":
 		var run_direction = (fear_coords - self.global_transform.origin)*-1
@@ -185,7 +205,7 @@ func handle_moods():
 		if offspring_counter >= 3:
 			current_mood = moods[1]
 			offspring_counter = 0
-			print('gave birth')
+			#print('gave birth')
 			ichor -= 3 
 			#egg lay sound
 			if laying_egg == false:
@@ -229,17 +249,23 @@ func handle_death():
 		dead = true
 		fertile = false
 		animator.play("Death")
+		climb_ray.enabled = false
+		if parasitized == true:
+			$Body/BodyShape/parasite.visible = true
 
 func take_damage(damage):
+	print('crab got hurt')
 	ichor -= damage
+	if parasitized == true:
+		infection.visible = true
 	if dead == true:
 		gib()
 	#hurt sound
 
 func wash_pollen():
-	print('washed off pollen: ', pollen_gamete)
+	#print('washed off pollen: ', pollen_gamete)
 	pollen_gamete = []
-	print('current pollen is:' , pollen_gamete)
+	#print('current pollen is:' , pollen_gamete)
 	pollenated = false
 	leg_pollen.visible = false
 	body_pollen.visible = false
@@ -258,6 +284,11 @@ func _on_hunger_timer_timeout():
 	elif hungry == true:
 		ichor -= hunger_num
 		pass
+	if dead == false:
+		if parasitized == true:
+			parasitized = false
+			print('cleared parasite')
+			$Body/BodyShape/parasite.visible = false
 
 func _on_idle_vector_timer_timeout():
 	if dead == false:
@@ -339,8 +370,6 @@ func _on_Eat_distance_body_entered(body):
 			body.queue_free()
 			body_pollen.visible = true
 			leg_pollen.visible = true
-	if current_mood == "Idle":
-		is_walking = false
 	if current_mood == "Searching":
 		if body.is_in_group("Plant"):
 			if hungry == true:
@@ -360,11 +389,7 @@ func _on_Eat_distance_body_entered(body):
 				# eat sound
 				$hunger_timer.start()
 				ping_player()
-	if current_mood == "Scared":
-		if body.is_in_group("Pollen"):
-			cornered = false
-		else:
-			cornered = true
+
 
 #this ticks on food and enemy location
 func _on_search_timer_timeout():
@@ -373,10 +398,10 @@ func _on_search_timer_timeout():
 	if current_mood == "Searching":
 		eat_nearby()
 	if player_habituation_counter >= 3:
-		print('Flowerbug habituated to player!')
+		print('Pollen Crab habituated to player!')
 		player_habituation_counter = 0
 		player_friend = true
-	print(current_mood)
+	#print(current_mood)
 	food_seen = false
 	var nearby_entities = sight.get_overlapping_bodies()
 	for food in nearby_entities:
@@ -439,3 +464,20 @@ func _on_gib_timer_timeout():
 
 func _on_bodybreak_timer_timeout():
 	queue_free()
+
+#stops walking into walls
+func _on_wall_detector_body_entered(body):
+	can_climb = false
+	if current_mood == "Scared":
+		if body.is_in_group("Pollen"):
+			cornered = false
+		else:
+			cornered = true
+			print('cornered')
+	#print('bump')
+	if current_mood == "Idle":
+		is_walking = false
+
+
+func _on_wall_detector_body_exited(body):
+	pass

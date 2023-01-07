@@ -19,8 +19,9 @@ margin_right = 40.0
 margin_bottom = 14.0
 
 [node name="Text" type="Label" parent="Centre"]
-margin_right = 40.0
+margin_right = 59.0
 margin_bottom = 14.0
+text = "You died!"
 
 [node name="HUD_info" type="VBoxContainer" parent="."]
 margin_left = 25.0
@@ -29,16 +30,80 @@ margin_right = 65.0
 margin_bottom = 557.0
 
 [node name="Ichor" type="Label" parent="HUD_info"]
-margin_right = 40.0
+margin_right = 598.0
 margin_bottom = 14.0
 
 [node name="Stamina" type="Label" parent="HUD_info"]
 margin_top = 18.0
-margin_right = 40.0
+margin_right = 598.0
 margin_bottom = 32.0
 
 [node name="Misc" type="Label" parent="HUD_info"]
 margin_top = 36.0
-margin_right = 40.0
+margin_right = 598.0
 margin_bottom = 50.0
-text = "hi"
+text = "WASD move, LMB attack, RMB drop held, Q eat held, E to interact, tab to show mouse/menus"
+
+[node name="Menu" type="VBoxContainer" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Exit" type="Button" parent="Menu"]
+margin_right = 77.0
+margin_bottom = 20.0
+text = "Exit Game"
+
+[node name="Load" type="Button" parent="Menu"]
+visible = false
+margin_top = 24.0
+margin_right = 77.0
+margin_bottom = 44.0
+
+[node name="Save" type="Button" parent="Menu"]
+visible = false
+margin_top = 48.0
+margin_right = 77.0
+margin_bottom = 68.0
+
+[node name="Restart" type="Button" parent="Menu"]
+margin_top = 24.0
+margin_right = 77.0
+margin_bottom = 44.0
+text = "Restart"
+
+[node name="Info" type="Button" parent="Menu"]
+visible = false
+margin_top = 96.0
+margin_right = 77.0
+margin_bottom = 116.0
+
+[node name="Upgrades" type="Button" parent="Menu"]
+visible = false
+margin_top = 120.0
+margin_right = 77.0
+margin_bottom = 140.0
+
+[node name="Notification" type="VBoxContainer" parent="."]
+margin_left = 77.0
+margin_top = 323.0
+margin_right = 117.0
+margin_bottom = 363.0
+
+[node name="Number" type="Label" parent="Notification"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+
+[node name="Notification_label" type="Label" parent="Notification"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+
+[node name="notif_time" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[connection signal="pressed" from="Menu/Exit" to="." method="_on_Exit_pressed"]
+[connection signal="pressed" from="Menu/Restart" to="." method="_on_Restart_pressed"]
+[connection signal="timeout" from="notif_time" to="." method="_on_notif_time_timeout"]
