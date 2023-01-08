@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Entities/Components/PinkClaw.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Textures/redanimated.tres" type="Material" id=2]
@@ -7,7 +7,12 @@
 [ext_resource path="res://Entities/AdultWurm.gd" type="Script" id=5]
 [ext_resource path="res://Textures/deepbrownanimated.tres" type="Material" id=6]
 
+[sub_resource type="CapsuleShape" id=22]
+radius = 0.555703
+height = 2.72798
+
 [sub_resource type="CapsuleShape" id=1]
+radius = 0.849715
 height = 1.74407
 
 [sub_resource type="CapsuleShape" id=2]
@@ -15,7 +20,7 @@ radius = 0.553787
 height = 1.14405
 
 [sub_resource type="SphereShape" id=3]
-radius = 1.1
+radius = 1.04785
 
 [sub_resource type="CapsuleShape" id=5]
 radius = 0.157646
@@ -334,10 +339,10 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0, 0.9, 1.2, 1.7, 1.8, 2.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.8, 0.9, 1.2, 1.6, 1.7, 1.8, 2.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector3( 0, 0, 2.72182 ), Vector3( 0, -0.3165, 3.11287 ), Vector3( 0, -0.299352, 2.71174 ), Vector3( 0, -0.406672, 3.07453 ), Vector3( 0, -0.323303, 3.07453 ), Vector3( 0, 0, 2.60694 ) ]
+"values": [ Vector3( 0, 0, 2.72182 ), Vector3( 0, 0.0390583, 2.92315 ), Vector3( 0, -0.0360705, 3.11287 ), Vector3( 0, 0.022098, 2.71174 ), Vector3( 0, -0.124835, 3.00197 ), Vector3( 0, -0.16447, 3.07453 ), Vector3( 0, -0.09699, 3.07453 ), Vector3( 0, 0, 2.60694 ) ]
 }
 tracks/6/type = "value"
 tracks/6/path = NodePath("HindTailCollide:rotation_degrees")
@@ -386,6 +391,20 @@ tracks/9/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector3( -1.77636e-15, 3.27826e-07, 0.786732 ), Vector3( -1.77635e-15, -0.273528, 0.857146 ), Vector3( 4.91776e-09, -0.204307, 0.967154 ), Vector3( 2.8769e-09, 0.0512718, 0.921499 ), Vector3( -1.77636e-15, 3.27826e-07, 0.786732 ) ]
+}
+tracks/10/type = "method"
+tracks/10/path = NodePath(".")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 1.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "get_method_list"
+} ]
 }
 
 [sub_resource type="Animation" id=11]
@@ -502,6 +521,7 @@ tracks/8/keys = {
 [sub_resource type="Animation" id=18]
 resource_name = "Left"
 length = 1.6
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("PinkClaw:rotation_degrees")
 tracks/0/interp = 1
@@ -790,8 +810,9 @@ tracks/6/keys = {
 [sub_resource type="BoxShape" id=13]
 extents = Vector3( 0.611238, 0.593608, 0.939286 )
 
-[sub_resource type="SphereShape" id=14]
-radius = 8.74146
+[sub_resource type="CapsuleShape" id=20]
+radius = 12.6127
+height = 10.916
 
 [sub_resource type="CapsuleShape" id=15]
 radius = 3.0
@@ -827,7 +848,14 @@ tracks/0/keys = {
 "values": [ Vector3( 0, 0, -1.64584 ) ]
 }
 
-[node name="AdultWurm" type="KinematicBody"]
+[sub_resource type="BoxShape" id=21]
+extents = Vector3( 0.243, 1, 12 )
+
+[sub_resource type="CylinderShape" id=23]
+height = 0.458266
+radius = 0.840808
+
+[node name="AdultWurm" type="KinematicBody" groups=["Predator"]]
 collision_layer = 3
 collision_mask = 3
 script = ExtResource( 5 )
@@ -873,6 +901,13 @@ radius = 0.127124
 height = 0.8
 cone = true
 material = ExtResource( 4 )
+
+[node name="TailWhip" type="Area" parent="Body/Tail/juveniletail/CSGSphere"]
+transform = Transform( 1, 0, -2.84217e-14, 0, 1, 0, -4.44089e-16, 0, 1, 9.4895e-08, 0, 0.419588 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Body/Tail/juveniletail/CSGSphere/TailWhip"]
+transform = Transform( 1, 0, -1.77636e-15, 0, 1, 0, 0, 0, 0.1, 0, 0, 0 )
+shape = SubResource( 22 )
 
 [node name="PinkClaw" parent="Body/Tail/juveniletail" instance=ExtResource( 1 )]
 transform = Transform( 2, 6.77626e-21, 2.13163e-14, 0, -2, 1.20797e-07, 1.77636e-15, -3.01992e-07, -0.8, -3.0362e-08, 0, -0.150843 )
@@ -993,13 +1028,13 @@ cone = true
 material = ExtResource( 4 )
 
 [node name="PinkClaw" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1.15911, -0.268973, 0.129409, 0, 0.6, 0.866025, -0.310583, -1.00382, 0.482963, -1.05, 0, 0 )
+transform = Transform( 1.15911, -0.268973, 0.129409, 0, 0.6, 0.866025, -0.310583, -1.00382, 0.482963, -1.05, -0.3, 0 )
 
 [node name="Bend" parent="PinkClaw/Arm" index="0"]
 transform = Transform( 1.00218, 0, 0, 0, 1.0586, 0.459409, 0, -0.733418, 0.6631, 1.19209e-07, 1.2666e-07, -0.26384 )
 
 [node name="PinkClaw2" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1.15911, 0.268973, -0.129409, 0, 0.6, 0.866025, 0.310583, -1.00382, 0.482963, 1.05, 0, 0 )
+transform = Transform( 1.15911, 0.268973, -0.129409, 0, 0.6, 0.866025, 0.310583, -1.00382, 0.482963, 1.05, -0.3, 0 )
 
 [node name="Bend" parent="PinkClaw2/Arm" index="0"]
 transform = Transform( 1.00092, 0, 0, 0, 1.02309, 0.466979, 0, -0.708818, 0.674026, 1.19209e-07, 1.49012e-08, -0.26384 )
@@ -1048,6 +1083,8 @@ anims/RESET = SubResource( 9 )
 
 [node name="stab_zone" type="Area" parent="TongueCollide"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00484902, -1.19602 )
+collision_layer = 5
+collision_mask = 5
 
 [node name="CollisionShape" type="CollisionShape" parent="TongueCollide/stab_zone"]
 shape = SubResource( 6 )
@@ -1061,17 +1098,24 @@ anims/Right = SubResource( 19 )
 
 [node name="OptimalEat" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.973885 )
+collision_layer = 5
+collision_mask = 5
 
 [node name="CollisionShape" type="CollisionShape" parent="OptimalEat"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.864778 )
 shape = SubResource( 13 )
 
 [node name="Sight" type="Area" parent="."]
+collision_layer = 5
+collision_mask = 5
 
 [node name="CollisionShape" type="CollisionShape" parent="Sight"]
-shape = SubResource( 14 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.16414 )
+shape = SubResource( 20 )
 
 [node name="CloseRange" type="Area" parent="."]
+collision_layer = 5
+collision_mask = 5
 
 [node name="CollisionShape" type="CollisionShape" parent="CloseRange"]
 shape = SubResource( 15 )
@@ -1079,6 +1123,49 @@ shape = SubResource( 15 )
 [node name="MouthAnimation" type="AnimationPlayer" parent="."]
 anims/Open = SubResource( 16 )
 anims/RESET = SubResource( 17 )
+
+[node name="FacingAreas" type="Spatial" parent="."]
+
+[node name="Facing" type="Area" parent="FacingAreas"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12 )
+collision_layer = 5
+collision_mask = 5
+
+[node name="CollisionShape" type="CollisionShape" parent="FacingAreas/Facing"]
+shape = SubResource( 21 )
+
+[node name="Back" type="Area" parent="FacingAreas"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 11.3428 )
+collision_layer = 7
+collision_mask = 7
+
+[node name="CollisionShape" type="CollisionShape" parent="FacingAreas/Back"]
+shape = SubResource( 21 )
+
+[node name="Carrot" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2 )
+
+[node name="attack_delay" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="scan_delay" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[node name="movechoose" type="Timer" parent="scan_delay"]
+wait_time = 0.2
+one_shot = true
+
+[node name="lowerbodycollision" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, -0.709997, 0.662549 )
+shape = SubResource( 23 )
+
+[connection signal="body_entered" from="OptimalEat" to="." method="_on_OptimalEat_body_entered"]
+[connection signal="body_entered" from="Sight" to="." method="_on_Sight_body_entered"]
+[connection signal="body_entered" from="FacingAreas/Facing" to="." method="_on_Facing_body_entered"]
+[connection signal="body_exited" from="FacingAreas/Back" to="." method="_on_Back_body_exited"]
+[connection signal="timeout" from="scan_delay" to="." method="_on_scan_delay_timeout"]
+[connection signal="timeout" from="scan_delay/movechoose" to="." method="_on_movechoose_timeout"]
 
 [editable path="PinkClaw"]
 [editable path="PinkClaw2"]

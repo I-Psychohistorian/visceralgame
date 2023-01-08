@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Terrain/SmallPool.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Entities/RandomFlower.tscn" type="PackedScene" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://Textures/pinkerflesh.tres" type="Material" id=12]
 [ext_resource path="res://Entities/CrabParasiteBeta.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Entities/signal emitters/gene_override.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Entities/AdultWurm.tscn" type="PackedScene" id=15]
 
 [sub_resource type="SpatialMaterial" id=4]
 flags_transparent = true
@@ -162,6 +163,19 @@ invert_faces = true
 radius = 2.099
 material = ExtResource( 8 )
 
+[node name="Hall3" type="CSGCylinder" parent="CSGCombiner"]
+transform = Transform( 1.08169, 0, -0.976319, 0, 1, 0, 4.88159, 0, 0.216337, 8.88176, 0.461483, 4.12037 )
+invert_faces = true
+height = 1.2
+material = ExtResource( 8 )
+
+[node name="wurmroom" type="CSGCylinder" parent="CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1.5, 9.5057, 2.37712, 32.3031 )
+invert_faces = true
+radius = 16.8675
+height = 6.04211
+material = ExtResource( 8 )
+
 [node name="PlantController" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.667624, 0 )
 
@@ -197,6 +211,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.03731, -1.33087, -3.19943 )
 
 [node name="RandomFlower5" parent="PlantController" instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.7311, -0.591877, 0.830201 )
+
+[node name="AdultWurm" parent="PlantController" instance=ExtResource( 15 )]
+transform = Transform( 0.0372541, 0, 0.999306, 0, 1, 0, -0.999306, 0, 0.0372541, 9.50243, -0.32138, 41.9018 )
 
 [node name="Sky" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 14.732, 11.8457, 0.277015 )

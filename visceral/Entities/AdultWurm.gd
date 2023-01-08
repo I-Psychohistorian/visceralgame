@@ -4,12 +4,51 @@ extends KinematicBody
 var ichor = 50
 var stress = 0
 var hungry = false
+var dead = false
 
 var sound_type = "meat"
 
 var chlidren_nearby = false
-var states = ['Lurking', 'Wandering', 'Attacking', 'Turning', 'Birthing']
+var states = ['Lurking', 'Moving', 'Attacking', 'Turning', 'Birthing']
+var current_state = 'Moving'
 
+#movement
+var gravity = 1
+var grav_vec = Vector3()
+var speed = 1
+#where target is spawned
+var target_vec = Vector3()
+var target_seen = false
+
+var aggro = true
+
+var rotate_degree = 2
+
+var moving_at_all = false
+var moving_forward = false
+var turning_left = false
+var turning_right = false
+var climbing = false
+
+
+onready var carrot = $Carrot
+onready var point = Vector3()
+
+onready var last_seen = preload("res://Entities/signal emitters/Wurm_target.tscn")
+
+#gaze stuff
+onready var sense_range = $Sight
+onready var nearby = $CloseRange
+onready var tongue_target_area = $OptimalEat
+
+onready var forward_gaze = $FacingAreas/Facing
+onready var backwards_turn_line
+
+var in_left = false
+var in_right = false
+var facing_target = false
+
+var tongue_target = Vector3()
 
 #wound shorthand
 onready var w1 = $Body/Wound1
@@ -32,5 +71,138 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	if dead == false:
+		movement()
+		#movement
+		
+	#gravity
+	if not is_on_floor():
+		grav_vec = Vector3()
+		grav_vec.y -= gravity
+		#move_and_slide(grav_vec - global_transform.origin, Vector3.UP)
+
+
+func movement():
+	if current_state == 'Moving':
+		if moving_at_all == true:
+			if moving_forward == true:
+				point = carrot.global_transform.origin
+				var move = point - self.global_transform.origin
+				move_and_slide(move * speed, Vector3.UP)
+			elif turning_left == true:
+				self.rotate_y(-0.01)
+			elif turning_right == true:
+				self.rotate_y(0.01)
+
+func scan():
+	var sight = sense_range.get_overlapping_bodies()
+	if target_seen == false:
+		for thing in sight:
+			if thing.is_in_group('Parasite'):
+				set_target(thing)
+				target_seen = true
+			elif thing.is_in_group('Prey'):
+				set_target(thing)
+				target_seen = true
+
+func set_target(target):
+	target_vec = target.global_transform.origin
+	var l = last_seen.instance()
+	self.add_child(l)
+	l.drop_coords = target_vec
+	l.reparent()
+	
+func choose_move_action():
+	#dir_chosen terminates loop to avoid confusion over multiple targets
+	var dir_chosen = false
+	var sight = sense_range.get_overlapping_bodies()
+	for i in sight:
+		if i.is_in_group("wurm_target"):
+			#i.print_location()
+			if dir_chosen == false:
+				var t_calc = self.global_transform.origin.x - i.global_transform.origin.x
+				print('t_calc is ', t_calc)
+				if i.global_transform.origin.x == 0:
+					dir_chosen = true
+					print('target is at 0')
+				elif t_calc <= 0:
+					moving_forward = false
+					turning_left = true
+					turning_right = false
+					dir_chosen = true
+					$GrossBodyAnimation.play("Left")
+				elif t_calc > 0:
+					moving_forward = false
+					turning_right = true
+					turning_left = false
+					dir_chosen = true
+					$GrossBodyAnimation.play("Right")
+				if i.is_in_group('wurm_target'):
+					var in_front = forward_gaze.get_overlapping_bodies()
+					for b in in_front:
+						if b.is_in_group('wurm_target'):
+							moving_forward = true
+							turning_left = false
+							turning_right = false
+							dir_chosen = true
+							$GrossBodyAnimation.play("Forward")
+				#temp till I figure out having animations trigger the boolean toggle
+				moving_at_all = true
+	print('forward is ', moving_forward, ', left is ', turning_left, ", right is ", turning_right)
+
+func clear_move():
+	$GrossBodyAnimation.play("IdlePose")
+	moving_at_all = false
+
+func toggle_moving():
+	if moving_at_all == false:
+		moving_at_all = true
+	elif moving_at_all == true:
+		moving_at_all = false
+	print('movement toggled ', moving_at_all)
+func _on_scan_delay_timeout():
+	clear_move()
+	target_seen = false
+	scan()
+	$scan_delay/movechoose.start()
+
+
+func _on_OptimalEat_body_entered(body):
+	pass # Replace with function body.
+
+
+
+
+func _on_Sight_body_entered(body):
+	pass
+	#print(body)
+
+
+func _on_movechoose_timeout():
+	choose_move_action()
+
+#keeps wurm from spinning endlessly
+func _on_Facing_body_entered(body):
+	#will swap to current_state "Moving
+	if current_state == "Moving":
+		if body.is_in_group('wurm_target'):
+			turning_right = false
+			turning_left = false
+			moving_forward = true
+			$GrossBodyAnimation.play("Forward")
+
+
+func _on_Back_body_exited(body):
+	#will swap to current_state "Moving"
+	if current_state == "Moving":
+		if body.is_in_group('wurm_target'):
+			if turning_right == true:
+				turning_right = false
+				turning_left = true
+				$GrossBodyAnimation.play("Left")
+			elif turning_left == false:
+				turning_right = true
+				turning_left = false
+				$GrossBodyAnimation.play("Right")
+			
