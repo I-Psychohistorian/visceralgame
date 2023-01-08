@@ -11,6 +11,10 @@ var claws = 5
 var hunger = false
 var death_type = "blank"
 
+var hunger_time = 45
+var hunger_rate = 4
+var cant_eat = false
+
 #for test hostile
 var parasitized = false
 
@@ -29,6 +33,7 @@ onready var seedpod = preload("res://Assets/RigidSeed.tscn")
 onready var crabegg = preload("res://Entities/PollinatorEgg.tscn")
 onready var crabmeat = preload("res://Entities/CrabGib.tscn")
 onready var rock = preload("res://Entities/MoveableRock.tscn")
+onready var spore = preload("res://Entities/PoisonSporeKinematic.tscn")
 
 var pollenated = false
 var pollen_gamete = []
@@ -74,6 +79,9 @@ var mouse_hide = false
 
 var rng = RandomNumberGenerator.new()
 # Called when the node enters the scene tree for the first time.
+
+
+
 func _ready():
 	hud.flavor_text.hide()
 	animator.play("mandibledefault")
@@ -137,7 +145,7 @@ func Left():
 	cooldown_timer.start()
 	if holding_item == false:
 		var targets = $centre/attack_area.get_overlapping_bodies()
-		print(targets)
+		#print(targets)
 		for target in targets:
 			if target.is_in_group('Destructible'):
 				target.take_damage(claws)
@@ -199,6 +207,18 @@ func Right():
 			r.drop_coords = seed_coord
 			r.reparent()
 			$centre/Rock.visible = false
+		if item_id == "Spore":
+			var s = spore.instance()
+			seed_coord = $centre/Pointer/DebugPointer.global_transform.origin
+			self.add_child(s)
+			var x = rng.randf_range(.8, 1)
+			var y = rng.randf_range(.8, 1)
+			var z = rng.randf_range(.8, 1)
+			s.scale = Vector3(x, y, z)
+			s.global_transform.origin = seed_coord
+			s.start_coord = seed_coord
+			s.reparent()
+			$centre/PoisonSpore.visible = false
 			#maybe make a new function that just hides everything?
 		#pollenation, nutrition, and gamete are needed as info
 	#if not carrying seed, nothing, if carrying seed, drop it
@@ -209,20 +229,37 @@ func Eat():
 			hud.notif_text = "You can't eat rocks!"
 			hud.notif_ping()
 		else:
-			holding_item = false
-			#eat animation?
-			animator.play("mandibledefault")
-			ichor += item_nutrition
-			hunger = false
-			hud.notif_text = "food provided nutrition"
-			hud.notif_n = String(item_nutrition)
-			hud.notif_ping()
-		
-			$centre/CrabGib1.visible = false
-			$centre/Crabgib2.visible = false
+			if cant_eat == false:
+				holding_item = false
+				#eat animation?
+				animator.play("mandibledefault")
+				ichor += item_nutrition
+				hunger = false
+				if item_id == "Spore":
+					hud.notif_text = "you are poisoned, but at least no longer hungry"
+					hud.notif_n = String(item_nutrition)
+				else:
+					hud.notif_text = "food provided nutrition"
+					hud.notif_n = String(item_nutrition)
+				hud.notif_ping()
+				slow_eating()
+				$centre/CrabGib1.visible = false
+				$centre/Crabgib2.visible = false
+				$centre/PoisonSpore.visible = false
+			elif cant_eat == true:
+				hud.notif_text = "You can't eat just yet"
+				hud.notif_ping()
 	#if carry seed, eat
 
+func slow_eating():
+	cant_eat = true
+	$eat_cooldown.start()
+	print('eat cooldown')
+
 func handle_death():
+	if ichor >= 100:
+		hud.flavor_text.text = "You have become healthy enough to reproduce, you win!"
+		hud.flavor_text.show()
 	if ichor < 0:
 		if dead == false:
 			toggle_mouse_mode()
@@ -246,28 +283,37 @@ func interaction():
 						if holding_item == false:
 							pointed_object.use()
 							if item_id == "Seed":
-								if item_pollinated == true:
-									held_seed.show_pollen()
-								elif item_pollinated == false:
-									held_seed.hide_pollen()
+								if holding_item == true:
+									if item_pollinated == true:
+										held_seed.show_pollen()
+									elif item_pollinated == false:
+										held_seed.hide_pollen()
 								animator.play("seedhold")
 							elif item_id == "Egg":
-								animator.play("egghold")
-								if pointed_object.viable == false:
-									$centre/egg/yolk.visible = false
-								elif pointed_object.viable == true:
-									$centre/egg/yolk.visible = true
+								if holding_item == true:
+									animator.play("egghold")
+									if pointed_object.viable == false:
+										$centre/egg/yolk.visible = false
+									elif pointed_object.viable == true:
+										$centre/egg/yolk.visible = true
 							elif item_id == "Crabmeat":
-								animator.play("generichold")
-								if pointed_object.gib_id == 'gib1':
-									$centre/CrabGib1.visible = true
-								elif pointed_object.gib_id == 'gib2':
-									$centre/Crabgib2.visible = true
+								if holding_item == true:
+									animator.play("generichold")
+									if pointed_object.gib_id == 'gib1':
+										$centre/CrabGib1.visible = true
+									elif pointed_object.gib_id == 'gib2':
+										$centre/Crabgib2.visible = true
 							elif item_id == "Rock":
-								animator.play("generichold")
-								$centre/Rock.visible = true
-								hud.notif_text = "Holding rocks is tiring!"
-								hud.notif_ping()
+								if holding_item == true:
+									animator.play("generichold")
+									$centre/Rock.visible = true
+									hud.notif_text = "Holding rocks is tiring!"
+									hud.notif_ping()
+							elif item_id == "Spore":
+								if holding_item == true:
+									animator.play("sporehold")
+									$centre/PoisonSpore.visible = true
+									
 						elif holding_item == true:
 							print('Picked up seed, genes are: ', item_gamete, ' pollinated is: ', item_pollinated, ' nutrition is: ', item_nutrition)
 		elif not pointed_object.is_in_group("Interactable"):
@@ -349,7 +395,7 @@ func _on_HungerTimer_timeout():
 		hud.notif_ping()
 	elif hunger == true:
 		ichor -= 4
-		print('starving')
+		#print('starving')
 		hud.notif_text = "You are getting weaker"
 		hud.notif_ping()
 
@@ -363,3 +409,9 @@ func _on_action_cooldown_timeout():
 
 
 
+
+
+func _on_eat_cooldown_timeout():
+	cant_eat = false
+	hud.notif_text = "You can eat again"
+	hud.notif_ping()

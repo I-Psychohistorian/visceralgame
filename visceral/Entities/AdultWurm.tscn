@@ -828,6 +828,8 @@ tracks/0/keys = {
 }
 
 [node name="AdultWurm" type="KinematicBody"]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource( 5 )
 
 [node name="Body" type="CSGSphere" parent="."]
@@ -843,7 +845,7 @@ cone = true
 material = ExtResource( 2 )
 
 [node name="Tail" type="CSGSphere" parent="Body"]
-transform = Transform( 1, 0, -4.47035e-08, 0, 1, 0, 2.98023e-08, 0, 1.5, 0, 0, 1.01206 )
+transform = Transform( 1, 0, -4.47036e-08, 0, 1, 0, 2.98024e-08, 0, 1.5, 0, 0, 1.01206 )
 material = ExtResource( 3 )
 
 [node name="juveniletail" type="Spatial" parent="Body/Tail"]
@@ -994,7 +996,7 @@ material = ExtResource( 4 )
 transform = Transform( 1.15911, -0.268973, 0.129409, 0, 0.6, 0.866025, -0.310583, -1.00382, 0.482963, -1.05, 0, 0 )
 
 [node name="Bend" parent="PinkClaw/Arm" index="0"]
-transform = Transform( 1.00218, 0, 0, 0, 1.0586, 0.459409, 0, -0.733416, 0.6631, 1.19209e-07, 1.2666e-07, -0.26384 )
+transform = Transform( 1.00218, 0, 0, 0, 1.0586, 0.459409, 0, -0.733418, 0.6631, 1.19209e-07, 1.2666e-07, -0.26384 )
 
 [node name="PinkClaw2" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1.15911, 0.268973, -0.129409, 0, 0.6, 0.866025, 0.310583, -1.00382, 0.482963, 1.05, 0, 0 )
@@ -1018,24 +1020,24 @@ transform = Transform( 1, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 0, 0, 0 )
 shape = SubResource( 5 )
 
 [node name="Spike" type="CSGCylinder" parent="TongueCollide"]
-transform = Transform( -1, -1.50996e-07, 6.60024e-15, 0, -4.37114e-08, -1, 1.50996e-07, -1, 4.37114e-08, 0, 0, -1.05554 )
+transform = Transform( -1, 8.74228e-08, -3.82137e-15, 0, -4.37114e-08, -1, -8.74228e-08, -1, 4.37114e-08, 0, 0, -1.05554 )
 radius = 0.1
 height = 0.7
 cone = true
 material = ExtResource( 2 )
 
 [node name="Section1" type="CSGSphere" parent="TongueCollide/Spike"]
-transform = Transform( -1, -6.99382e-07, -1.50996e-07, -1.74846e-07, 4, -8.63737e-15, 1.50996e-07, 7.10543e-14, -1, 5.57031e-08, -0.637169, -1.39698e-09 )
+transform = Transform( -1, -6.99384e-07, -1.50996e-07, -1.74846e-07, 4, -8.6374e-15, 1.50996e-07, 7.10544e-14, -1, 5.57031e-08, -0.637169, -1.39698e-09 )
 radius = 0.12
 material = ExtResource( 2 )
 
 [node name="Section2" type="CSGSphere" parent="TongueCollide/Spike"]
-transform = Transform( -1, -6.99382e-07, -1.50996e-07, -1.74846e-07, 4, -8.63736e-15, 1.50996e-07, 7.10543e-14, -1, 1.0879e-07, -1.24441, 0 )
+transform = Transform( -1, -6.99384e-07, -1.50996e-07, -1.74846e-07, 4, -8.6374e-15, 1.50996e-07, 7.10544e-14, -1, 1.0879e-07, -1.24441, 0 )
 radius = 0.12
 material = ExtResource( 2 )
 
 [node name="Section3" type="CSGSphere" parent="TongueCollide/Spike"]
-transform = Transform( -1, -6.99382e-07, -1.50996e-07, -1.74846e-07, 4, -1.57428e-14, 1.50996e-07, 4.26326e-14, -1, 1.57893e-07, -1.80608, 2.45515e-08 )
+transform = Transform( -1, -6.99384e-07, -1.50996e-07, -1.74846e-07, 4, -1.57428e-14, 1.50996e-07, 4.26328e-14, -1, 1.57893e-07, -1.80608, 2.45515e-08 )
 radius = 0.12
 material = ExtResource( 2 )
 

@@ -9,10 +9,12 @@ var sound_type = "meat"
 #for test hostile
 var parasitized = false
 
+var crested = true
 
 #starting size for creature
 var start_size = 0.3
-var hunger_num = 0
+#.3 by default
+var hunger_num = 1
 
 var direction = Vector3()
 var grav_vec = Vector3()
@@ -89,18 +91,22 @@ onready var w3 = $Body/BodyShape/Wound3
 onready var w4 = $Body/BodyShape/Wound4
 
 onready var infection = $Body/BodyShape/parasite
+
+onready var crestlosstimer = $crestloss
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	rng.randomize()
 	var phenotype = rng.randi_range(1,4)
 	if phenotype == 4:
 		crest.visible = false
+		crested = false
 	viable_offspring = rng.randi_range(3,6)
 	#print(start_point)
 	#print(moods[0])
 	current_mood = moods[0]
 	grow()
 	animator.play_backwards("Death")
+	#uncrested crabs are more parasite resistant
 
 func reparent():
 	var newparent = get_parent().get_parent()
@@ -138,6 +144,7 @@ func gib():
 			gibbing = true
 			var g = gib.instance()
 			var m = gib.instance()
+			var big = gib.instance()
 			var up_coord = self.global_transform.origin
 			up_coord.y += 0.1
 			if parasitized == true:
@@ -149,6 +156,10 @@ func gib():
 			self.add_child(m)
 			m.drop_coords = up_coord
 			m.reparent()
+			if start_size >= 0.4:
+				self.add_child(big)
+				big.drop_coords = up_coord
+				big.reparent()
 			#scale?
 			if parasitized == true:
 				up_coord.y -= 0.2
@@ -156,6 +167,7 @@ func gib():
 				self.add_child(p)
 				var para_size = start_size - 0.1
 				p.scale = Vector3(para_size, para_size, para_size)
+				p.ichor += hunger_num
 				p.start_point = up_coord
 				p.reparent()
 			$bodybreak_timer.start()
@@ -286,9 +298,13 @@ func _on_hunger_timer_timeout():
 		pass
 	if dead == false:
 		if parasitized == true:
-			parasitized = false
-			print('cleared parasite')
-			$Body/BodyShape/parasite.visible = false
+			if crested == false:
+				ichor -= 1
+				parasitized = false
+				print('cleared parasite')
+				$Body/BodyShape/parasite.visible = false
+	if dead == true:
+		gib()
 
 func _on_idle_vector_timer_timeout():
 	if dead == false:
@@ -370,6 +386,10 @@ func _on_Eat_distance_body_entered(body):
 			body.queue_free()
 			body_pollen.visible = true
 			leg_pollen.visible = true
+	if body.is_in_group("Spore"):
+		if parasitized == false:
+			parasitized = true
+			body.queue_free()
 	if current_mood == "Searching":
 		if body.is_in_group("Plant"):
 			if hungry == true:
@@ -473,7 +493,7 @@ func _on_wall_detector_body_entered(body):
 			cornered = false
 		else:
 			cornered = true
-			print('cornered')
+			#print('cornered')
 	#print('bump')
 	if current_mood == "Idle":
 		is_walking = false
@@ -481,3 +501,9 @@ func _on_wall_detector_body_entered(body):
 
 func _on_wall_detector_body_exited(body):
 	pass
+
+
+func _on_crestloss_timeout():
+	print('because parent was crestless, child became crestless')
+	crest.visible = false
+	crested = false

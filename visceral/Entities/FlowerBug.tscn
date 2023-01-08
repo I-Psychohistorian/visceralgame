@@ -1065,6 +1065,8 @@ height = 0.431455
 radius = 0.229254
 
 [node name="FlowerBug" type="KinematicBody" groups=["Animal", "Buoyant", "Destructible", "Pollinator", "Prey", "SmallBug"]]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
@@ -1199,16 +1201,22 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.164834, 0.034679, 0.193326 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.135242, -0.0537499, -0.204157 )
 
 [node name="Eat_distance" type="Area" parent="."]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="Eat_distance"]
 shape = SubResource( 8 )
 
 [node name="Sight_Distance" type="Area" parent="."]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="Sight_Distance"]
 shape = SubResource( 9 )
 
 [node name="Fear_distance" type="Area" parent="."]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="Fear_distance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00702071, 0 )
@@ -1264,6 +1272,9 @@ shape = SubResource( 12 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.176075, 0 )
 shape = SubResource( 13 )
 
+[node name="crestloss" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="body_entered" from="Eat_distance" to="." method="_on_Eat_distance_body_entered"]
 [connection signal="body_entered" from="Fear_distance" to="." method="_on_Fear_distance_body_entered"]
 [connection signal="timeout" from="hunger_timer" to="." method="_on_hunger_timer_timeout"]
@@ -1277,6 +1288,7 @@ shape = SubResource( 13 )
 [connection signal="timeout" from="bodybreak_timer" to="." method="_on_bodybreak_timer_timeout"]
 [connection signal="body_entered" from="wall_detector" to="." method="_on_wall_detector_body_entered"]
 [connection signal="body_exited" from="wall_detector" to="." method="_on_wall_detector_body_exited"]
+[connection signal="timeout" from="crestloss" to="." method="_on_crestloss_timeout"]
 
 [editable path="Body/BugLeg1"]
 [editable path="Body/BugLeg2"]

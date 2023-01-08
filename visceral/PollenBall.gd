@@ -89,4 +89,7 @@ func reparent():
 
 func _on_report_timeout():
 	#print('gamete is ', gamete)
-	pass
+	if impulsed == true:
+		impulsed = false
+	elif impulsed == false:
+		impulsed = true

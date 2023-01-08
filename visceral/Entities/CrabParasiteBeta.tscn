@@ -5,7 +5,7 @@
 [ext_resource path="res://Textures/chunkyredblack.tres" type="Material" id=3]
 
 [sub_resource type="SphereShape" id=1]
-radius = 0.4
+radius = 0.45
 
 [sub_resource type="CapsuleShape" id=2]
 radius = 0.1
@@ -1188,6 +1188,13 @@ shape = SubResource( 30 )
 [node name="deathtime" type="Timer" parent="."]
 one_shot = true
 
+[node name="Sporepoint" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.572282, 0 )
+
+[node name="DecayTimer" type="Timer" parent="."]
+wait_time = 15.0
+autostart = true
+
 [connection signal="body_entered" from="Clawunit/Darkclaw1/Arm/Bend/Point/pokebox" to="." method="_on_pokebox_body_entered"]
 [connection signal="body_entered" from="Clawunit2/Darkclaw1/Arm/Bend/Point/pokebox2" to="." method="_on_pokebox2_body_entered"]
 [connection signal="body_entered" from="Clawunit3/Darkclaw1/Arm/Bend/Point/pokebox3" to="." method="_on_pokebox3_body_entered"]
@@ -1206,6 +1213,7 @@ one_shot = true
 [connection signal="timeout" from="Legtime" to="." method="_on_Legtime_timeout"]
 [connection signal="body_exited" from="Aggro_out" to="." method="_on_Aggro_out_body_exited"]
 [connection signal="timeout" from="deathtime" to="." method="_on_deathtime_timeout"]
+[connection signal="timeout" from="DecayTimer" to="." method="_on_DecayTimer_timeout"]
 
 [editable path="Clawunit/Darkclaw1"]
 [editable path="Clawunit2/Darkclaw1"]

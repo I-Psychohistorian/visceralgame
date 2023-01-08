@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Textures/RedNoiseFlesh1.tres" type="Material" id=1]
 [ext_resource path="res://Entities/Player.gd" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Entities/Components/Crabgib2.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Entities/Components/CrabGib1.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Textures/pinkgreyrock.tres" type="Material" id=12]
+[ext_resource path="res://Assets/PoisonSpore.tscn" type="PackedScene" id=13]
 
 [sub_resource type="SphereShape" id=1]
 radius = 0.5
@@ -94,6 +95,30 @@ tracks/5/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ true ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("PoisonSpore:translation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -0.0396186, -0.119894, -0.604228 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("PoisonSpore:scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 1, 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -377,6 +402,58 @@ tracks/3/keys = {
 "values": [ false ]
 }
 
+[sub_resource type="Animation" id=13]
+resource_name = "sporehold"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Claw:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 15.162, -61.906 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Claw2:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 1.1627, -6.82541, 47.2618 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("PoisonSpore:translation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -0.0516192, -0.154618, -0.739775 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("PoisonSpore:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 1, 1, 1 ), Vector3( 1, 0.8, 1 ), Vector3( 1, 1, 1 ) ]
+}
+
 [sub_resource type="SphereMesh" id=8]
 radius = 0.015
 height = 0.03
@@ -450,6 +527,7 @@ anims/egghold = SubResource( 10 )
 anims/generichold = SubResource( 11 )
 anims/mandibledefault = SubResource( 6 )
 anims/seedhold = SubResource( 7 )
+anims/sporehold = SubResource( 13 )
 
 [node name="Seed" parent="centre" instance=ExtResource( 5 )]
 transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.0273798, -0.118556, -0.774649 )
@@ -460,11 +538,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0325747, -0.130425, -0.7861
 
 [node name="white" type="CSGSphere" parent="centre/egg"]
 transform = Transform( 1, 0, 0, 0, 0.7, 0, 0, 0, 1, 0, 0, 0 )
+visible = false
 radius = 0.11
 material = ExtResource( 9 )
 
 [node name="yolk" type="CSGSphere" parent="centre/egg"]
 transform = Transform( 1, 0, 0, 0, 0.7, 0, 0, 0, 1, 0, 0, 0 )
+visible = false
 radius = 0.06
 material = ExtResource( 8 )
 
@@ -472,6 +552,7 @@ material = ExtResource( 8 )
 transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 1, 0, -0.1, -0.541 )
 enabled = true
 cast_to = Vector3( 0, 0, -0.45 )
+collision_mask = 3
 
 [node name="DebugPointer" type="MeshInstance" parent="centre/Pointer"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.424928 )
@@ -522,6 +603,10 @@ height = 0.05
 sides = 12
 material = ExtResource( 12 )
 
+[node name="PoisonSpore" parent="centre" instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0396186, -0.119894, -0.604228 )
+visible = false
+
 [node name="GravCast" type="RayCast" parent="."]
 enabled = true
 cast_to = Vector3( 0, -0.65, 0 )
@@ -547,12 +632,15 @@ wait_time = 0.5
 one_shot = true
 
 [node name="eat_cooldown" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
 
 [connection signal="body_entered" from="PollenTouch" to="." method="_on_PollenTouch_body_entered"]
 [connection signal="timeout" from="StaminaTimer" to="." method="_on_StaminaTimer_timeout"]
 [connection signal="timeout" from="HungerTimer" to="." method="_on_HungerTimer_timeout"]
 [connection signal="timeout" from="Jump_speed_boost" to="." method="_on_Jump_speed_boost_timeout"]
 [connection signal="timeout" from="action_cooldown" to="." method="_on_action_cooldown_timeout"]
+[connection signal="timeout" from="eat_cooldown" to="." method="_on_eat_cooldown_timeout"]
 
 [editable path="centre/Claw"]
 [editable path="centre/Claw2"]

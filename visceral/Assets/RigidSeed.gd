@@ -12,7 +12,7 @@ var item_id = "Seed"
 var interact_label = "Press E to take seed"
 
 var rng = RandomNumberGenerator.new()
-var grow_time = 15
+var grow_time = 30
 onready var sprout_timer = $Timer
 
 signal sprout
@@ -122,9 +122,9 @@ func _on_polination_area_body_entered(body):
 				if allele == "A":
 					pass
 				elif allele == "B":
-					grow_time += 4
-				elif allele == "C":
 					grow_time += 5
+				elif allele == "C":
+					grow_time += 10
 			sprout_timer.set_wait_time(grow_time)
 			sprout_timer.start()
 			body.queue_free()
@@ -141,7 +141,7 @@ func _on_polination_area_body_entered(body):
 					elif allele == "B":
 						grow_time += 4
 					elif allele == "C":
-						grow_time += 5
+						grow_time += 7
 				sprout_timer.set_wait_time(grow_time)
 				sprout_timer.start()
 		

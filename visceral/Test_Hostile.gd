@@ -36,6 +36,10 @@ onready var anim2 = $Clawunit2/ClawAnim
 onready var claw3range = $Clawunit3/claw3zone
 onready var anim3 = $Clawunit3/ClawAnim
 
+onready var spore = preload("res://Entities/PoisonSporeKinematic.tscn")
+var spore_coord = Vector3()
+onready var sporepoint = $Sporepoint
+
 var rng = RandomNumberGenerator.new()
 
 var can_spin = false
@@ -90,14 +94,31 @@ func spin():
 	if spinning == true:
 		rotate_y(deg2rad(spin_degree))
 
+func sporulate():
+	var spore_num = rng.randi_range(2,4)
+	for n in spore_num:
+		spore_coord = sporepoint.global_transform.origin
+		var s = spore.instance()
+		var x = rng.randf_range(.8, 1)
+		var y = rng.randf_range(.8, 1)
+		var z = rng.randf_range(.8, 1)
+		self.add_child(s)
+		s.start_coord = spore_coord
+		s.scale = Vector3(x, y, z)
+		s.player_spawned = false
+		s.reparent()
+
+
+
 
 func take_damage(damage):
-	print('parasite took damage')
-	print(damage)
+	#print('parasite took damage')
+	#print(damage)
 	ichor -= damage
 	if ichor <= 0:
 		if dead == false:
 			dead = true
+			sporulate()
 			$deathtime.start()
 			anim1.play("Pain")
 			anim2.play("Pain")
@@ -274,3 +295,9 @@ func _on_move_limit_body_exited(body):
 
 func _on_deathtime_timeout():
 	queue_free()
+
+
+func _on_DecayTimer_timeout():
+	if aggro == true:
+		take_damage(2)
+		print('parasite decay')

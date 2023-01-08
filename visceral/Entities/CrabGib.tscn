@@ -19,6 +19,8 @@ radius = 3.0
 extents = Vector3( 0.104567, 0.0461765, 0.119491 )
 
 [node name="CrabGib" type="RigidBody" groups=["Buoyant", "Interactable", "Meat"]]
+collision_layer = 3
+collision_mask = 3
 physics_material_override = SubResource( 1 )
 continuous_cd = true
 script = ExtResource( 3 )

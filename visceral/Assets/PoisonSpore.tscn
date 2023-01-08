@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Textures/chunkyredblack.tres" type="Material" id=1]
+
+[node name="PoisonSpore" type="Spatial"]
+
+[node name="CSGSphere" type="CSGSphere" parent="."]
+radius = 0.05
+material = ExtResource( 1 )

@@ -105,6 +105,8 @@ func spawn_crab():
 				add_child(egg)
 				if crab.fertile == false:
 					egg.viable = false
+				if crab.crested == false:
+					egg.parent_crestless = true
 				egg.scale = Vector3(crab.start_size, crab.start_size, crab.start_size)
 				egg.global_transform.origin = crab_spawn_point
 				crab.laying_egg = false

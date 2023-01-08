@@ -95,8 +95,8 @@ func generate_plant():
 	start_rotation = rng.randi_range(0,-360)
 	rotate_y(deg2rad(start_rotation))
 	#for random blooming and wilting time
-	grow_time = rng.randi_range(30,60) #30 and 60
-	wilt_time = rng.randi_range(20,40) 
+	grow_time = rng.randi_range(50,100) #30 and 60 for earlier itteration
+	wilt_time = rng.randi_range(30,60)  #20, 40 for earlier itteration
 	#for random genome
 	for allele in gene:
 		if allele == "A":
@@ -154,7 +154,7 @@ func generate_gametes():
 	#print("seedscore number is: ", gametes)
 	if gametes >= 6:
 		seeds = 3
-	elif gametes >= 4:
+	elif gametes >= 3:
 		seeds = 2
 		$Seed2.visible = false
 	elif gametes >= 0:
@@ -199,7 +199,7 @@ func pollen_allele():
 func release_pollen():
 	pollen_coord = $PollenGenerationPoint.global_transform.origin
 	var release_chance = rng.randi_range(0,1)
-	var pollen_num = rng.randi_range(2,6)
+	var pollen_num = rng.randi_range(3,7)
 	if wilted == true:
 		if release_chance == 0:
 			#print("too wilted, no pollen")
@@ -233,15 +233,20 @@ func use():
 	for body in area:
 		if body.is_in_group('Player'):
 			if dead == false:
-				body.item_id = item_id
-				body.stamina += nutrition
-				body.ichor += nutrition
-				body.hunger = false
-				body.hud.notif_text = "food provided nutrition and energy"
-				body.hud.notif_n = String(nutrition)
-				body.hud.notif_ping()
-				body.eat_sounds()
-				release_seed()
+				if body.cant_eat == false:
+					body.item_id = item_id
+					body.stamina += nutrition
+					body.ichor += nutrition
+					body.hunger = false
+					body.hud.notif_text = "food provided nutrition and energy"
+					body.hud.notif_n = String(nutrition)
+					body.hud.notif_ping()
+					body.eat_sounds()
+					body.slow_eating()
+					release_seed()
+				elif body.cant_eat == true:
+					body.hud.notif_text = "You can't eat just yet"
+					body.hud.notif_ping()
 
 func take_damage(damage):
 	ichor -= damage
@@ -298,7 +303,13 @@ func _on_WiltTimer_timeout():
 			nutrition -= 1
 			#wilting
 			var seed_loss = rng.randi_range(0,3)
+			if dry_type == true:
+				seed_loss -= 1
+				#means dry flowers are less likely to lose seeds from wilting
+				if seed_loss < 0:
+					seed_loss = 0
 			seeds -= seed_loss
+			
 			if seeds < 0:
 				seeds = 0
 			if seeds < 3:

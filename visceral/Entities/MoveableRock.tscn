@@ -19,6 +19,8 @@ height = 0.174427
 radius = 0.267361
 
 [node name="Rock" type="KinematicBody" groups=["Interactable"]]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource( 2 )
 
 [node name="CSGCombiner" type="CSGCombiner" parent="."]
@@ -56,6 +58,8 @@ shape = SubResource( 2 )
 shape = SubResource( 3 )
 
 [node name="hurtzone" type="Area" parent="."]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="hurtzone"]
 shape = SubResource( 4 )

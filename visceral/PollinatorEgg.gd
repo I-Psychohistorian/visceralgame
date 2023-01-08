@@ -22,6 +22,10 @@ var spawn_coords = Vector3()
 
 var drop_coords = Vector3()
 var dead = false
+
+var parent_crestless = false
+
+var rng = RandomNumberGenerator.new()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Start_spawn.start()
@@ -73,7 +77,12 @@ func _on_HatchTime_timeout():
 		c.hatched = true
 		c.start_size = 0.2
 		c.ichor = 2
-		c.hunger_num = 0
+		c.hunger_num = 1
+		if parent_crestless == true:
+			rng.randomize()
+			var chance = rng.randi_range(1,4)
+			if chance >= 1:
+				c.crestlosstimer.start()
 		c.reparent()
 		dead = true
 		$DespawnTimer.start()
