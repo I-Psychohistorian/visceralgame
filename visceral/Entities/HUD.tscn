@@ -30,19 +30,19 @@ margin_right = 65.0
 margin_bottom = 557.0
 
 [node name="Ichor" type="Label" parent="HUD_info"]
-margin_right = 598.0
+margin_right = 697.0
 margin_bottom = 14.0
 
 [node name="Stamina" type="Label" parent="HUD_info"]
 margin_top = 18.0
-margin_right = 598.0
+margin_right = 697.0
 margin_bottom = 32.0
 
 [node name="Misc" type="Label" parent="HUD_info"]
 margin_top = 36.0
-margin_right = 598.0
+margin_right = 697.0
 margin_bottom = 50.0
-text = "WASD move, LMB attack, RMB drop held, Q eat held, E to interact, tab to show mouse/menus"
+text = "WASD move, LMB attack, RMB drop held, Q eat held, E to interact, tab to show mouse/menus, space to jump"
 
 [node name="Menu" type="VBoxContainer" parent="."]
 visible = false
