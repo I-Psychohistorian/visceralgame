@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://Entities/Components/PinkClaw.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Textures/redanimated.tres" type="Material" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Textures/RedNoiseFlesh1.tres" type="Material" id=4]
 [ext_resource path="res://Entities/AdultWurm.gd" type="Script" id=5]
 [ext_resource path="res://Textures/deepbrownanimated.tres" type="Material" id=6]
+[ext_resource path="res://Entities/DebugAxisStatic.gd" type="Script" id=7]
 
 [sub_resource type="CapsuleShape" id=22]
 radius = 0.555703
@@ -889,7 +890,28 @@ extents = Vector3( 0.243, 1, 12 )
 height = 0.458266
 radius = 0.840808
 
+[sub_resource type="CubeMesh" id=24]
+size = Vector3( 10, 0.1, 0.1 )
+
+[sub_resource type="CubeMesh" id=25]
+size = Vector3( 0.1, 0.1, 20 )
+
+[sub_resource type="SpatialMaterial" id=26]
+albedo_color = Color( 0, 0.0313726, 1, 1 )
+
+[sub_resource type="CubeMesh" id=27]
+material = SubResource( 26 )
+size = Vector3( 10, 0.1, 0.1 )
+
+[sub_resource type="SpatialMaterial" id=28]
+albedo_color = Color( 0.054902, 0, 1, 1 )
+
+[sub_resource type="CubeMesh" id=29]
+material = SubResource( 28 )
+size = Vector3( 0.1, 0.1, 20 )
+
 [node name="AdultWurm" type="KinematicBody" groups=["Predator"]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 collision_layer = 3
 collision_mask = 3
 script = ExtResource( 5 )
@@ -1072,7 +1094,7 @@ transform = Transform( 1.00218, 0, 0, 0, 1.0586, 0.459409, 0, -0.733419, 0.6631,
 transform = Transform( 1.15911, 0.268973, -0.129409, 0, 0.6, 0.866025, 0.310583, -1.00382, 0.482963, 1.05, -0.3, 0 )
 
 [node name="Bend" parent="PinkClaw2/Arm" index="0"]
-transform = Transform( 1.00119, 0, 0, 0, 1.07004, 0.446383, 0, -0.741347, 0.644299, 1.49012e-07, 5.96046e-08, -0.26384 )
+transform = Transform( 1.00119, 0, 0, 0, 1.07004, 0.446383, 0, -0.741346, 0.644299, 1.49012e-07, 5.96046e-08, -0.26384 )
 
 [node name="BodyCollide" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.787813 )
@@ -1097,17 +1119,17 @@ cone = true
 material = ExtResource( 2 )
 
 [node name="Section1" type="CSGSphere" parent="TongueCollide/Spike"]
-transform = Transform( -1, -6.99384e-07, -1.50996e-07, -1.74846e-07, 4, -8.63747e-15, 1.50996e-07, 7.10542e-14, -1, 5.57031e-08, -0.637169, -1.39698e-09 )
+transform = Transform( -1, -6.99384e-07, -1.50996e-07, -1.74846e-07, 4, -8.6375e-15, 1.50996e-07, 7.10541e-14, -1, 5.57031e-08, -0.637169, -1.39698e-09 )
 radius = 0.12
 material = ExtResource( 2 )
 
 [node name="Section2" type="CSGSphere" parent="TongueCollide/Spike"]
-transform = Transform( -1, -6.99384e-07, -1.50996e-07, -1.74846e-07, 4, -8.63747e-15, 1.50996e-07, 7.10542e-14, -1, 1.0879e-07, -1.24441, 0 )
+transform = Transform( -1, -6.99384e-07, -1.50996e-07, -1.74846e-07, 4, -8.6375e-15, 1.50996e-07, 7.10541e-14, -1, 1.0879e-07, -1.24441, 0 )
 radius = 0.12
 material = ExtResource( 2 )
 
 [node name="Section3" type="CSGSphere" parent="TongueCollide/Spike"]
-transform = Transform( -1, -6.99384e-07, -1.50996e-07, -1.74846e-07, 4, -1.57429e-14, 1.50996e-07, 4.26326e-14, -1, 1.57893e-07, -1.80608, 2.45515e-08 )
+transform = Transform( -1, -6.99384e-07, -1.50996e-07, -1.74846e-07, 4, -1.57429e-14, 1.50996e-07, 4.26325e-14, -1, 1.57893e-07, -1.80608, 2.45515e-08 )
 radius = 0.12
 material = ExtResource( 2 )
 
@@ -1173,6 +1195,7 @@ shape = SubResource( 21 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 11.3428 )
 collision_layer = 7
 collision_mask = 7
+monitoring = false
 
 [node name="CollisionShape" type="CollisionShape" parent="FacingAreas/Back"]
 shape = SubResource( 21 )
@@ -1184,7 +1207,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3 )
 wait_time = 0.1
 
 [node name="scan_delay" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 2.5
 autostart = true
 
 [node name="movechoose" type="Timer" parent="scan_delay"]
@@ -1196,7 +1219,32 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, -0.709997, 0.662549 )
 shape = SubResource( 23 )
 
 [node name="Debug" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.5
+autostart = true
+
+[node name="cartesian point" type="Spatial" parent="."]
+transform = Transform( 0.999997, 0, 0, 0, 1, 0, 0, 0, 0.999997, 3, 0, -3 )
+
+[node name="DebugAxis" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.698507, 0 )
+visible = false
+
+[node name="x" type="MeshInstance" parent="DebugAxis"]
+mesh = SubResource( 24 )
+
+[node name="z" type="MeshInstance" parent="DebugAxis"]
+mesh = SubResource( 25 )
+
+[node name="DebugAxisStatic" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.698507, 0 )
+visible = false
+script = ExtResource( 7 )
+
+[node name="x" type="MeshInstance" parent="DebugAxisStatic"]
+mesh = SubResource( 27 )
+
+[node name="z" type="MeshInstance" parent="DebugAxisStatic"]
+mesh = SubResource( 29 )
 
 [connection signal="body_entered" from="OptimalEat" to="." method="_on_OptimalEat_body_entered"]
 [connection signal="body_entered" from="Sight" to="." method="_on_Sight_body_entered"]

@@ -15,7 +15,7 @@ var current_state = 'Moving'
 #movement
 var gravity = 5
 var grav_vec = Vector3()
-var speed = 1
+var speed = 1 #1
 #where target is spawned
 var target_vec = Vector3()
 var target_seen = false
@@ -24,7 +24,14 @@ var worm_yeet = Vector3()
 
 var aggro = true
 
-var rotate_degree = 0.03
+var quadrant = 0
+
+var random_turn_set = false
+var choice = 0
+
+
+var rotate_degree = 0.03 #0.03
+var immediate_look = false
 
 export var moving_at_all = false
 
@@ -70,15 +77,19 @@ onready var w13 = $Body/Wound13
 onready var w14 =$Body/Wound14
 # Called when the node enters the scene tree for the first time.
 
+var rng = RandomNumberGenerator.new()
+
 var debug = false
 func _ready():
-	pass # Replace with function body.
+	rng.randomize()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	worm_yeet = Vector3(0, 0, 0)
 	if dead == false:
+		pass
+		determine_rotation_quad()
 		movement()
 		#movement
 		
@@ -100,11 +111,18 @@ func movement():
 				point = carrot.global_transform.origin
 				move = point - self.global_transform.origin
 				move_and_slide(move * speed, Vector3.UP)
+			elif immediate_look == true:
+				look_at(target_vec, Vector3.UP)
+				print('looking snap')
+				rotation.x = clamp(rotation.x, deg2rad(0), deg2rad(0))
+				rotation.z = clamp(rotation.x, deg2rad(0), deg2rad(0))
+				immediate_look = false
 			elif turning_left == true:
 				self.rotate_y(rotate_degree)
 			elif turning_right == true:
 				self.rotate_y(-rotate_degree)
-			print('movin')
+
+			#print('movin')
 	
 
 
@@ -126,7 +144,58 @@ func set_target(target):
 	self.add_child(l)
 	l.drop_coords = target_vec
 	l.reparent()
+
+#left is really just counterclockwise and right is clockwise
+#i made the mistake of naming them left early on and now am too lazy to change it
+
+func set_turn_left():
+	$GrossBodyAnimation.play("Left")
+	turning_left = true
+	turning_right = false
+	moving_forward = false
+	#print('counterclockwise')
 	
+func set_turn_right():
+	$GrossBodyAnimation.play("Right")
+	turning_left = false
+	turning_right = true
+	moving_forward = false
+	#print('clockwise')
+
+func determine_rotation_quad():
+	if rad2deg(self.rotation.y) >= 0: 
+		quadrant = 1
+
+		if rad2deg(self.rotation.y) > 90:
+			quadrant = 2
+
+	elif rad2deg(self.rotation.y) < 0:
+			quadrant = -2
+
+			if rad2deg(self.rotation.y) < -90:
+				quadrant = -1
+
+	
+	#godot rotation coords work in 180 to -180 not 360
+
+func check_quads():
+	print('rotation is ', String(rad2deg(self.rotation.y)))
+	if quadrant == 1:
+		print('fquad1')
+	elif quadrant == 2:
+		print('fquad2')
+	elif quadrant == -2:
+		print('fquad-2')
+	elif quadrant == -1:
+		print('fquad-1')
+
+func get_abs(num):
+	if num < 0:
+		num * -1
+	elif num > 0:
+		pass
+	return
+
 func choose_move_action():
 	#dir_chosen terminates loop to avoid confusion over multiple targets
 	var dir_chosen = false
@@ -135,23 +204,73 @@ func choose_move_action():
 		if i.is_in_group("wurm_target"):
 			#i.print_location()
 			if dir_chosen == false:
-				var t_calc = self.global_transform.origin.x - i.global_transform.origin.x
-				print('t_calc is ', t_calc)
+				var t_calc_x =  i.global_transform.origin.x - self.global_transform.origin.x
+				var t_calc_z =  i.global_transform.origin.z - self.global_transform.origin.z
+				var target_quadrant = 0
+				#print("x, z ", t_calc_x, t_calc_z)
+				#print('t_calc', ' x = ', t_calc_x, ' z = ', t_calc_z)
 				if i.global_transform.origin.x == 0:
 					dir_chosen = true
 					print('target is at 0')
-				elif t_calc <= 0:
+				elif t_calc_x <= 0:
+					if t_calc_z <=0:
+						target_quadrant = 1
+						#0 to 90 deg
+					elif t_calc_z > 0:
+						target_quadrant = 2
+						#91 to 180 deg
+				elif t_calc_x > 0:
+					if t_calc_z > 0:
+						target_quadrant = -1
+						#180 to 270 deg
+					elif t_calc_z <= 0:
+						target_quadrant = -2
+						#270 to 360 deg
+				print('face quad= ', quadrant, ' targ quad= ', target_quadrant)
+				
+				if quadrant + target_quadrant == 0:
+					if random_turn_set == false:
+						choice = rng.randi_range(0,1)
+						random_turn_set = true
+					if choice == 1:
+						set_turn_left()
+					elif choice == 0:
+						set_turn_right()
+					#print('opposing quadrants')
+				elif quadrant == target_quadrant:
+					#print('same quadrant')
+					$GrossBodyAnimation.play("Forward")
 					moving_forward = false
-					turning_left = true
-					turning_right = false
-					dir_chosen = true
-					$GrossBodyAnimation.play("Left")
-				elif t_calc > 0:
-					moving_forward = false
-					turning_right = true
-					turning_left = false
-					dir_chosen = true
-					$GrossBodyAnimation.play("Right")
+					immediate_look = true
+				elif quadrant == 1:
+					if quadrant > target_quadrant:
+						set_turn_left()
+					elif quadrant < target_quadrant: 
+						set_turn_right()
+					#print('adjacent quadrant')
+				elif quadrant == 2:
+					if target_quadrant > 0:
+						set_turn_right()
+					elif target_quadrant < 0:
+						set_turn_left()
+					#print('adjacent quadrant')
+				elif quadrant == -1:
+					if target_quadrant > 0:
+						set_turn_right()
+					elif target_quadrant < 0:
+						set_turn_left()
+					#print('adjacent quadrant')
+				elif quadrant == -2:
+					if target_quadrant > 0:
+						set_turn_left()
+					elif target_quadrant < 0:
+						set_turn_right()
+					#print('adjacent quadrant')
+				if quadrant + target_quadrant != 0:
+					print('random turn reset')
+					random_turn_set = false
+				dir_chosen = true
+
 				if i.is_in_group('wurm_target'):
 					var in_front = forward_gaze.get_overlapping_bodies()
 					for b in in_front:
@@ -161,14 +280,16 @@ func choose_move_action():
 							turning_right = false
 							dir_chosen = true
 							$GrossBodyAnimation.play("Forward")
+							print('in front of')
 				#temp till I figure out having animations trigger the boolean toggle
 				#moving_at_all = true
-				#should work now given exported variable
-	print('forward is ', moving_forward, ', left is ', turning_left, ", right is ", turning_right)
+				#should work now given exported variable, thanks boris
+	#print('forward is ', moving_forward, ', left is ', turning_left, ", right is ", turning_right)
 
 func clear_move():
 	$GrossBodyAnimation.play("IdlePose")
 	moving_at_all = false
+	immediate_look = false
 
 func toggle_moving():
 	if moving_at_all == false:
@@ -176,6 +297,7 @@ func toggle_moving():
 	elif moving_at_all == true:
 		moving_at_all = false
 	print('movement toggled ', moving_at_all)
+
 func _on_scan_delay_timeout():
 	clear_move()
 	target_seen = false
@@ -207,11 +329,12 @@ func _on_Facing_body_entered(body):
 			turning_left = false
 			moving_forward = true
 			$GrossBodyAnimation.play("Forward")
-			print('target aquired, moving')
+			#print('target aquired, moving')
 
 
 func _on_Back_body_exited(body):
 	#will swap to current_state "Moving"
+	#set to not monitering as turning calculations have been modified
 	if current_state == "Moving":
 		if body.is_in_group('wurm_target'):
 			if turning_right == true:
@@ -232,3 +355,5 @@ func _on_Debug_timeout():
 	elif debug == true:
 		debug = false
 	#print(worm_yeet)
+	#check_quads()
+	#checks current facing quadrant

@@ -20,4 +20,4 @@ material = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.39277, 5.55677 )
 
 [node name="AdultWurm" parent="PlantController" instance=ExtResource( 3 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.121094, -5.71749 )
+transform = Transform( 1, 0, 2.38419e-07, 0, 1, 0, -2.38419e-07, 0, 1, 0, -0.121094, -5.71749 )

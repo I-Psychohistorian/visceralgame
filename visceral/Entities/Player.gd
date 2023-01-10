@@ -61,7 +61,7 @@ var cinematic_pause = false
 var not_invisible = true
 
 #physics variables
-var speed = 2.0
+var speed = 2.0 #normally 2.0
 var gravity = 1
 var jump = 0.5
 var jump_dash = false
