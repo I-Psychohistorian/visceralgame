@@ -282,6 +282,8 @@ func interaction():
 						cooldown_timer.start()
 						if holding_item == false:
 							pointed_object.use()
+							
+							#sometimes holding seed triggers after trying to eat plants??
 							if item_id == "Seed":
 								if holding_item == true:
 									if item_pollinated == true:

@@ -24,9 +24,10 @@ var worm_yeet = Vector3()
 
 var aggro = true
 
-var rotate_degree = 2
+var rotate_degree = 0.03
 
-var moving_at_all = false
+export var moving_at_all = false
+
 var moving_forward = false
 var turning_left = false
 var turning_right = false
@@ -84,14 +85,11 @@ func _process(delta):
 	#gravity
 	if not is_on_floor():
 		worm_yeet.y -= gravity
-
-	if debug == true:
-		pass
-		move_and_slide(worm_yeet, Vector3.UP)
+	move_and_slide(worm_yeet, Vector3.UP)
 		#print(self.global_transform.origin)
 	
 	
-	#currently causes yeeting
+	#fixed yeeting problem, move and slide does not require global_transform by default for falling it is already implied
 
 
 func movement():
@@ -103,9 +101,9 @@ func movement():
 				move = point - self.global_transform.origin
 				move_and_slide(move * speed, Vector3.UP)
 			elif turning_left == true:
-				self.rotate_y(0.01)
+				self.rotate_y(rotate_degree)
 			elif turning_right == true:
-				self.rotate_y(-0.01)
+				self.rotate_y(-rotate_degree)
 			print('movin')
 	
 
@@ -164,7 +162,8 @@ func choose_move_action():
 							dir_chosen = true
 							$GrossBodyAnimation.play("Forward")
 				#temp till I figure out having animations trigger the boolean toggle
-				moving_at_all = true
+				#moving_at_all = true
+				#should work now given exported variable
 	print('forward is ', moving_forward, ', left is ', turning_left, ", right is ", turning_right)
 
 func clear_move():
