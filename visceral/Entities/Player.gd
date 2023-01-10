@@ -341,7 +341,7 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		rotate_y(deg2rad(-event.relative.x * mouse_sensitivity))
 		head.rotate_x(deg2rad(-event.relative.y * mouse_sensitivity))
-		head.rotation.x = clamp(head.rotation.x, deg2rad(-25), deg2rad(45))
+		head.rotation.x = clamp(head.rotation.x, deg2rad(-25), deg2rad(60))
 
 func wash_pollen():
 	if pollenated == true:

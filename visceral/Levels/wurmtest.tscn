@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Textures/pinkflesh.tres" type="Material" id=1]
+[ext_resource path="res://Entities/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Entities/AdultWurm.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Entities/PlantController.tscn" type="PackedScene" id=4]
+
+[node name="Spatial" type="Spatial"]
+
+[node name="CSGCylinder" type="CSGCylinder" parent="."]
+use_collision = true
+invert_faces = true
+radius = 21.624
+height = 10.9725
+material = ExtResource( 1 )
+
+[node name="PlantController" parent="." instance=ExtResource( 4 )]
+
+[node name="Player" parent="PlantController" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.39277, 5.55677 )
+
+[node name="AdultWurm" parent="PlantController" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.121094, -5.71749 )

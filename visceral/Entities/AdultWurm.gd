@@ -13,12 +13,14 @@ var states = ['Lurking', 'Moving', 'Attacking', 'Turning', 'Birthing']
 var current_state = 'Moving'
 
 #movement
-var gravity = 1
+var gravity = 5
 var grav_vec = Vector3()
 var speed = 1
 #where target is spawned
 var target_vec = Vector3()
 var target_seen = false
+#wurmyeet, yeets worm
+var worm_yeet = Vector3()
 
 var aggro = true
 
@@ -66,34 +68,48 @@ onready var btw12 = $Body/Tail/juveniletail/CSGSphere/Wound12
 onready var w13 = $Body/Wound13
 onready var w14 =$Body/Wound14
 # Called when the node enters the scene tree for the first time.
+
+var debug = false
 func _ready():
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	worm_yeet = Vector3(0, 0, 0)
 	if dead == false:
 		movement()
 		#movement
 		
 	#gravity
 	if not is_on_floor():
-		grav_vec = Vector3()
-		grav_vec.y -= gravity
-		#move_and_slide(grav_vec - global_transform.origin, Vector3.UP)
+		worm_yeet.y -= gravity
+
+	if debug == true:
+		pass
+		move_and_slide(worm_yeet, Vector3.UP)
+		#print(self.global_transform.origin)
+	
+	
+	#currently causes yeeting
 
 
 func movement():
 	if current_state == 'Moving':
 		if moving_at_all == true:
 			if moving_forward == true:
+				var move = Vector3()
 				point = carrot.global_transform.origin
-				var move = point - self.global_transform.origin
+				move = point - self.global_transform.origin
 				move_and_slide(move * speed, Vector3.UP)
 			elif turning_left == true:
-				self.rotate_y(-0.01)
-			elif turning_right == true:
 				self.rotate_y(0.01)
+			elif turning_right == true:
+				self.rotate_y(-0.01)
+			print('movin')
+	
+
+
 
 func scan():
 	var sight = sense_range.get_overlapping_bodies()
@@ -180,7 +196,8 @@ func _on_Sight_body_entered(body):
 
 
 func _on_movechoose_timeout():
-	choose_move_action()
+	if current_state == "Moving":
+		choose_move_action()
 
 #keeps wurm from spinning endlessly
 func _on_Facing_body_entered(body):
@@ -191,6 +208,7 @@ func _on_Facing_body_entered(body):
 			turning_left = false
 			moving_forward = true
 			$GrossBodyAnimation.play("Forward")
+			print('target aquired, moving')
 
 
 func _on_Back_body_exited(body):
@@ -205,4 +223,13 @@ func _on_Back_body_exited(body):
 				turning_right = true
 				turning_left = false
 				$GrossBodyAnimation.play("Right")
+			print('turning flipped')
 			
+
+
+func _on_Debug_timeout():
+	if debug == false:
+		debug = true
+	elif debug == true:
+		debug = false
+	#print(worm_yeet)
