@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://Entities/Components/PinkClaw.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Textures/redanimated.tres" type="Material" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Entities/AdultWurm.gd" type="Script" id=5]
 [ext_resource path="res://Textures/deepbrownanimated.tres" type="Material" id=6]
 [ext_resource path="res://Entities/DebugAxisStatic.gd" type="Script" id=7]
+[ext_resource path="res://Assets/CrabBody.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CapsuleShape" id=22]
 radius = 0.555703
@@ -41,25 +42,8 @@ tracks/0/keys = {
 "update": 1,
 "values": [ false ]
 }
-
-[sub_resource type="Animation" id=8]
-resource_name = "Pulse"
-length = 1.6
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:translation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector3( 0, 0, -1.05554 ) ]
-}
 tracks/1/type = "value"
-tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/path = NodePath("..:translation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -68,46 +52,87 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector3( 90, -180, 0 ) ]
+"values": [ Vector3( 0, 0, 0 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Section1:scale")
+tracks/2/path = NodePath("..:rotation_degrees")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "Pulse"
+length = 1.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Section1:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5, 1 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Vector3( 1, 4, 1 ), Vector3( 1.1, 4, 1.1 ), Vector3( 1, 4, 1 ) ]
 }
-tracks/3/type = "value"
-tracks/3/path = NodePath("Section2:scale")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
+tracks/1/type = "value"
+tracks/1/path = NodePath("Section2:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
 "times": PoolRealArray( 0.3, 0.8, 1.3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Vector3( 1, 4, 1 ), Vector3( 1.1, 4.2, 1.1 ), Vector3( 1, 4, 1 ) ]
 }
-tracks/4/type = "value"
-tracks/4/path = NodePath("Section3:scale")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
+tracks/2/type = "value"
+tracks/2/path = NodePath("Section3:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
 "times": PoolRealArray( 0.6, 1.1, 1.5 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Vector3( 1, 4, 1 ), Vector3( 1.1, 4.1, 1.1 ), Vector3( 1, 4, 1 ) ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Section1:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 tracks/5/type = "value"
-tracks/5/path = NodePath(".:visible")
+tracks/5/path = NodePath("Section2:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -119,36 +144,12 @@ tracks/5/keys = {
 "values": [ true ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Section1:visible")
+tracks/6/path = NodePath("Section3:visible")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/7/type = "value"
-tracks/7/path = NodePath("Section2:visible")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/8/type = "value"
-tracks/8/path = NodePath("Section3:visible")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
@@ -264,6 +265,30 @@ tracks/8/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ true ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("..:translation")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("..:rotation_degrees")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
 }
 
 [sub_resource type="SphereShape" id=6]
@@ -911,7 +936,6 @@ material = SubResource( 28 )
 size = Vector3( 0.1, 0.1, 20 )
 
 [node name="AdultWurm" type="KinematicBody" groups=["Predator"]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 collision_layer = 3
 collision_mask = 3
 script = ExtResource( 5 )
@@ -1119,17 +1143,17 @@ cone = true
 material = ExtResource( 2 )
 
 [node name="Section1" type="CSGSphere" parent="TongueCollide/Spike"]
-transform = Transform( -1, -6.99384e-07, -1.50996e-07, -1.74846e-07, 4, -8.6375e-15, 1.50996e-07, 7.10541e-14, -1, 5.57031e-08, -0.637169, -1.39698e-09 )
+transform = Transform( -1, -6.99384e-07, -1.50996e-07, -1.74846e-07, 4, -8.63752e-15, 1.50996e-07, 7.1054e-14, -1, 5.57031e-08, -0.637169, -1.39698e-09 )
 radius = 0.12
 material = ExtResource( 2 )
 
 [node name="Section2" type="CSGSphere" parent="TongueCollide/Spike"]
-transform = Transform( -1, -6.99384e-07, -1.50996e-07, -1.74846e-07, 4, -8.6375e-15, 1.50996e-07, 7.10541e-14, -1, 1.0879e-07, -1.24441, 0 )
+transform = Transform( -1, -6.99384e-07, -1.50996e-07, -1.74846e-07, 4, -8.63752e-15, 1.50996e-07, 7.1054e-14, -1, 1.0879e-07, -1.24441, 0 )
 radius = 0.12
 material = ExtResource( 2 )
 
 [node name="Section3" type="CSGSphere" parent="TongueCollide/Spike"]
-transform = Transform( -1, -6.99384e-07, -1.50996e-07, -1.74846e-07, 4, -1.57429e-14, 1.50996e-07, 4.26325e-14, -1, 1.57893e-07, -1.80608, 2.45515e-08 )
+transform = Transform( -1, -6.99384e-07, -1.50996e-07, -1.74846e-07, 4, -1.57429e-14, 1.50996e-07, 4.26324e-14, -1, 1.57893e-07, -1.80608, 2.45515e-08 )
 radius = 0.12
 material = ExtResource( 2 )
 
@@ -1137,6 +1161,10 @@ material = ExtResource( 2 )
 anims/Hidden = SubResource( 7 )
 anims/Pulse = SubResource( 8 )
 anims/RESET = SubResource( 9 )
+
+[node name="CrabBody" parent="TongueCollide/Spike" instance=ExtResource( 8 )]
+transform = Transform( 0.3, -4.52987e-08, -2.62268e-08, -4.52987e-08, -0.3, -2.62268e-08, -2.62268e-08, 2.62268e-08, -0.3, 9.42766e-09, 0.10784, -4.71383e-09 )
+visible = false
 
 [node name="stab_zone" type="Area" parent="TongueCollide"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00484902, -1.19602 )
@@ -1219,7 +1247,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, -0.709997, 0.662549 )
 shape = SubResource( 23 )
 
 [node name="Debug" type="Timer" parent="."]
-wait_time = 0.5
 autostart = true
 
 [node name="cartesian point" type="Spatial" parent="."]
@@ -1246,13 +1273,27 @@ mesh = SubResource( 27 )
 [node name="z" type="MeshInstance" parent="DebugAxisStatic"]
 mesh = SubResource( 29 )
 
+[node name="StabTimer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[node name="StabCooldown" type="Timer" parent="."]
+wait_time = 0.8
+one_shot = true
+
+[connection signal="body_entered" from="TongueCollide/stab_zone" to="." method="_on_stab_zone_body_entered"]
 [connection signal="body_entered" from="OptimalEat" to="." method="_on_OptimalEat_body_entered"]
+[connection signal="body_exited" from="OptimalEat" to="." method="_on_OptimalEat_body_exited"]
 [connection signal="body_entered" from="Sight" to="." method="_on_Sight_body_entered"]
+[connection signal="body_exited" from="Sight" to="." method="_on_Sight_body_exited"]
+[connection signal="body_entered" from="CloseRange" to="." method="_on_CloseRange_body_entered"]
 [connection signal="body_entered" from="FacingAreas/Facing" to="." method="_on_Facing_body_entered"]
 [connection signal="body_exited" from="FacingAreas/Back" to="." method="_on_Back_body_exited"]
 [connection signal="timeout" from="scan_delay" to="." method="_on_scan_delay_timeout"]
 [connection signal="timeout" from="scan_delay/movechoose" to="." method="_on_movechoose_timeout"]
 [connection signal="timeout" from="Debug" to="." method="_on_Debug_timeout"]
+[connection signal="timeout" from="StabTimer" to="." method="_on_StabTimer_timeout"]
+[connection signal="timeout" from="StabCooldown" to="." method="_on_StabCooldown_timeout"]
 
 [editable path="PinkClaw"]
 [editable path="PinkClaw2"]

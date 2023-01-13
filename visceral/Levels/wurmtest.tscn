@@ -10,9 +10,14 @@
 [node name="CSGCylinder" type="CSGCylinder" parent="."]
 use_collision = true
 invert_faces = true
-radius = 21.624
+radius = 43.848
 height = 10.9725
 material = ExtResource( 1 )
+
+[node name="CSGBox" type="CSGBox" parent="CSGCylinder"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.2587, 0 )
+operation = 2
+invert_faces = true
 
 [node name="PlantController" parent="." instance=ExtResource( 4 )]
 

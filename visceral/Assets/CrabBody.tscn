@@ -1,0 +1,1172 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Entities/Components/BugLeg.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Pollen.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Textures/RedNoiseFlesh1.tres" type="Material" id=3]
+[ext_resource path="res://Textures/redanimated.tres" type="Material" id=4]
+[ext_resource path="res://Textures/OrangeNoiseFlesh1.tres" type="Material" id=5]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Alert"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0.134174, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Body/BugLeg1:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( -135, 0, 0 ), Vector3( -90, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Body/BugLeg1/CSGCylinder/1stJoint:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 105, 0, 0 ), Vector3( 60, 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Body/BugLeg1/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 45, 0, 0 ), Vector3( 15, 0, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Body/BugLeg2:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 135 ), Vector3( 0, 0, 90 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Body/BugLeg2/CSGCylinder/1stJoint:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -105 ), Vector3( 0, 0, -60 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Body/BugLeg2/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -45 ), Vector3( 0, 0, -15 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Body/BugLeg3:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -135 ), Vector3( 0, 0, -90 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Body/BugLeg3/CSGCylinder/1stJoint:rotation_degrees")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 105 ), Vector3( 0, 0, 60 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Body/BugLeg3/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 45 ), Vector3( 0, 0, 15 ) ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Body/BugLeg4:rotation_degrees")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 135, 0, 0 ), Vector3( 90, 0, 0 ) ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Body/BugLeg4/CSGCylinder/1stJoint:rotation_degrees")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( -105, 0, 0 ), Vector3( -60, 0, 0 ) ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Body/BugLeg4/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( -45, 0, 0 ), Vector3( -15, 0, 0 ) ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("CollisionShape:translation")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0.138834, 0 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Death"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, -0.230171, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Body/BugLeg1:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( -135, 0, 0 ), Vector3( -98.473, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Body/BugLeg1/CSGCylinder/1stJoint:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 105, 0, 0 ), Vector3( 11.062, 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Body/BugLeg1/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 45, 0, 0 ), Vector3( 2.322, 0, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Body/BugLeg2:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 135 ), Vector3( 0, 0, 109.222 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Body/BugLeg3:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -135 ), Vector3( 0, 0, -105.94 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Body/BugLeg3/CSGCylinder/1stJoint:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 105 ), Vector3( 0, 0, 25.187 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Body/BugLeg3/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 45 ), Vector3( 0, 0, 1.339 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Body/BugLeg4:rotation_degrees")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 135, 0, 0 ), Vector3( 103.315, 0, 0 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Body/BugLeg4/CSGCylinder/1stJoint:rotation_degrees")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( -105, 0, 0 ), Vector3( -25.388, 0, 0 ) ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Body/BugLeg4/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( -45, 0, 0 ), Vector3( -4.833, 0, 0 ) ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Body/BugLeg2/CSGCylinder/1stJoint:rotation_degrees")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -105 ), Vector3( 0, 0, -39.873 ) ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Body/BugLeg2/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -45 ), Vector3( 0, 0, -3.354 ) ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("CollisionShape:translation")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, -0.227826, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Idle"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body/BugLeg1:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -135, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Body/BugLeg1/CSGCylinder/1stJoint:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 105, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Body/BugLeg1/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 45, 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Body/BugLeg2:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 135 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Body/BugLeg2/CSGCylinder/1stJoint:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -105 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Body/BugLeg2/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -45 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Body/BugLeg3:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -135 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Body/BugLeg3/CSGCylinder/1stJoint:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 105 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Body/BugLeg3/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 45 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Body/BugLeg4:rotation_degrees")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 135, 0, 0 ) ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Body/BugLeg4/CSGCylinder/1stJoint:rotation_degrees")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -105, 0, 0 ) ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Body/BugLeg4/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -45, 0, 0 ) ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Body:translation")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("CollisionShape:translation")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body/BugLeg1:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -135, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Body/BugLeg1/CSGCylinder/1stJoint:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 105, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Body/BugLeg1/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 45, 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Body/BugLeg2:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 135 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Body/BugLeg2/CSGCylinder/1stJoint:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -105 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Body/BugLeg2/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -45 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Body/BugLeg3/CSGCylinder/1stJoint:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 105 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Body/BugLeg3/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 45 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Body/BugLeg4/CSGCylinder/1stJoint:rotation_degrees")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -105, 0, 0 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Body/BugLeg4:rotation_degrees")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 135, 0, 0 ) ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Body/BugLeg3:rotation_degrees")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -135 ) ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Body/BugLeg4/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -45, 0, 0 ) ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Body:translation")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("CollisionShape:translation")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Walk"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body/BugLeg1:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -135, 0, 0 ), Vector3( -146.6, 0, 0 ), Vector3( -135, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Body/BugLeg1/CSGCylinder/1stJoint:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 105, 0, 0 ), Vector3( 89.676, 0, 0 ), Vector3( 105, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Body/BugLeg1/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 45, 0, 0 ), Vector3( 33.684, 0, 0 ), Vector3( 45, 0, 0 ), Vector3( 45, 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Body/BugLeg4:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.2, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 135, 0, 0 ), Vector3( 148.88, 0, 0 ), Vector3( 135, 0, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Body/BugLeg4/CSGCylinder/1stJoint:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.2, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -105, 0, 0 ), Vector3( -84.863, 0, 0 ), Vector3( -105, 0, 0 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Body/BugLeg4/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.2, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -45, 0, 0 ), Vector3( -27.419, 0, 0 ), Vector3( -45, 0, 0 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Body/BugLeg2:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0.4, 0.5, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 135 ), Vector3( 0, 0, 141.756 ), Vector3( 0, 0, 135 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Body/BugLeg2/CSGCylinder/1stJoint:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0.4, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -105 ), Vector3( 0, 0, -75.706 ), Vector3( 0, 0, -105 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Body/BugLeg2/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0.4, 0.5, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -45 ), Vector3( 0, 0, -24.237 ), Vector3( 0, 0, -45 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Body/BugLeg3:rotation_degrees")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0.6, 0.7, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -135 ), Vector3( 0, 0, -143.126 ), Vector3( 0, 0, -135 ) ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Body/BugLeg3/CSGCylinder/1stJoint:rotation_degrees")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0.6, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 105 ), Vector3( 0, 0, 86.118 ), Vector3( 0, 0, 105 ) ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Body/BugLeg3/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0.6, 0.7, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 45 ), Vector3( 0, 0, 26.573 ), Vector3( 0, 0, 45 ) ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Body:translation")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("CollisionShape:translation")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "Walk2"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body/BugLeg2:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 135 ), Vector3( 0, 0, 143.808 ), Vector3( 0, 0, 135 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Body/BugLeg2/CSGCylinder/1stJoint:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -105 ), Vector3( 0, 0, -77.65 ), Vector3( 0, 0, -105 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Body/BugLeg2/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -45 ), Vector3( 0, 0, -26.218 ), Vector3( 0, 0, -45 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Body/BugLeg1:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.2, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -135, 0, 0 ), Vector3( -144.138, 0, 0 ), Vector3( -135, 0, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Body/BugLeg1/CSGCylinder/1stJoint:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.2, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 105, 0, 0 ), Vector3( 90, 0, 0 ), Vector3( 105, 0, 0 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Body/BugLeg1/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.2, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 45, 0, 0 ), Vector3( 23.01, 0, 0 ), Vector3( 45, 0, 0 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Body/BugLeg4:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0.4, 0.5, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 135, 0, 0 ), Vector3( 144.345, 0, 0 ), Vector3( 135, 0, 0 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Body/BugLeg4/CSGCylinder/1stJoint:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0.4, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -105, 0, 0 ), Vector3( -96.15, 0, 0 ), Vector3( -105, 0, 0 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Body/BugLeg4/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0.4, 0.5, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -45, 0, 0 ), Vector3( -21.554, 0, 0 ), Vector3( -45, 0, 0 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Body/BugLeg3:rotation_degrees")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0.6, 0.7, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -135 ), Vector3( 0, 0, -145.167 ), Vector3( 0, 0, -135 ) ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Body/BugLeg3/CSGCylinder/1stJoint:rotation_degrees")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0.6, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 105 ), Vector3( 0, 0, 95.444 ), Vector3( 0, 0, 105 ) ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Body/BugLeg3/CSGCylinder/1stJoint/CSGCylinder/2ndJoint:rotation_degrees")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0.6, 0.7, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 45 ), Vector3( 0, 0, 27.977 ), Vector3( 0, 0, 45 ) ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Body:translation")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("CollisionShape:translation")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+
+[node name="CrabBody" type="Spatial"]
+
+[node name="Body" type="Spatial" parent="."]
+
+[node name="BugLeg1" parent="Body" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, -0.707107, 0.707107, 0, -0.707107, -0.707107, 0, 0, 0.25 )
+
+[node name="1stJoint" parent="Body/BugLeg1/CSGCylinder" index="0"]
+transform = Transform( 1, 0, 0, 0, -0.258819, -0.965925, 0, 0.965925, -0.258819, 0, -0.15, -9.68575e-08 )
+
+[node name="CSGCylinder" parent="Body/BugLeg1/CSGCylinder/1stJoint" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 5.96046e-08, 0, -5.96046e-08, 1, 0, -0.15, 2.98023e-08 )
+
+[node name="2ndJoint" parent="Body/BugLeg1/CSGCylinder/1stJoint/CSGCylinder" index="0"]
+transform = Transform( 1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, -0.15, 8.9407e-08 )
+
+[node name="LegPollen" type="Spatial" parent="Body/BugLeg1/CSGCylinder/1stJoint/CSGCylinder" index="1"]
+visible = false
+
+[node name="Pollen" parent="Body/BugLeg1/CSGCylinder/1stJoint/CSGCylinder/LegPollen" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, -1.49012e-07, 0, 1.49012e-07, 1, 0.0328892, -0.028514, -0.0164627 )
+
+[node name="BugLeg2" parent="Body" instance=ExtResource( 1 )]
+transform = Transform( -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, 0, 1, 0.25, 0, 0 )
+
+[node name="1stJoint" parent="Body/BugLeg2/CSGCylinder" index="0"]
+transform = Transform( -0.258819, 0.965926, 0, -0.965926, -0.258819, 0, 0, 0, 1, -2.98023e-08, -0.15, 0 )
+
+[node name="2ndJoint" parent="Body/BugLeg2/CSGCylinder/1stJoint/CSGCylinder" index="0"]
+transform = Transform( 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, -1.78814e-07, -0.15, 0 )
+
+[node name="BugLeg3" parent="Body" instance=ExtResource( 1 )]
+transform = Transform( -0.707107, 0.707107, 0, -0.707107, -0.707107, 0, 0, 0, 1, -0.25, 0, 0 )
+
+[node name="1stJoint" parent="Body/BugLeg3/CSGCylinder" index="0"]
+transform = Transform( -0.258819, -0.965925, 0, 0.965925, -0.258819, 0, 0, 0, 1, 1.49012e-08, -0.15, 0 )
+
+[node name="2ndJoint" parent="Body/BugLeg3/CSGCylinder/1stJoint/CSGCylinder" index="0"]
+transform = Transform( 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, 2.38419e-07, -0.15, 0 )
+
+[node name="BugLeg4" parent="Body" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, -0.707107, -0.707107, 0, 0.707107, -0.707107, 0, 0, -0.25 )
+
+[node name="1stJoint" parent="Body/BugLeg4/CSGCylinder" index="0"]
+transform = Transform( 1, 0, 0, 0, -0.258819, 0.965925, 0, -0.965925, -0.258819, 0, -0.15, 4.47035e-08 )
+
+[node name="2ndJoint" parent="Body/BugLeg4/CSGCylinder/1stJoint/CSGCylinder" index="0"]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, -0.15, 2.38419e-07 )
+
+[node name="BodyShape" type="CSGSphere" parent="Body"]
+transform = Transform( 1, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, 0, 0 )
+radius = 0.3
+material = ExtResource( 5 )
+
+[node name="HeadBump" type="CSGSphere" parent="Body/BodyShape"]
+transform = Transform( 1, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, 0.294912, 0 )
+radius = 0.0612824
+material = ExtResource( 5 )
+
+[node name="Mouth" type="CSGSphere" parent="Body/BodyShape"]
+transform = Transform( 1, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, -0.291379, 0 )
+visible = false
+operation = 2
+radius = 0.05
+material = ExtResource( 5 )
+
+[node name="Wound1" type="CSGCylinder" parent="Body/BodyShape"]
+transform = Transform( 0.84103, -0.21935, -0.316563, 0, -0.585156, 1.62184, -0.540989, -0.341004, -0.492133, 0.125731, 0.119122, 0.0961419 )
+visible = false
+operation = 2
+radius = 0.0657885
+height = 0.3
+cone = true
+material = ExtResource( 3 )
+
+[node name="Wound2" type="CSGCylinder" parent="Body/BodyShape"]
+transform = Transform( 0.878588, 0.0518234, -0.466198, -0.877399, -0.210648, -1.74719, -0.188749, 0.486026, -0.139603, 0.119111, 0.205344, -0.107926 )
+visible = false
+operation = 2
+radius = 0.0626174
+height = 0.346154
+cone = true
+material = ExtResource( 3 )
+
+[node name="Wound3" type="CSGCylinder" parent="Body/BodyShape"]
+transform = Transform( 0.625577, 0.313157, -0.465171, -0.137463, -0.549686, -1.66508, -0.777129, 0.276395, -0.300823, -0.0970951, 0.168183, -0.107926 )
+visible = false
+operation = 2
+radius = 0.05
+height = 0.3
+cone = true
+material = ExtResource( 3 )
+
+[node name="Wound4" type="CSGCylinder" parent="Body/BodyShape"]
+transform = Transform( 0.344906, 0.386958, 0.531126, 1.05282, 0.308997, -1.58419, -0.777129, 0.276395, -0.300823, -0.0970951, 0.168183, 0.152881 )
+visible = false
+operation = 2
+radius = 0.0548548
+height = 0.44493
+cone = true
+material = ExtResource( 3 )
+
+[node name="parasite" type="CSGSphere" parent="Body/BodyShape"]
+transform = Transform( 1, 0, 0, 0, 0.195899, 0.402942, 0, -0.0201471, 0.979494, 0, 0.233917, 0.00814275 )
+visible = false
+radius = 0.2
+material = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Body"]
+root_node = NodePath("../..")
+anims/Alert = SubResource( 1 )
+anims/Death = SubResource( 2 )
+anims/Idle = SubResource( 3 )
+anims/RESET = SubResource( 4 )
+anims/Walk = SubResource( 5 )
+anims/Walk2 = SubResource( 6 )
+
+[node name="StuckPollen" type="Spatial" parent="Body"]
+visible = false
+
+[node name="Pollen" parent="Body/StuckPollen" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.199162, 0.0717793, 0.103189 )
+
+[node name="Pollen2" parent="Body/StuckPollen" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.164834, 0.034679, 0.193326 )
+
+[node name="Pollen3" parent="Body/StuckPollen" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.135242, -0.0537499, -0.204157 )
+
+[editable path="Body/BugLeg1"]
+[editable path="Body/BugLeg2"]
+[editable path="Body/BugLeg3"]
+[editable path="Body/BugLeg4"]
