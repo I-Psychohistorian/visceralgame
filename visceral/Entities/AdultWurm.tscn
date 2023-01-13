@@ -868,7 +868,7 @@ tracks/7/keys = {
 }
 
 [sub_resource type="BoxShape" id=13]
-extents = Vector3( 0.611238, 0.593608, 0.939286 )
+extents = Vector3( 0.611238, 1.15935, 0.939286 )
 
 [sub_resource type="CapsuleShape" id=20]
 radius = 12.6127

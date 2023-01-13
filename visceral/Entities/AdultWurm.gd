@@ -2,7 +2,7 @@ extends KinematicBody
 
 
 var ichor = 50
-var damage = 1
+var damage = 15
 var stress = 0
 var hungry = false
 var dead = false
@@ -349,8 +349,12 @@ func tongue_aim():
 		tongue.rotation.y = deg2rad(-20)
 	elif tongue.rotation.y >= deg2rad(20):
 		tongue.rotation.y = deg2rad(20)
-	tongue.translation.y = (tongue.rotation.x / 66.67)
-	tongue.translation.x = (tongue.rotation.y / - 66.67)
+	var ty = (tongue.rotation.x / 2)
+	print(ty)
+	tongue.translation.y = ty
+	var tx = (tongue.rotation.y / - 2)
+	print(tx)
+	tongue.translation.x = tx
 	if stab == false:
 		tongue.translation.z += 0.1
 		if tongue.translation.z >= 0:

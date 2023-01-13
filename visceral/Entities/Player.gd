@@ -62,6 +62,7 @@ var not_invisible = true
 
 #physics variables
 var speed = 2.0 #normally 2.0
+var jumpspeed = 4
 var gravity = 1
 var jump = 0.5
 var jump_dash = false
@@ -79,7 +80,7 @@ var mouse_hide = false
 
 var rng = RandomNumberGenerator.new()
 # Called when the node enters the scene tree for the first time.
-
+var cheating = true #enables cheats on p
 
 
 func _ready():
@@ -108,7 +109,7 @@ func _process(delta):
 				if jump_dash == false:
 					$Jump_speed_boost.start()
 					jump_dash = true
-					speed = 3.5
+					speed = jumpspeed
 		if Input.is_action_pressed("forward"):
 			direction -= transform.basis.z
 		elif Input.is_action_pressed("backward"):
@@ -126,6 +127,9 @@ func _process(delta):
 			Eat()
 		if Input.is_action_just_pressed("interact"):
 			pass
+		if Input.is_action_just_pressed("cheats"):
+			if cheating == true:
+				cheat()
 	if Input.is_action_just_pressed("hide_mouse"):
 		toggle_mouse_mode()
 		hud.toggle_menu()
@@ -139,6 +143,11 @@ func update_hud():
 	hud.points = points
 	hud.claws = claws
 	hud.holding = holding_item
+
+func cheat():
+	ichor = 100
+	stamina = 999
+	jumpspeed = 6
 
 func Left():
 	action_cooldown = true
