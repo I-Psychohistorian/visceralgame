@@ -638,9 +638,11 @@ func _on_Give_up_timeout():
 		gaveup = true
 		$Idle.start()
 
-
+#will allow for hunger tick to harm, may change this later
 func _on_Stress_timeout():
-	pass # Replace with function body.
+	if stress > ichor:
+		stress = 0
+		ichor -= 4
 
 
 func _on_Idle_timeout():
