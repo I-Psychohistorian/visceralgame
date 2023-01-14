@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Textures/pinkflesh.tres" type="Material" id=1]
 [ext_resource path="res://Entities/Player.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Entities/PlantController.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Entities/FlowerBug.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Entities/RandomFlower.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Textures/pinkbone.tres" type="Material" id=7]
 
 [node name="Spatial" type="Spatial"]
 
@@ -21,6 +22,15 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.2587, 0 )
 operation = 2
 invert_faces = true
 
+[node name="CSGBox2" type="CSGBox" parent="CSGCylinder"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.6635, -41.0173 )
+operation = 2
+invert_faces = true
+width = 6.78021
+height = 0.254866
+depth = 5.02011
+material = ExtResource( 7 )
+
 [node name="PlantController" parent="." instance=ExtResource( 4 )]
 
 [node name="Player" parent="PlantController" instance=ExtResource( 2 )]
@@ -33,4 +43,7 @@ transform = Transform( 1, 0, 2.38419e-07, 0, 1, 0, -2.38419e-07, 0, 1, 0, -0.121
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -22.2512 )
 
 [node name="RandomFlower" parent="PlantController" instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.95525, -2.01879, -4.69768 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.58809, -4.17488, -40.2959 )
+
+[node name="FlowerBug2" parent="PlantController" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14.3858 )

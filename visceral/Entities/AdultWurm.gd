@@ -1,15 +1,23 @@
 extends KinematicBody
 
-
+var max_ichor = 50
 var ichor = 50
+var injured = false
+
+#primarily for sounds, but also for give up
+var hurt = false
+
 var damage = 15
 var stress = 0
-var hungry = false
+var hungry = true
+var killed_twice = false
+var food_eaten = 0
+var fertile = false
 var dead = false
 
 var sound_type = "meat"
 
-var chlidren_nearby = false
+var children_nearby = false
 var states = ['Lurking', 'Moving', 'Attacking', 'Turning', 'Birthing']
 var current_state = 'Lurking'
 
@@ -83,7 +91,12 @@ onready var btw11 = $Body/Tail/juveniletail/CSGSphere/Wound11
 onready var btw12 = $Body/Tail/juveniletail/CSGSphere/Wound12
 onready var w13 = $Body/Wound13
 onready var w14 =$Body/Wound14
-# Called when the node enters the scene tree for the first time.
+
+# w1,w2,w3,w4,w5,tw6,tw7,tw8,tw9,tw10,btw11,btw12,w13,w14
+onready var behind_tail = $WalkBehind
+var retreat_time_set = false
+var gaveup = false
+var retreat_coords_temp = Vector3()
 
 var rng = RandomNumberGenerator.new()
 
@@ -92,10 +105,16 @@ func _ready():
 	rng.randomize()
 
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	worm_yeet = Vector3(0, 0, 0)
 	if dead == false:
+		if aggro == true:
+			if current_state != "Lurking":
+				if retreat_time_set == false:
+					retreat_time_set = true
+					$Give_up.start()
 		if target_seen == false:
 			current_state = states[0]
 		determine_rotation_quad()
@@ -124,7 +143,7 @@ func movement():
 				move_and_slide(move * speed, Vector3.UP)
 			elif immediate_look == true:
 				look_at(target_vec, Vector3.UP)
-				print('looking snap')
+				#print('looking snap')
 				rotation.x = clamp(rotation.x, deg2rad(0), deg2rad(0))
 				rotation.z = clamp(rotation.x, deg2rad(0), deg2rad(0))
 				immediate_look = false
@@ -132,25 +151,72 @@ func movement():
 				self.rotate_y(rotate_degree)
 			elif turning_right == true:
 				self.rotate_y(-rotate_degree)
-
+	elif current_state == 'Lurking':
+		if mouth_closed == false:
+			mouth_closed = true
+			$MouthAnimation.play_backwards("Open")
+			$TongueCollide/Spike/TongueAnimator.play("Hidden")
 			#print('movin')
 	
 
-
+func show_injury():
+	if injured == true:
+		w1.visible = true
+		w2.visible = true
+		w3.visible = true
+		w4.visible = true
+		w5.visible = true
+		tw6.visible = true
+		tw7.visible = true
+		tw8.visible = true
+		tw9.visible = true
+		tw10.visible = true
+		btw11.visible = true
+		btw12.visible = true
+		w13.visible = true
+		w14.visible = true
+	elif injured == false:
+		w1.visible = false
+		w2.visible = false
+		w3.visible = false
+		w4.visible = false
+		w5.visible = false
+		tw6.visible = false
+		tw7.visible = false
+		tw8.visible = false
+		tw9.visible = false
+		tw10.visible = false
+		btw11.visible = false
+		btw12.visible = false
+		w13.visible = false
+		w14.visible = false
 
 func scan():
 	var sight = sense_range.get_overlapping_bodies()
 	if target_seen == false:
-		for thing in sight:
-			if thing.is_in_group('Parasite'):
-				set_target(thing)
-				target_seen = true
-			elif thing.is_in_group('Prey'):
-				set_target(thing)
-				target_seen = true
+		if gaveup == false:
+			for thing in sight:
+				if thing.is_in_group('Player') or thing.is_in_group('Parasite'):
+					if thing.hurt_wurm == true:
+						set_target(thing)
+						target_seen = true
+						print('prioritized threat')
+				if thing.is_in_group('Parasite'):
+					set_target(thing)
+					target_seen = true
+				elif thing.is_in_group('Prey'):
+					if thing.dead == false:
+						set_target(thing)
+						target_seen = true
+		if gaveup == true:
+			set_target(retreat_coords_temp)
+			target_seen = true
 
 func set_target(target):
-	target_vec = target.global_transform.origin
+	if gaveup == false:
+		target_vec = target.global_transform.origin
+	elif gaveup == true:
+		target_vec = retreat_coords_temp
 	var l = last_seen.instance()
 	self.add_child(l)
 	l.drop_coords = target_vec
@@ -208,15 +274,27 @@ func get_abs(num):
 	return
 
 
+func death():
+	pass
 
 func take_damage(damage):
 	ichor -= damage
+	aggro = true
+	killed_twice = false
+	current_state = "Moving"
+	if ichor <= 40:
+		injured = true
+		show_injury()
+	print('aggroed from damage!')
+	hurt = true
+	$HurtTimer.start()
+	#sounds?
 	#aggro towards source
 
 
 func choose_move_action():
 	#dir_chosen terminates loop to avoid confusion over multiple targets
-	print('choosing move action')
+	#print('choosing move action')
 	var dir_chosen = false
 	var sight = sense_range.get_overlapping_bodies()
 	for i in sight:
@@ -244,7 +322,7 @@ func choose_move_action():
 					elif t_calc_z <= 0:
 						target_quadrant = -2
 						#270 to 360 deg
-				print('face quad= ', quadrant, ' targ quad= ', target_quadrant)
+				#print('face quad= ', quadrant, ' targ quad= ', target_quadrant)
 				
 				if quadrant + target_quadrant == 0:
 					if random_turn_set == false:
@@ -285,7 +363,7 @@ func choose_move_action():
 						set_turn_right()
 					#print('adjacent quadrant')
 				if quadrant + target_quadrant != 0:
-					print('random turn reset')
+					#print('random turn reset')
 					random_turn_set = false
 				#dir_chosen = true
 				#print('direction chosen')
@@ -299,7 +377,7 @@ func choose_move_action():
 						turning_right = false
 						
 						$GrossBodyAnimation.play("Forward")
-						print('in front of')
+						#print('in front of')
 				dir_chosen = true
 				#temp till I figure out having animations trigger the boolean toggle
 				#moving_at_all = true
@@ -314,7 +392,8 @@ func determine_aggro():
 		aggro = false
 		hiding = false
 	else:
-		aggro = true
+		if killed_twice == false:
+			aggro = true
 		hiding = false
 func clear_move():
 	$GrossBodyAnimation.play("IdlePose")
@@ -330,16 +409,21 @@ func toggle_moving():
 
 func tongue_aim():
 	if next_stab == true:
-		$StabTimer.start()
-		stab = true
+		if killed_twice == false:
+			$StabTimer.start()
+			stab = true
+			crab.visible = false
+		elif killed_twice == true:
+			next_stab = false
 	var targets = tongue_target_area.get_overlapping_bodies()
 	var target_found = false
 	if target_found == false:
 		for target in targets:
 			if target.is_in_group('Prey'):
-				target_found = true
-				tongue_target = target.global_transform.origin
-				$TongueCollide/Spike/TongueAnimator.play("Pulse")
+				if target.dead == false:
+					target_found = true
+					tongue_target = target.global_transform.origin
+					$TongueCollide/Spike/TongueAnimator.play("Pulse")
 	tongue.look_at(tongue_target, Vector3.UP)
 	if tongue.rotation.x <= deg2rad(-20):
 		tongue.rotation.x = deg2rad(-20)
@@ -350,10 +434,10 @@ func tongue_aim():
 	elif tongue.rotation.y >= deg2rad(20):
 		tongue.rotation.y = deg2rad(20)
 	var ty = (tongue.rotation.x / 2)
-	print(ty)
+	#print(ty)
 	tongue.translation.y = ty
 	var tx = (tongue.rotation.y / - 2)
-	print(tx)
+	#print(tx)
 	tongue.translation.x = tx
 	if stab == false:
 		tongue.translation.z += 0.1
@@ -364,19 +448,34 @@ func tongue_aim():
 		if tongue.translation.z <= -1.4:
 			tongue.translation.z = -1.4
 	if tongue.translation.z == 0:
+		crab.visible = false
 		$TongueCollide/Spike/TongueAnimator.play("Hidden")
 	
 func _on_scan_delay_timeout():
 	clear_move()
 	target_seen = false
 	scan()
+	var near_zone = nearby.get_overlapping_bodies()
+	var targets_near = false
+	#retracts tongue if nothing is nearby
+	if targets_near == false:
+		for i in near_zone:
+			if i.is_in_group('Prey'):
+				if i.dead == false:
+					targets_near = true
+			if i.is_in_group('Parasite'):
+				targets_near = true
+	if targets_near == false:
+		stab = false
+
 	if current_state == "Attacking":
 		var in_eat_range = false
 		var mouthzone = tongue_target_area.get_overlapping_bodies()
 		if in_eat_range == false:
 			for t in mouthzone:
 				if t.is_in_group('Prey'):
-					in_eat_range = true
+					if t.dead == false:
+						in_eat_range = true
 		if in_eat_range == false:
 			current_state = "Moving"
 			next_stab = false
@@ -393,13 +492,18 @@ func _on_scan_delay_timeout():
 
 func _on_OptimalEat_body_entered(body):
 	if body.is_in_group('Prey'):
-		current_state = states[2]
-		$GrossBodyAnimation.play("IdlePose")
-		tongue_target = body.global_transform.origin
-		tongue_safety = false
-		stab = true
-		next_stab = false
-		$StabTimer.start()
+		if body.dead == false:
+			current_state = states[2]
+			$GrossBodyAnimation.play("IdlePose")
+			tongue_target = body.global_transform.origin
+			if aggro == true:
+				if mouth_closed == true:
+					mouth_closed = false
+					$MouthAnimation.play("Open")
+				tongue_safety = false
+				stab = true
+				next_stab = false
+				$StabTimer.start()
 
 
 
@@ -410,9 +514,10 @@ func _on_Sight_body_entered(body):
 
 func _on_movechoose_timeout():
 	if current_state == "Moving":
-		choose_move_action()
-		print('movechoose timer check')
-
+		if aggro == true:
+			choose_move_action()
+			#print('movechoose timer check')
+			
 #keeps wurm from spinning endlessly
 func _on_Facing_body_entered(body):
 	#will swap to current_state "Moving
@@ -454,9 +559,27 @@ func _on_Debug_timeout():
 
 
 func _on_stab_zone_body_entered(body):
+	var choice = rng.randi_range(0,1)
 	if tongue_safety == false:
 		if body.is_in_group('Destructible'):
 			body.take_damage(damage)
+			$Give_up.start()
+			#should restart timer
+			print('reset giveup')
+		if hungry == true:
+			if body.is_in_group('SmallBug'):
+				body.dead = true
+				hungry = false
+				food_eaten += 5
+				#maybe make it more if the crab was big?
+				$Hunger_time.start()
+				body.queue_free()
+				crab.visible = true
+		if hungry == false:
+			if body.is_in_group('SmallBug'):
+				if killed_twice == false:
+					if body.dead == true:
+						killed_twice = true
 		$StabTimer.start()
 
 
@@ -473,10 +596,12 @@ func _on_StabTimer_timeout():
 
 func _on_CloseRange_body_entered(body):
 	if body.is_in_group('Prey'):
-		current_state = states[1]
-		if mouth_closed == true:
-			$MouthAnimation.play("Open")
-			mouth_closed = false
+		if body.dead == false:
+			current_state = states[1]
+			if mouth_closed == true:
+				if killed_twice == false:
+					$MouthAnimation.play("Open")
+					mouth_closed = false
 
 
 func _on_StabCooldown_timeout():
@@ -487,3 +612,38 @@ func _on_StabCooldown_timeout():
 func _on_Sight_body_exited(body):
 	if body.is_in_group('Player'):
 		print('player exited sight')
+
+
+func _on_Hunger_time_timeout():
+	if hungry == false:
+		pass
+	show_injury()
+	hungry = true
+	killed_twice = false
+
+
+func _on_Give_up_timeout():
+	if hurt == false:
+		retreat_coords_temp = behind_tail.global_transform.origin
+		set_target(behind_tail)
+		print('retreat set')
+		gaveup = true
+		$Idle.start()
+
+
+func _on_Stress_timeout():
+	pass # Replace with function body.
+
+
+func _on_Idle_timeout():
+	retreat_time_set = false
+	if hurt == false:
+		current_state = 'Lurking'
+		tongue_safety = true
+	gaveup = false
+	print('reset gaveup')
+
+
+
+func _on_HurtTimer_timeout():
+	hurt = false

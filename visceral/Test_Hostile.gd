@@ -1,6 +1,8 @@
 extends KinematicBody
 
 var dead = false
+var hurt_wurm = false
+
 
 var gravity = 5
 var grav_vec = Vector3()
@@ -183,6 +185,9 @@ func _on_pokebox_body_entered(body):
 					if body.parasitized == false:
 						body.parasitized = true
 						print('parasitized!')
+				if body.is_in_group('Predator'):
+					hurt_wurm == true
+
 
 func _on_pokebox2_body_entered(body):
 	#print(body)
@@ -194,6 +199,9 @@ func _on_pokebox2_body_entered(body):
 					if body.parasitized == false:
 						body.parasitized = true
 						print('parasitized!')
+				if body.is_in_group('Predator'):
+					hurt_wurm == true
+						
 
 
 func _on_pokebox3_body_entered(body):
@@ -205,6 +213,8 @@ func _on_pokebox3_body_entered(body):
 					if body.parasitized == false:
 						body.parasitized = true
 						print('parasitized!')
+				if body.is_in_group('Predator'):
+					hurt_wurm == true
 
 func aggro_and_hide():
 	var things_in_sight = sight.get_overlapping_bodies()
@@ -301,3 +311,7 @@ func _on_DecayTimer_timeout():
 	if aggro == true:
 		take_damage(2)
 		print('parasite decay')
+
+
+func _on_Timer_timeout():
+	hurt_wurm = false

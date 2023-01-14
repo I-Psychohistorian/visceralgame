@@ -1,6 +1,7 @@
 extends KinematicBody
 
 var seeding = false
+var hurt_wurm = false
 
 #game stats
 var ichor = 30
@@ -158,6 +159,9 @@ func Left():
 		for target in targets:
 			if target.is_in_group('Destructible'):
 				target.take_damage(claws)
+				if target.is_in_group('Predator'):
+					hurt_wurm = true
+					target.set_target(self)
 			if target.is_in_group('Plant'):
 				eat_sounds()
 			if target.is_in_group('Animal'):
@@ -426,3 +430,7 @@ func _on_eat_cooldown_timeout():
 	cant_eat = false
 	hud.notif_text = "You can eat again"
 	hud.notif_ping()
+
+
+func _on_hurt_wurm_timeout():
+	hurt_wurm = false

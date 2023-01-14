@@ -292,7 +292,7 @@ tracks/10/keys = {
 }
 
 [sub_resource type="SphereShape" id=6]
-radius = 0.30129
+radius = 0.357113
 
 [sub_resource type="Animation" id=10]
 resource_name = "Forward"
@@ -935,7 +935,7 @@ albedo_color = Color( 0.054902, 0, 1, 1 )
 material = SubResource( 28 )
 size = Vector3( 0.1, 0.1, 20 )
 
-[node name="AdultWurm" type="KinematicBody" groups=["Predator"]]
+[node name="AdultWurm" type="KinematicBody" groups=["Destructible", "Predator"]]
 collision_layer = 3
 collision_mask = 3
 script = ExtResource( 5 )
@@ -1247,6 +1247,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, -0.709997, 0.662549 )
 shape = SubResource( 23 )
 
 [node name="Debug" type="Timer" parent="."]
+wait_time = 2.0
 autostart = true
 
 [node name="cartesian point" type="Spatial" parent="."]
@@ -1281,6 +1282,27 @@ one_shot = true
 wait_time = 0.8
 one_shot = true
 
+[node name="Hunger_time" type="Timer" parent="."]
+wait_time = 120.0
+autostart = true
+
+[node name="Give_up" type="Timer" parent="."]
+wait_time = 15.0
+one_shot = true
+
+[node name="Stress" type="Timer" parent="."]
+
+[node name="WalkBehind" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.25631 )
+
+[node name="Idle" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="HurtTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
 [connection signal="body_entered" from="TongueCollide/stab_zone" to="." method="_on_stab_zone_body_entered"]
 [connection signal="body_entered" from="OptimalEat" to="." method="_on_OptimalEat_body_entered"]
 [connection signal="body_exited" from="OptimalEat" to="." method="_on_OptimalEat_body_exited"]
@@ -1294,6 +1316,11 @@ one_shot = true
 [connection signal="timeout" from="Debug" to="." method="_on_Debug_timeout"]
 [connection signal="timeout" from="StabTimer" to="." method="_on_StabTimer_timeout"]
 [connection signal="timeout" from="StabCooldown" to="." method="_on_StabCooldown_timeout"]
+[connection signal="timeout" from="Hunger_time" to="." method="_on_Hunger_time_timeout"]
+[connection signal="timeout" from="Give_up" to="." method="_on_Give_up_timeout"]
+[connection signal="timeout" from="Stress" to="." method="_on_Stress_timeout"]
+[connection signal="timeout" from="Idle" to="." method="_on_Idle_timeout"]
+[connection signal="timeout" from="HurtTimer" to="." method="_on_HurtTimer_timeout"]
 
 [editable path="PinkClaw"]
 [editable path="PinkClaw2"]

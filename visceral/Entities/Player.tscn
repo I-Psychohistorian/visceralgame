@@ -635,12 +635,17 @@ one_shot = true
 wait_time = 10.0
 one_shot = true
 
+[node name="hurt_wurm" type="Timer" parent="."]
+wait_time = 20.0
+autostart = true
+
 [connection signal="body_entered" from="PollenTouch" to="." method="_on_PollenTouch_body_entered"]
 [connection signal="timeout" from="StaminaTimer" to="." method="_on_StaminaTimer_timeout"]
 [connection signal="timeout" from="HungerTimer" to="." method="_on_HungerTimer_timeout"]
 [connection signal="timeout" from="Jump_speed_boost" to="." method="_on_Jump_speed_boost_timeout"]
 [connection signal="timeout" from="action_cooldown" to="." method="_on_action_cooldown_timeout"]
 [connection signal="timeout" from="eat_cooldown" to="." method="_on_eat_cooldown_timeout"]
+[connection signal="timeout" from="hurt_wurm" to="." method="_on_hurt_wurm_timeout"]
 
 [editable path="centre/Claw"]
 [editable path="centre/Claw2"]

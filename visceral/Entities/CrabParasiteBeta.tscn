@@ -1195,6 +1195,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.572282, 0 )
 wait_time = 15.0
 autostart = true
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 20.0
+autostart = true
+
 [connection signal="body_entered" from="Clawunit/Darkclaw1/Arm/Bend/Point/pokebox" to="." method="_on_pokebox_body_entered"]
 [connection signal="body_entered" from="Clawunit2/Darkclaw1/Arm/Bend/Point/pokebox2" to="." method="_on_pokebox2_body_entered"]
 [connection signal="body_entered" from="Clawunit3/Darkclaw1/Arm/Bend/Point/pokebox3" to="." method="_on_pokebox3_body_entered"]
@@ -1214,6 +1218,7 @@ autostart = true
 [connection signal="body_exited" from="Aggro_out" to="." method="_on_Aggro_out_body_exited"]
 [connection signal="timeout" from="deathtime" to="." method="_on_deathtime_timeout"]
 [connection signal="timeout" from="DecayTimer" to="." method="_on_DecayTimer_timeout"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 
 [editable path="Clawunit/Darkclaw1"]
 [editable path="Clawunit2/Darkclaw1"]

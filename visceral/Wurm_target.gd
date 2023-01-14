@@ -17,7 +17,7 @@ func _ready():
 #func _process(delta):
 #	pass
 func reparent():
-	#print(drop_coords)
+	print(drop_coords)
 	var new_parent = self.get_parent().get_parent()
 	#for ensuring correct parent is one node up, should be plant controller
 	#print(new_parent)
