@@ -1283,11 +1283,11 @@ wait_time = 0.8
 one_shot = true
 
 [node name="Hunger_time" type="Timer" parent="."]
-wait_time = 120.0
+wait_time = 30.0
 autostart = true
 
 [node name="Give_up" type="Timer" parent="."]
-wait_time = 15.0
+wait_time = 60.0
 one_shot = true
 
 [node name="Stress" type="Timer" parent="."]
@@ -1302,6 +1302,10 @@ one_shot = true
 [node name="HurtTimer" type="Timer" parent="."]
 wait_time = 10.0
 one_shot = true
+
+[node name="BirthCast" type="RayCast" parent="."]
+enabled = true
+cast_to = Vector3( 0, -0.5, -3 )
 
 [connection signal="body_entered" from="TongueCollide/stab_zone" to="." method="_on_stab_zone_body_entered"]
 [connection signal="body_entered" from="OptimalEat" to="." method="_on_OptimalEat_body_entered"]

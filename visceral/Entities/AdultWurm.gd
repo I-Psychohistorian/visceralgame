@@ -98,6 +98,9 @@ var retreat_time_set = false
 var gaveup = false
 var retreat_coords_temp = Vector3()
 
+#will check collisions so that wurm can vomit babies
+onready var birthray = $BirthCast
+
 var rng = RandomNumberGenerator.new()
 
 var debug = false
@@ -616,7 +619,12 @@ func _on_Sight_body_exited(body):
 
 func _on_Hunger_time_timeout():
 	if hungry == false:
-		pass
+		ichor += 5
+		print('regenerated')
+		if ichor >= 40:
+			injured = false
+	elif hungry == true:
+		stress += 5
 	show_injury()
 	hungry = true
 	killed_twice = false
