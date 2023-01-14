@@ -3,7 +3,7 @@ extends KinematicBody
 var max_ichor = 50
 var ichor = 50
 var injured = false
-
+var parasitized = false
 #primarily for sounds, but also for give up
 var hurt = false
 
@@ -422,7 +422,7 @@ func tongue_aim():
 	var target_found = false
 	if target_found == false:
 		for target in targets:
-			if target.is_in_group('Prey'):
+			if target.is_in_group('Prey') or target.is_in_group('Parasite'):
 				if target.dead == false:
 					target_found = true
 					tongue_target = target.global_transform.origin
@@ -494,7 +494,7 @@ func _on_scan_delay_timeout():
 
 
 func _on_OptimalEat_body_entered(body):
-	if body.is_in_group('Prey'):
+	if body.is_in_group('Prey') or body.is_in_group('Parasite'):
 		if body.dead == false:
 			current_state = states[2]
 			$GrossBodyAnimation.play("IdlePose")
@@ -558,7 +558,7 @@ func _on_Debug_timeout():
 	#print(worm_yeet)
 	#check_quads()
 	#checks current facing quadrant
-	print(current_state)
+	#print(current_state)
 
 
 func _on_stab_zone_body_entered(body):

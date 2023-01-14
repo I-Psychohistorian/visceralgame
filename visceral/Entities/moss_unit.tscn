@@ -1,19 +1,21 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Assets/MossModel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Entities/moss_unit.gd" type="Script" id=2]
 
 [sub_resource type="CylinderShape" id=1]
-height = 0.06
+height = 0.09
 radius = 0.15
 
 [sub_resource type="CylinderShape" id=2]
-height = 0.06
-radius = 0.3
+height = 0.12
+radius = 0.4
 
 [sub_resource type="SphereShape" id=3]
 radius = 4.0
 
-[node name="moss_unit" type="KinematicBody"]
+[node name="moss_unit" type="KinematicBody" groups=["Buoyant", "Destructible", "Moss"]]
+script = ExtResource( 2 )
 
 [node name="MossModel" parent="." instance=ExtResource( 1 )]
 
@@ -29,3 +31,19 @@ shape = SubResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="player_sensor"]
 shape = SubResource( 3 )
+
+[node name="CentralNode" type="Spatial" parent="."]
+
+[node name="GrowPoint" type="Spatial" parent="CentralNode"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.1, 0 )
+
+[node name="stress_tick" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[node name="neighbor_timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="stress_tick" to="." method="_on_stress_tick_timeout"]
+[connection signal="timeout" from="neighbor_timer" to="." method="_on_neighbor_timer_timeout"]

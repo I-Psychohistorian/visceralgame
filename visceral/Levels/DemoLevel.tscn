@@ -189,6 +189,10 @@ radius = 3.38418
 height = 3.32844
 material = ExtResource( 8 )
 
+[node name="ovalpool" parent="CSGCombiner/MossRoom" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 0.4, 0, 0, 0, 0.8, -0.644152, -1.51746, -1.89485 )
+operation = 0
+
 [node name="PlantController" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.667624, 0 )
 

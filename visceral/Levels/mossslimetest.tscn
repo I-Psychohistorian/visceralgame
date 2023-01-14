@@ -1,0 +1,60 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Entities/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Entities/PlantController.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Entities/moss_unit.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Textures/pinkflesh.tres" type="Material" id=4]
+[ext_resource path="res://Entities/RandomFlower.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Terrain/ovalpool.tscn" type="PackedScene" id=6]
+
+[node name="Spatial" type="Spatial"]
+
+[node name="PlantController" parent="." instance=ExtResource( 2 )]
+
+[node name="Player" parent="PlantController" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.973755 )
+
+[node name="moss_unit" parent="PlantController" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.29871, -1.5713 )
+
+[node name="moss_unit2" parent="PlantController" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.72087, -1.29871, -1.5713 )
+
+[node name="moss_unit3" parent="PlantController" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.11269, -1.29871, -1.5713 )
+
+[node name="moss_unit4" parent="PlantController" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.69637, -1.29871, -1.5713 )
+
+[node name="RandomFlower" parent="PlantController" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.97278, -1.29391, -1.64345 )
+
+[node name="moss_unit5" parent="PlantController" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.72087, -1.29871, 2.38921 )
+
+[node name="moss_unit6" parent="PlantController" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.11269, -1.29871, 2.38921 )
+
+[node name="moss_unit7" parent="PlantController" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.92901, -1.29871, 2.04177 )
+
+[node name="moss_unit8" parent="PlantController" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.92901, -1.29871, 2.69645 )
+
+[node name="moss_unit9" parent="PlantController" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.46966, -1.29871, 2.38921 )
+
+[node name="CSGCombiner" type="CSGCombiner" parent="."]
+use_collision = true
+
+[node name="CSGBox" type="CSGBox" parent="CSGCombiner"]
+use_collision = true
+invert_faces = true
+width = 7.0
+height = 3.0
+depth = 7.0
+material = ExtResource( 4 )
+
+[node name="ovalpool" parent="CSGCombiner" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 0.4, 0, 0, 0, 0.8, 1.70678, -1.26749, 2.33968 )
+operation = 0

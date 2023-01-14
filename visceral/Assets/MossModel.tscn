@@ -13,28 +13,70 @@ persistence = 1.0
 noise = SubResource( 1 )
 
 [sub_resource type="SpatialMaterial" id=3]
-albedo_color = Color( 0.333333, 0.262745, 0.14902, 0.941176 )
+albedo_color = Color( 0.231373, 0.14902, 0.0156863, 0.941176 )
 albedo_texture = SubResource( 2 )
 
 [node name="MossModel" type="Spatial"]
 script = ExtResource( 1 )
 
-[node name="RegularTrans" type="CSGSphere" parent="."]
+[node name="cb" type="CSGCombiner" parent="."]
+
+[node name="RegularTrans" type="CSGSphere" parent="cb"]
 transform = Transform( 1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0 )
+visible = false
 radius = 0.3
 material = ExtResource( 2 )
 
-[node name="DeepGreen" type="CSGSphere" parent="."]
+[node name="DeepGreen" type="CSGSphere" parent="cb"]
 transform = Transform( 1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0 )
+visible = false
 radius = 0.3
 material = ExtResource( 3 )
 
-[node name="MidGreen" type="CSGSphere" parent="."]
+[node name="MidGreen" type="CSGSphere" parent="cb"]
 transform = Transform( 1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0 )
+visible = false
 radius = 0.3
 material = ExtResource( 4 )
 
-[node name="Brown" type="CSGSphere" parent="."]
+[node name="Brown" type="CSGSphere" parent="cb"]
 transform = Transform( 1, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0 )
+visible = false
 radius = 0.3
 material = SubResource( 3 )
+
+[node name="damage1" type="CSGCylinder" parent="cb"]
+transform = Transform( 1, 0, 0, 0, -0.195826, -0.980639, 0, 0.980639, -0.195826, -0.115851, 0.0393542, 0 )
+visible = false
+operation = 2
+radius = 0.05
+height = 0.308266
+cone = true
+material = ExtResource( 4 )
+
+[node name="damage2" type="CSGCylinder" parent="cb"]
+transform = Transform( -0.515434, 0.83653, -0.185865, 0.0237365, -0.202876, -0.978917, -0.856601, -0.508978, 0.084713, 0.122885, 0.0424014, 0 )
+visible = false
+operation = 2
+radius = 0.05
+height = 0.451341
+cone = true
+material = ExtResource( 4 )
+
+[node name="damage3" type="CSGCylinder" parent="cb"]
+transform = Transform( 0.929339, 0.362079, -0.0723045, 0, -0.195826, -0.980639, -0.369228, 0.911346, -0.181989, 0.010656, 0.0393542, 0.173724 )
+visible = false
+operation = 2
+radius = 0.05
+height = 0.308266
+cone = true
+material = ExtResource( 4 )
+
+[node name="damage4" type="CSGCylinder" parent="cb"]
+transform = Transform( -0.989147, 0.144084, -0.0287726, 0, -0.195826, -0.980639, -0.146929, -0.969996, 0.193701, 0.0464527, 0.0393542, -0.0953182 )
+visible = false
+operation = 2
+radius = 0.05
+height = 0.308266
+cone = true
+material = ExtResource( 4 )

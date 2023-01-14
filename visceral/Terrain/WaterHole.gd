@@ -30,8 +30,8 @@ func _on_WaterEffectTimer_timeout():
 	var bodies = self.get_overlapping_bodies()
 	for body in bodies:
 		if body.is_in_group("Buoyant"):
-			if body.wet == false:
-				body.wet = true
+			if body.in_water == false:
+				body.in_water = true
 
 
 func _on_WaterHole_body_exited(body):

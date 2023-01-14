@@ -175,6 +175,9 @@ func leg_stop():
 	$legs/Clawunit2/ClawAnim.stop()
 	$legs/Clawunit3/ClawAnim.stop()
 	
+func set_target(target):
+	pass
+
 func _on_pokebox_body_entered(body):
 	#print(body)
 	if attack1 == true:

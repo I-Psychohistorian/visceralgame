@@ -1,7 +1,8 @@
 extends KinematicBody
 
-var ichor = 6
-var max_ichor = 6
+var dead = false
+var ichor = 8
+var max_ichor = 8
 var stress = 0
 
 var nutrition = 1
@@ -27,16 +28,36 @@ var connected_to_water = false
 
 var rng = RandomNumberGenerator.new()
 
+var grav_vec = Vector3()
+var gravity = 1
+
 onready var model = $MossModel
 onready var neighbor_area = $neighbor_sensor
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	rng.randomize()
+	generate_type()
+	set_type()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	grav_vec = Vector3()
+	if not is_on_floor():
+		grav_vec.y -= gravity
+	move_and_slide(grav_vec, Vector3.UP)
+
+func take_damage(damage):
+	ichor -= damage
+	trimmed = true
+	if ichor < max_ichor:
+		damaged = true
+		model.show_damage()
+	if dead == false:
+		if ichor <= 0:
+			#die
+			queue_free()
+	
 
 func generate_type():
 	var choice = rng.randi_range(0,2)
@@ -57,7 +78,17 @@ func set_type():
 	elif damaged == false:
 		model.hide_damage()
 
-
+func check_neighbors():
+	neighbors = 0
+	flower_neighbors = 0
+	var nearby_plants = neighbor_area.get_overlapping_bodies()
+	for p in nearby_plants:
+		if p.is_in_group('Moss'):
+			neighbors +=1
+		elif p.is_in_group('Flower'):
+			flower_neighbors += 1
+			p.stress += 1
+	#print(neighbors, ' moss bois adjacent. ', flower_neighbors, ' flower bois adjacent')
 #taken from pollencrab, will need to retool for plant controller to spawn in more
 func reparent():
 	var newparent = get_parent().get_parent()
@@ -67,4 +98,48 @@ func reparent():
 	#connect("lay_egg", get_parent(), "spawn_crab")
 
 func _on_stress_tick_timeout():
-	pass # Replace with function body.
+	#want stress roll to be above stress number, it's a stress threshold
+	var stress_roll = rng.randi_range(3,10)
+	var stressmod = 5 - neighbors + flower_neighbors 
+	if in_water == true:
+		stressmod -= 5
+	if in_water == false:
+		if connected_to_water == true:
+			stressmod -=4
+	if unhealthy == true:
+		stressmod += 1
+	stress += stressmod
+	print('stress = ', stress , ' stress mod = ', stressmod, ' stress roll = ', stress_roll)
+	if stress_roll <= stress:
+		if unhealthy == true:
+			#die
+			queue_free()
+		else:
+			unhealthy = true
+			max_ichor /= 2
+			if ichor > max_ichor:
+				ichor = max_ichor
+			#print('moss got unhealthy')
+	elif stress_roll > stress:
+		#print('stress roll succeeded!')
+		unhealthy = false
+		if trimmed == true:
+			max_ichor = 12
+			nutrition = 2
+		model.hide_damage()
+		ichor = max_ichor
+		damaged = false
+	set_type()
+	stress = 0
+	if neighbors >= 3:
+		var local_stress = 1 + (neighbors - 3)
+		var neighbor_moss = neighbor_area.get_overlapping_bodies()
+		for moss in neighbor_moss:
+			if moss.is_in_group('Moss'):
+				stress += local_stress
+		#signal for neighbors getting stressed
+		#currently set at 3, will have to change this eventually
+
+
+func _on_neighbor_timer_timeout():
+	check_neighbors()

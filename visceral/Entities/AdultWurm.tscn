@@ -1283,7 +1283,7 @@ wait_time = 0.8
 one_shot = true
 
 [node name="Hunger_time" type="Timer" parent="."]
-wait_time = 30.0
+wait_time = 120.0
 autostart = true
 
 [node name="Give_up" type="Timer" parent="."]
@@ -1291,6 +1291,8 @@ wait_time = 60.0
 one_shot = true
 
 [node name="Stress" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
 
 [node name="WalkBehind" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.25631 )
