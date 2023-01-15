@@ -9,7 +9,7 @@ radius = 0.15
 
 [sub_resource type="CylinderShape" id=2]
 height = 0.12
-radius = 0.4
+radius = 0.45
 
 [sub_resource type="SphereShape" id=3]
 radius = 4.0
@@ -50,8 +50,6 @@ enabled = true
 cast_to = Vector3( 0, -0.3, 0 )
 
 [node name="debugtime" type="Timer" parent="."]
-wait_time = 2.0
-one_shot = true
 autostart = true
 
 [connection signal="timeout" from="stress_tick" to="." method="_on_stress_tick_timeout"]

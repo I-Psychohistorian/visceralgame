@@ -14,10 +14,19 @@
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.973755 )
 
 [node name="moss_unit8" parent="PlantController" instance=ExtResource( 3 )]
-transform = Transform( 0.962023, -0.272969, 0, 0.272969, 0.962023, 0, 0, 0, 1, -3.09354, -0.832332, 0.698824 )
+transform = Transform( 0.962023, -0.272969, 0, 0.226264, 0.797422, 0.559395, -0.152698, -0.538151, 0.828901, 1.27821, -0.832332, -2.26155 )
 
 [node name="moss_unit9" parent="PlantController" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.04335, -0.821107, 0.0122828 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.73037, -1.10777, -1.93503 )
+
+[node name="moss_unit10" parent="PlantController" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.167568, -0.6162, -1.32438 )
+
+[node name="moss_unit11" parent="PlantController" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.05494, -1.10777, -1.93503 )
+
+[node name="moss_unit12" parent="PlantController" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09985, -0.6162, -1.80123 )
 
 [node name="CSGCombiner" type="CSGCombiner" parent="."]
 use_collision = true
@@ -35,7 +44,7 @@ transform = Transform( 1, 0, 0, 0, 0.4, 0, 0, 0, 0.8, 1.70678, -1.26749, 2.33968
 operation = 0
 
 [node name="slantbox" type="CSGBox" parent="."]
-transform = Transform( 0.963078, 0.269222, 0, -0.269222, 0.963078, 0, 0, 0, 1, -3.21748, -1.55112, 0 )
+transform = Transform( 0.963078, 0.269222, 0, -0.266496, 0.953325, 0.141955, 0.0382175, -0.136714, 0.989873, -3.21748, -1.55112, 0 )
 use_collision = true
 width = 1.57935
 height = 0.992001

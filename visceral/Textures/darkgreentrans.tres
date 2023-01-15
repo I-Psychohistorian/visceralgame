@@ -9,5 +9,5 @@ noise = SubResource( 1 )
 
 [resource]
 flags_transparent = true
-albedo_color = Color( 0, 0.133333, 0.0901961, 0.835294 )
+albedo_color = Color( 0.00392157, 0.188235, 0.129412, 0.937255 )
 albedo_texture = SubResource( 2 )

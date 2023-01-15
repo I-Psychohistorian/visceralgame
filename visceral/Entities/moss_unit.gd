@@ -16,6 +16,10 @@ var light_green = false
 var unhealthy = false
 var damaged = false
 
+var xs = 1
+var ys = 1
+var zs = 1
+
 #game states
 var neighbors = 0
 var flower_neighbors = 0
@@ -42,6 +46,8 @@ func _ready():
 	rng.randomize()
 	generate_type()
 	set_type()
+	rand_size()
+	set_size()
 
 
 
@@ -51,6 +57,7 @@ func _process(delta):
 	if not is_on_floor():
 		grav_vec.y -= gravity
 	move_and_slide(grav_vec, Vector3.UP)
+
 
 func take_damage(damage):
 	ichor -= damage
@@ -63,23 +70,39 @@ func take_damage(damage):
 			#die
 			queue_free()
 	
+func rand_size():
+	xs = rng.randf_range(0.8,1)
+	zs = rng.randf_range(0.8,1)
+	ys = rng.randf_range(0.5,2.5)
+func set_size():
+	$MossModel.scale = Vector3(xs, ys, zs)
+	#print(scale)
+
 
 func get_normal():
 	angle = bottom.get_collision_normal()
-	print(angle)
+	#print(angle)
 
 func generate_type():
-	var choice = rng.randi_range(0,2)
+	var choice = rng.randi_range(0,3)
 	if choice == 0:
 		light_green = true
+		nascent = false
+	elif choice == 2:
+		nascent = true
+		light_green = false
 	else:
 		light_green = false
+		nascent = false
 
 func set_type():
 	if light_green == true:
 		model.mid_green()
 	elif light_green == false:
-		model.dark_green()
+		if nascent == false:
+			model.dark_green()
+		elif nascent == true:
+			model.trans_green()
 	if unhealthy == true:
 		model.brown()
 	if damaged == true:
@@ -156,3 +179,8 @@ func _on_neighbor_timer_timeout():
 
 func _on_debugtime_timeout():
 	get_normal()
+	global_rotation = angle
+	#set_size()
+	#self.global_rotation.z = angle.z
+	#self.global_rotation.x = angle.x
+	#self.global_rotation.y = angle.y
