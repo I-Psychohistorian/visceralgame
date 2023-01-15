@@ -12,8 +12,11 @@ var claws = 5
 var hunger = false
 var death_type = "blank"
 
+var starving = false
 var hunger_time = 45
 var hunger_rate = 4
+#needs to hit 2 to go 'not hungry'
+var hunger_level = 0
 var cant_eat = false
 
 #for test hostile
@@ -247,14 +250,21 @@ func Eat():
 				#eat animation?
 				animator.play("mandibledefault")
 				ichor += item_nutrition
-				hunger = false
 				if item_id == "Spore":
-					hud.notif_text = "you are poisoned, but at least no longer hungry"
+					if hunger_level == 0:
+						hud.notif_text = "you are poisoned, and did not eat quite enough to sate your hunger"
+					elif hunger_level == 1:
+						hud.notif_text = "you are poisoned, but at least no longer hungry"
 					hud.notif_n = String(item_nutrition)
 				else:
-					hud.notif_text = "food provided nutrition"
+					if hunger_level == 0:
+						hud.notif_text = "food provided nutrition, but not enough to sate hunger"
+					elif hunger_level == 1:
+						hud.notif_text = "food provided nutrition, and sates your hunger"
 					hud.notif_n = String(item_nutrition)
 				hud.notif_ping()
+				sate_tick()
+				eat_update()
 				slow_eating()
 				$centre/CrabGib1.visible = false
 				$centre/Crabgib2.visible = false
@@ -268,6 +278,24 @@ func slow_eating():
 	cant_eat = true
 	$eat_cooldown.start()
 	print('eat cooldown')
+
+#currently should take 2 units of food to cure hunger
+func sate_tick():
+	if hunger_level == 0:
+		hunger_level += 1
+	elif hunger_level == 1:
+		hunger_level = 0
+		hunger = false
+		starving = false
+
+func eat_update():
+	if hunger == true:
+		hud.hunger_message = 'Hungry'
+		if starving == true:
+			hud.hunger_message = 'Starving'
+	elif hunger == false:
+		hud.hunger_message =  'Not hungry'
+
 
 func handle_death():
 	if ichor >= 100:
@@ -401,7 +429,7 @@ func _on_StaminaTimer_timeout():
 		if item_id == "Rock":
 			stamina -= 2
 
-
+#currently eating does not reset timer
 func _on_HungerTimer_timeout():
 	if hunger == false:
 		hunger = true
@@ -409,10 +437,14 @@ func _on_HungerTimer_timeout():
 		hud.notif_text = "You are hungry"
 		hud.notif_ping()
 	elif hunger == true:
+		starving = true
 		ichor -= 4
 		#print('starving')
 		hud.notif_text = "You are getting weaker"
 		hud.notif_ping()
+		hunger_level = 0
+	eat_update()
+	
 
 func _on_Jump_speed_boost_timeout():
 	jump_dash = false

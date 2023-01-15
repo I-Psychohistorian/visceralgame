@@ -33,11 +33,16 @@ var gravity = 1
 
 onready var model = $MossModel
 onready var neighbor_area = $neighbor_sensor
+
+onready var bottom = $RayCast
+#normal vector
+var angle = Vector3()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	rng.randomize()
 	generate_type()
 	set_type()
+
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -58,6 +63,10 @@ func take_damage(damage):
 			#die
 			queue_free()
 	
+
+func get_normal():
+	angle = bottom.get_collision_normal()
+	print(angle)
 
 func generate_type():
 	var choice = rng.randi_range(0,2)
@@ -143,3 +152,7 @@ func _on_stress_tick_timeout():
 
 func _on_neighbor_timer_timeout():
 	check_neighbors()
+
+
+func _on_debugtime_timeout():
+	get_normal()

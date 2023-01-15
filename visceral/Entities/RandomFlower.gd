@@ -237,8 +237,12 @@ func use():
 					body.item_id = item_id
 					body.stamina += nutrition
 					body.ichor += nutrition
-					body.hunger = false
-					body.hud.notif_text = "food provided nutrition and energy"
+					if body.hunger_level == 0:
+						body.hud.notif_text = "food provided nutrition and energy, but not enough to sate hunger"
+					elif body.hunger_level == 1:
+						body.hud.notif_text = "food provided nutrition and energy, and sates your hunger"
+					body.sate_tick()
+					body.eat_update()
 					body.hud.notif_n = String(nutrition)
 					body.hud.notif_ping()
 					body.eat_sounds()

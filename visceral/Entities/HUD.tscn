@@ -38,10 +38,15 @@ margin_top = 18.0
 margin_right = 697.0
 margin_bottom = 32.0
 
-[node name="Misc" type="Label" parent="HUD_info"]
+[node name="Hunger" type="Label" parent="HUD_info"]
 margin_top = 36.0
 margin_right = 697.0
 margin_bottom = 50.0
+
+[node name="Misc" type="Label" parent="HUD_info"]
+margin_top = 54.0
+margin_right = 697.0
+margin_bottom = 68.0
 text = "WASD move, LMB attack, RMB drop held, Q eat held, E to interact, tab to show mouse/menus, space to jump"
 
 [node name="Menu" type="VBoxContainer" parent="."]

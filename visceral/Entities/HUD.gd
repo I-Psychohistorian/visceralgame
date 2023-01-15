@@ -10,6 +10,7 @@ var holding = false
 var message = "nothing"
 var death_message = "You are dead!"
 
+var hunger_message = "Not hungry"
 var interact_viewable = false
 
 onready var interact_text = $Centre/Interact
@@ -18,6 +19,7 @@ onready var flavor_text = $Centre/Text
 onready var health_text = $HUD_info/Ichor
 onready var stamina_text = $HUD_info/Stamina
 onready var misc_text = $HUD_info/Misc
+onready var hunger_text = $HUD_info/Hunger
 
 onready var notif =$Notification/Notification_label
 var notif_on = true # does nothing yet
@@ -45,6 +47,7 @@ func toggle_menu():
 		menu_seen = false
 		menu.hide()
 
+
 func notif_ping():
 	notif_int.text = notif_n
 	notif.text = notif_text
@@ -65,6 +68,7 @@ func _process(delta):
 	health_text.text = "Ichor: " + String(ichor)
 	stamina_text.text = "Stamina: " + String(stamina)
 	interact_text.text = String(message)
+	hunger_text.text = hunger_message
 
 
 func _on_Exit_pressed():
