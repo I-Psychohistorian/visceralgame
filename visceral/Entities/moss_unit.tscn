@@ -33,9 +33,18 @@ shape = SubResource( 2 )
 shape = SubResource( 3 )
 
 [node name="CentralNode" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0 )
 
 [node name="GrowPoint" type="Spatial" parent="CentralNode"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.1, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0, 0 )
+
+[node name="grow_ground_cast" type="RayCast" parent="CentralNode/GrowPoint"]
+enabled = true
+cast_to = Vector3( 0, -0.1, 0 )
+
+[node name="grow_side_cast" type="RayCast" parent="CentralNode"]
+enabled = true
+cast_to = Vector3( 0.35, 0, 0 )
 
 [node name="stress_tick" type="Timer" parent="."]
 wait_time = 10.0
@@ -52,6 +61,11 @@ cast_to = Vector3( 0, -0.3, 0 )
 [node name="debugtime" type="Timer" parent="."]
 autostart = true
 
+[node name="temp_bud" type="Timer" parent="."]
+wait_time = 15.0
+autostart = true
+
 [connection signal="timeout" from="stress_tick" to="." method="_on_stress_tick_timeout"]
 [connection signal="timeout" from="neighbor_timer" to="." method="_on_neighbor_timer_timeout"]
 [connection signal="timeout" from="debugtime" to="." method="_on_debugtime_timeout"]
+[connection signal="timeout" from="temp_bud" to="." method="_on_temp_bud_timeout"]

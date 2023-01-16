@@ -13,6 +13,10 @@ onready var crabegg = preload("res://Entities/PollinatorEgg.tscn")
 
 var crab_spawn_point = Vector3()
 
+onready var moss = preload("res://Entities/moss_unit.tscn")
+
+var moss_spawn = Vector3()
+
 var rng = RandomNumberGenerator.new()
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -113,6 +117,18 @@ func spawn_crab():
 				egg.check_viable()
 				#print('egg created')
 				
+
+func spawn_moss():
+	var mosses = get_children()
+	for moss in mosses:
+		if moss.is_in_group("Moss"):
+			if moss.budding == true:
+				moss_spawn == moss.grow_coords
+				var m = moss.instance()
+				add_child(m)
+				m.start_point = moss_spawn
+				m.set_controls()
+				moss.budding = false
 
 func _on_RigidSeed_sprout():
 	pass # Replace with function body.

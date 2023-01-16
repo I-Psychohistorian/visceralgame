@@ -13,20 +13,11 @@
 [node name="Player" parent="PlantController" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.973755 )
 
-[node name="moss_unit8" parent="PlantController" instance=ExtResource( 3 )]
-transform = Transform( 0.962023, -0.272969, 0, 0.226264, 0.797422, 0.559395, -0.152698, -0.538151, 0.828901, 1.27821, -0.832332, -2.26155 )
-
-[node name="moss_unit9" parent="PlantController" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.73037, -1.10777, -1.93503 )
-
 [node name="moss_unit10" parent="PlantController" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.167568, -0.6162, -1.32438 )
 
 [node name="moss_unit11" parent="PlantController" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.05494, -1.10777, -1.93503 )
-
-[node name="moss_unit12" parent="PlantController" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09985, -0.6162, -1.80123 )
 
 [node name="CSGCombiner" type="CSGCombiner" parent="."]
 use_collision = true

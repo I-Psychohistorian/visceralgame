@@ -7,6 +7,24 @@ var stress = 0
 
 var nutrition = 1
 
+#reproduction stuff
+var will_bud = true
+var budding = false
+
+onready var rotation_point = $CentralNode
+onready var grow_point = $CentralNode/GrowPoint
+var grow_coords = Vector3()
+#these two raycasts will monitor intersections and rotate so that slanted moss doesn't spawn through walls
+onready var ground_collide = $CentralNode/GrowPoint/grow_ground_cast
+onready var side_collide = $CentralNode/grow_side_cast
+
+signal moss_bud
+
+#for spawning in
+var start_point = Vector3()
+
+
+
 #will allow nibbled moss to become more resilient
 var trimmed = false
 
@@ -48,6 +66,8 @@ func _ready():
 	set_type()
 	rand_size()
 	set_size()
+	#may be redundant, will check later
+	connect("moss_bud", get_parent(), "spawn_moss")
 
 
 
@@ -121,13 +141,40 @@ func check_neighbors():
 			flower_neighbors += 1
 			p.stress += 1
 	#print(neighbors, ' moss bois adjacent. ', flower_neighbors, ' flower bois adjacent')
-#taken from pollencrab, will need to retool for plant controller to spawn in more
-func reparent():
-	var newparent = get_parent().get_parent()
-	#get_parent().remove_child(self)
-	#newparent.add_child(self)
-	#self.global_transform.origin = start_point
-	#connect("lay_egg", get_parent(), "spawn_crab")
+
+func set_spawner_collisions(bud_check):
+	if budding == true:
+		if ground_collide.is_colliding() or side_collide.is_colliding():
+			rotation_point.rotate_z(deg2rad(1))
+			if rotation_point.rotation.z <= -1:
+				print('rotated too far, no viable positions, stopped budding')
+				bud_check = false
+				budding = false
+		else: 
+			print('no spawn collisions! can bud')
+			bud_check = false
+	elif budding == false:
+		rotation_point.rotation.z = 0
+	
+
+func begin_budding():
+	budding = true
+	var bud_check = true
+	var rand_degree = rng.randi_range(-180,180)
+	rotation_point.rotation.y = deg2rad(rand_degree)
+	while bud_check == true:
+		set_spawner_collisions(bud_check)
+	if bud_check == false:
+		print('bud_check is false')
+		if budding == true:
+			grow_coords = grow_point.global_transform.origin
+			emit_signal("moss_bud")
+
+func set_controls():
+	self.global_transform.origin = start_point
+	connect("moss_bud", get_parent(), "spawn_moss")
+
+
 
 func _on_stress_tick_timeout():
 	#want stress roll to be above stress number, it's a stress threshold
@@ -184,3 +231,9 @@ func _on_debugtime_timeout():
 	#self.global_rotation.z = angle.z
 	#self.global_rotation.x = angle.x
 	#self.global_rotation.y = angle.y
+
+
+func _on_temp_bud_timeout():
+	if will_bud == true:
+		begin_budding()
+		print('began budding')
