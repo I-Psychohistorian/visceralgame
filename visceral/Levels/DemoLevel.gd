@@ -23,3 +23,11 @@ func _on_deleter_body_entered(body):
 		print(body, " fell through the world and was deleted")
 		body.queue_free()
 	
+
+
+func _on_deleter2_body_entered(body):
+	if body.is_in_group('Player'):
+		body.take_damage(9999)
+	else:
+		print(body, " fell through the world and was deleted")
+		body.queue_free()

@@ -59,6 +59,8 @@ onready var neighbor_area = $neighbor_sensor
 onready var bottom = $RayCast
 #normal vector
 var angle = Vector3()
+
+var spawned_in = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	rng.randomize()
@@ -66,8 +68,9 @@ func _ready():
 	set_type()
 	rand_size()
 	set_size()
-	#may be redundant, will check later
-	connect("moss_bud", get_parent(), "spawn_moss")
+	
+
+	
 
 
 
@@ -98,6 +101,8 @@ func set_size():
 	$MossModel.scale = Vector3(xs, ys, zs)
 	#print(scale)
 
+func use():
+	pass
 
 func get_normal():
 	angle = bottom.get_collision_normal()
@@ -142,33 +147,31 @@ func check_neighbors():
 			p.stress += 1
 	#print(neighbors, ' moss bois adjacent. ', flower_neighbors, ' flower bois adjacent')
 
-func set_spawner_collisions(bud_check):
-	if budding == true:
-		if ground_collide.is_colliding() or side_collide.is_colliding():
-			rotation_point.rotate_z(deg2rad(1))
-			if rotation_point.rotation.z <= -1:
-				print('rotated too far, no viable positions, stopped budding')
-				bud_check = false
-				budding = false
-		else: 
-			print('no spawn collisions! can bud')
-			bud_check = false
-	elif budding == false:
-		rotation_point.rotation.z = 0
-	
+
+
 
 func begin_budding():
 	budding = true
 	var bud_check = true
 	var rand_degree = rng.randi_range(-180,180)
+	var turn_num = 5
 	rotation_point.rotation.y = deg2rad(rand_degree)
-	while bud_check == true:
-		set_spawner_collisions(bud_check)
+	if bud_check == true:
+		for n in turn_num:
+			if ground_collide.is_colliding() or side_collide.is_colliding():
+				rotation_point.rotate_z(deg2rad(15))
+			elif not ground_collide.is_colliding() and not side_collide.is_colliding():
+				bud_check = false
 	if bud_check == false:
 		print('bud_check is false')
 		if budding == true:
-			grow_coords = grow_point.global_transform.origin
-			emit_signal("moss_bud")
+			if turn_num > 0:
+				grow_coords = grow_point.global_transform.origin
+				rotation_point.rotation.z = 0
+				emit_signal("moss_bud")
+			else:
+				print('too many collisions, did not bud')
+				budding = false
 
 func set_controls():
 	self.global_transform.origin = start_point
@@ -227,6 +230,10 @@ func _on_neighbor_timer_timeout():
 func _on_debugtime_timeout():
 	get_normal()
 	global_rotation = angle
+	if spawned_in == false:
+		connect("moss_bud", get_parent(), "spawn_moss")
+		spawned_in = true
+		print('connected non_spawned moss')
 	#set_size()
 	#self.global_rotation.z = angle.z
 	#self.global_rotation.x = angle.x
@@ -236,4 +243,4 @@ func _on_debugtime_timeout():
 func _on_temp_bud_timeout():
 	if will_bud == true:
 		begin_budding()
-		print('began budding')
+		#print('began budding')

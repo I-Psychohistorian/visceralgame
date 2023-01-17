@@ -1,12 +1,21 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Entities/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Entities/PlantController.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Entities/moss_unit.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Textures/pinkflesh.tres" type="Material" id=4]
+[ext_resource path="res://Textures/pinkgreyrock.tres" type="Material" id=4]
+[ext_resource path="res://Levels/DemoLevel.gd" type="Script" id=5]
 [ext_resource path="res://Terrain/ovalpool.tscn" type="PackedScene" id=6]
 
+[sub_resource type="SpatialMaterial" id=2]
+flags_transparent = true
+albedo_color = Color( 0.8, 0.796078, 0.101961, 0.470588 )
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 50, 1, 50 )
+
 [node name="Spatial" type="Spatial"]
+script = ExtResource( 5 )
 
 [node name="PlantController" parent="." instance=ExtResource( 2 )]
 
@@ -14,28 +23,44 @@
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.973755 )
 
 [node name="moss_unit10" parent="PlantController" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.167568, -0.6162, -1.32438 )
+transform = Transform( 1, -1.74846e-07, 0, 1.74846e-07, 1, 0, 0, 0, 1, 0.026862, -1.54675, -1.59406 )
 
 [node name="moss_unit11" parent="PlantController" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.05494, -1.10777, -1.93503 )
+transform = Transform( 1, -1.74846e-07, 0, 1.74846e-07, 1, 0, 0, 0, 1, 1.0847, -1.54675, 2.58364 )
 
 [node name="CSGCombiner" type="CSGCombiner" parent="."]
 use_collision = true
 
 [node name="CSGBox" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00378847, 0, -0.0187836 )
 use_collision = true
 invert_faces = true
 width = 7.0
 height = 3.0
 depth = 7.0
-material = ExtResource( 4 )
+material = SubResource( 2 )
 
 [node name="ovalpool" parent="CSGCombiner" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 0.4, 0, 0, 0, 0.8, 1.70678, -1.26749, 2.33968 )
 operation = 0
+
+[node name="CSGCylinder" type="CSGCylinder" parent="CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.42002, -1.59905 )
+invert_faces = true
+radius = 0.337267
+height = 0.576537
+material = ExtResource( 4 )
 
 [node name="slantbox" type="CSGBox" parent="."]
 transform = Transform( 0.963078, 0.269222, 0, -0.266496, 0.953325, 0.141955, 0.0382175, -0.136714, 0.989873, -3.21748, -1.55112, 0 )
 use_collision = true
 width = 1.57935
 height = 0.992001
+
+[node name="deleter2" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -11.0696, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="deleter2"]
+shape = SubResource( 1 )
+
+[connection signal="body_entered" from="deleter2" to="." method="_on_deleter2_body_entered"]

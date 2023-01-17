@@ -24,7 +24,7 @@ func _ready():
 #should generate up to 3??? will have to check
 func show_damage():
 	var slashes = rng.randi_range(1,3)
-	print('slashes is ', slashes)
+	#print('slashes is ', slashes)
 	for slash in slashes:
 		var type = rng.randi_range(1,4)
 		if type == 1:
