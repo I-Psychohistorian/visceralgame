@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://MossModel.gd" type="Script" id=1]
 [ext_resource path="res://Textures/darkgreentrans.tres" type="Material" id=2]
 [ext_resource path="res://Textures/darkgreen.tres" type="Material" id=3]
 [ext_resource path="res://Textures/midgreen.tres" type="Material" id=4]
+[ext_resource path="res://Textures/browntrans.tres" type="Material" id=5]
 
 [sub_resource type="OpenSimplexNoise" id=1]
 period = 100.6
@@ -79,3 +80,10 @@ radius = 0.05
 height = 0.308266
 cone = true
 material = ExtResource( 4 )
+
+[node name="dead1" type="CSGSphere" parent="cb"]
+transform = Transform( 1, 0, 0, 0, 0.0399928, 0.0189357, 0, -0.000757428, 0.999821, 0, 0.0154873, 0 )
+visible = false
+operation = 2
+radius = 0.3
+material = ExtResource( 5 )

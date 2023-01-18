@@ -24,7 +24,7 @@ var parasitized = false
 
 
 #npc detection
-var hiding = false
+var hiding = true #normally false
 
 var action_cooldown = false
 onready var cooldown_timer = $action_cooldown
@@ -59,6 +59,7 @@ var item_nascent = false
 var item_light_green = false
 var item_unhealthy = false
 var item_damaged = false
+var item_dead = false
 
 onready var algae = $centre/MossModel
 #crab egg viability
@@ -254,8 +255,9 @@ func Right():
 			seed_coord = $centre/Pointer/DebugPointer.global_transform.origin
 			self.add_child(a)
 			a.drop_coords = seed_coord
-			a.rotation.x = head.rotation.x
-			a.rotation.z = self.rotation.y
+			#a.rotation.x = head.rotation.x
+			#a.rotation.z = self.rotation.y
+			#does not yet align angles
 			a.ichor = item_ichor
 			a.max_ichor = item_max_ichor
 			a.stress = item_stress
@@ -263,6 +265,7 @@ func Right():
 			a.nascent = item_nascent
 			a.light_green = item_light_green
 			a.unhealthy = item_unhealthy
+			a.dead = item_dead
 			a.set_type()
 			a.spawned_in = false
 			a.reparent()
@@ -286,6 +289,9 @@ func Eat():
 					if item_unhealthy == false:
 						ichor -=1
 						item_nutrition = 0
+					if item_dead == true:
+						item_nutrition += 1
+						ichor += 1
 				if item_id == "Spore":
 					if hunger_level == 0:
 						hud.notif_text = "you are poisoned, and did not eat quite enough to sate your hunger"

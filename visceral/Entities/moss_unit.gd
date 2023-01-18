@@ -106,14 +106,14 @@ func _process(delta):
 
 func take_damage(damage):
 	ichor -= damage
+	stress += 1
 	trimmed = true
 	if ichor < max_ichor:
 		damaged = true
 		model.show_damage()
-	if dead == false:
-		if ichor <= 0:
-			#die
-			queue_free()
+	if ichor <= 0:
+		#die
+		queue_free()
 	
 func rand_size():
 	xs = rng.randf_range(0.8,1)
@@ -130,6 +130,8 @@ func reparent():
 	get_parent().remove_child(self)
 	new_parent.add_child(self)
 	self.global_transform.origin = drop_coords
+	if dead == true:
+		interact_label = "Press E to take dead algal mass"
 
 func use():
 	var nearby = $player_sensor.get_overlapping_bodies()
@@ -147,6 +149,7 @@ func use():
 			n.item_light_green = light_green
 			n.item_unhealthy = unhealthy
 			n.item_damaged = damaged
+			n.item_dead = dead
 			if light_green == true:
 				n.algae.mid_green()
 			elif light_green == false:
@@ -160,6 +163,8 @@ func use():
 				n.algae.show_damage()
 			elif damaged == false:
 				n.algae.hide_damage()
+			elif dead == true:
+				n.algae.rot()
 			n.algae.visible = true
 			queue_free()
 func get_normal():
@@ -192,6 +197,8 @@ func set_type():
 		model.show_damage()
 	elif damaged == false:
 		model.hide_damage()
+	if dead == true:
+		model.rot()
 
 func check_neighbors():
 	neighbors = 0
@@ -202,10 +209,23 @@ func check_neighbors():
 			neighbors +=1
 			if in_water == true:
 				p.connected_to_water = true
+			if dead == true:
+				var rot_choice = rng.randi_range(0,1)
+				if rot_choice == 0:
+					p.stress += 1
+					print('rotting mass stressed neighbor moss')
+				else:
+					print('by chance did not stress neighbor')
 		elif p.is_in_group('Flower'):
 			flower_neighbors += 1
-			p.stress += 1
-			print('stressed nearby flowers')
+			if dead == false:
+
+				p.stress += 1
+				print('stressed nearby flowers')
+
+			elif dead == true:
+				p.stress -= 1
+				print('fertilized nearby flowers')
 	if neighbors >= stress_limit:
 		print('stressed by ', String(neighbors - stress_limit + 1),  ' neighbor moss')
 		stress += 1 + ((neighbors - stress_limit))
@@ -250,7 +270,8 @@ func set_controls():
 	#print(self.global_transform.origin, "is spawned moss start point")
 	connect("moss_bud", get_parent(), "spawn_moss")
 
-
+#stress/neighbor/bud/decay time ratios
+#1:2:6:3
 
 func _on_stress_tick_timeout():
 	#want stress roll to be above stress number, it's a stress threshold
@@ -269,23 +290,29 @@ func _on_stress_tick_timeout():
 	if stress > 0:
 		if unhealthy == true:
 			#die
-			queue_free()
+			if dead == false:
+				dead = true
+				model.rot()
+				print('moss died')
+				interact_label = "Press E to take dead algal mass"
 		else:
 			unhealthy = true
 			max_ichor /= 2
 			if ichor > max_ichor:
 				ichor = max_ichor
-			#print('moss got unhealthy')
-	elif stress_roll > stress:
-		#print('stress roll succeeded!')
-		unhealthy = false
-		if trimmed == true:
-			max_ichor = 12
-			nutrition = 2
-		model.hide_damage()
-		max_ichor = 8
-		ichor = max_ichor
-		damaged = false
+			print('moss got unhealthy')
+	elif stress < 0:
+		if dead == false:
+			#should not heal
+			#print('stress roll succeeded!')
+			unhealthy = false
+			model.hide_damage()
+			max_ichor = 8
+			ichor = max_ichor
+			damaged = false
+			if trimmed == true:
+				max_ichor = 12
+				nutrition = 2
 	set_type()
 	stress = 0
 	if in_water == false:
@@ -328,4 +355,11 @@ func _on_random_start_timeout():
 	$stress_tick.start()
 	$neighbor_timer.start()
 	$temp_bud.start()
+	$Decay.start()
 	print('moss metabolism started')
+
+
+func _on_Decay_timeout():
+	if dead == true:
+		print('dead moss decayed')
+		queue_free()

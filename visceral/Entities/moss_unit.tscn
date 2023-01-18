@@ -47,10 +47,10 @@ enabled = true
 cast_to = Vector3( 0.35, 0, 0 )
 
 [node name="stress_tick" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 20.0
 
 [node name="neighbor_timer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 10.0
 
 [node name="RayCast" type="RayCast" parent="."]
 enabled = true
@@ -65,13 +65,17 @@ wait_time = 0.5
 autostart = true
 
 [node name="temp_bud" type="Timer" parent="."]
-wait_time = 30.0
+wait_time = 60.0
 
 [node name="random_start" type="Timer" parent="."]
 one_shot = true
+
+[node name="Decay" type="Timer" parent="."]
+wait_time = 30.0
 
 [connection signal="timeout" from="stress_tick" to="." method="_on_stress_tick_timeout"]
 [connection signal="timeout" from="neighbor_timer" to="." method="_on_neighbor_timer_timeout"]
 [connection signal="timeout" from="debugtime" to="." method="_on_debugtime_timeout"]
 [connection signal="timeout" from="temp_bud" to="." method="_on_temp_bud_timeout"]
 [connection signal="timeout" from="random_start" to="." method="_on_random_start_timeout"]
+[connection signal="timeout" from="Decay" to="." method="_on_Decay_timeout"]

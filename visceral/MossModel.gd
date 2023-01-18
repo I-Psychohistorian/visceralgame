@@ -47,6 +47,7 @@ func invis_models():
 	$cb/DeepGreen.visible = false
 	$cb/MidGreen.visible = false
 	$cb/Brown.visible = false
+	$cb/dead1.visible = false
 
 func trans_green():
 	invis_models()
@@ -63,3 +64,6 @@ func mid_green():
 func brown():
 	invis_models()
 	$cb/Brown.visible = true
+
+func rot():
+	$cb/dead1.visible = true

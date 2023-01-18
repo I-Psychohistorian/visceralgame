@@ -1,5 +1,6 @@
 extends KinematicBody
 
+var max_ichor = 15
 var ichor = 10
 var stress = 0
 var hungry = false
@@ -287,14 +288,14 @@ func rotate_body():
 		self.rotate_y(deg2rad(rotate_direction))
 
 func _on_hunger_timer_timeout():
-	if ichor > (19 + hunger_num):
-		ichor = 19 + hunger_num
-		start_size += 0.05
-		grow()
 	if hungry == false:
+		if ichor > (19 + hunger_num):
+			ichor = 19 + hunger_num
+			start_size += 0.05
+			grow()
 		hungry = true
 	elif hungry == true:
-		ichor -= hunger_num
+		ichor -= hunger_num*2
 		pass
 	if dead == false:
 		if parasitized == true:
@@ -341,13 +342,23 @@ func eat_nearby():
 					$hunger_timer.start()
 					ate = true
 					ping_player()
+			elif i.is_in_group('Moss'):
+				if hungry == true:
+					var eat_damage = rng.randi_range(6,9)
+					i.take_damage(eat_damage)
+					ichor += i.nutrition
+					offspring_counter += 1
+					hungry = false
+					#eat sound
+					$hunger_timer.start()
+				ate = true
 			elif i.is_in_group("Seed"):
 				if hungry == true:
 					ichor += i.nutrition
 					i.queue_free()
 					offspring_counter += 1
 					hungry = false
-					# eat sound
+					#eat sound
 					$hunger_timer.start()
 					ate = true
 					ping_player()
@@ -400,6 +411,16 @@ func _on_Eat_distance_body_entered(body):
 				#eat sound
 				$hunger_timer.start()
 				ping_player()
+		elif body.is_in_group('Moss'):
+			if hungry == true:
+				var eat_damage = rng.randi_range(6,9)
+				body.take_damage(eat_damage)
+				ichor += body.nutrition
+				offspring_counter += 1
+				hungry = false
+				#eat sound
+				$hunger_timer.start()
+				ping_player()
 		elif body.is_in_group("Seed"):
 			if hungry == true:
 				ichor += body.nutrition
@@ -430,6 +451,9 @@ func _on_search_timer_timeout():
 				if food.wilted == false:
 					food_coords = food.global_transform.origin
 					food_seen = true
+			elif food.is_in_group("Moss"):
+				food_coords = food.global_transform.origin
+				food_seen = true
 			elif food.is_in_group("Seed"):
 				food_coords = food.global_transform.origin
 				food_seen = true
