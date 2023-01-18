@@ -38,6 +38,8 @@ onready var crabegg = preload("res://Entities/PollinatorEgg.tscn")
 onready var crabmeat = preload("res://Entities/CrabGib.tscn")
 onready var rock = preload("res://Entities/MoveableRock.tscn")
 onready var spore = preload("res://Entities/PoisonSporeKinematic.tscn")
+onready var alg = preload("res://Entities/moss_unit.tscn")
+
 
 var pollenated = false
 var pollen_gamete = []
@@ -47,6 +49,18 @@ var item_id = "blank"
 var item_pollinated = false
 var item_gamete = []
 var item_nutrition = 0
+
+#moss/algae specific
+var item_max_ichor = 0
+var item_ichor = 0
+var item_stress = 0
+var item_trimmed = false
+var item_nascent = false
+var item_light_green = false
+var item_unhealthy = false
+var item_damaged = false
+
+onready var algae = $centre/MossModel
 #crab egg viability
 var viability = true
 
@@ -235,6 +249,24 @@ func Right():
 			s.start_coord = seed_coord
 			s.reparent()
 			$centre/PoisonSpore.visible = false
+		if item_id == "Algae":
+			var a = alg.instance()
+			seed_coord = $centre/Pointer/DebugPointer.global_transform.origin
+			self.add_child(a)
+			a.drop_coords = seed_coord
+			a.rotation.x = head.rotation.x
+			a.rotation.z = self.rotation.y
+			a.ichor = item_ichor
+			a.max_ichor = item_max_ichor
+			a.stress = item_stress
+			a.damaged = item_damaged
+			a.nascent = item_nascent
+			a.light_green = item_light_green
+			a.unhealthy = item_unhealthy
+			a.set_type()
+			a.spawned_in = false
+			a.reparent()
+			algae.visible = false
 			#maybe make a new function that just hides everything?
 		#pollenation, nutrition, and gamete are needed as info
 	#if not carrying seed, nothing, if carrying seed, drop it
@@ -250,6 +282,10 @@ func Eat():
 				#eat animation?
 				animator.play("mandibledefault")
 				ichor += item_nutrition
+				if item_id == "Algae":
+					if item_unhealthy == false:
+						ichor -=1
+						item_nutrition = 0
 				if item_id == "Spore":
 					if hunger_level == 0:
 						hud.notif_text = "you are poisoned, and did not eat quite enough to sate your hunger"
@@ -269,6 +305,7 @@ func Eat():
 				$centre/CrabGib1.visible = false
 				$centre/Crabgib2.visible = false
 				$centre/PoisonSpore.visible = false
+				algae.visible = false
 			elif cant_eat == true:
 				hud.notif_text = "You can't eat just yet"
 				hud.notif_ping()
@@ -466,3 +503,7 @@ func _on_eat_cooldown_timeout():
 
 func _on_hurt_wurm_timeout():
 	hurt_wurm = false
+
+
+func _on_debug_timeout():
+	print(head.rotation.x)

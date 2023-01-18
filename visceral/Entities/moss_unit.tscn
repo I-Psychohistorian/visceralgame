@@ -14,7 +14,7 @@ radius = 0.45
 [sub_resource type="SphereShape" id=3]
 radius = 4.0
 
-[node name="moss_unit" type="KinematicBody" groups=["Buoyant", "Destructible", "Moss"]]
+[node name="moss_unit" type="KinematicBody" groups=["Buoyant", "Destructible", "Interactable", "Moss"]]
 script = ExtResource( 2 )
 
 [node name="MossModel" parent="." instance=ExtResource( 1 )]
@@ -48,24 +48,30 @@ cast_to = Vector3( 0.35, 0, 0 )
 
 [node name="stress_tick" type="Timer" parent="."]
 wait_time = 10.0
-autostart = true
 
 [node name="neighbor_timer" type="Timer" parent="."]
 wait_time = 5.0
-autostart = true
 
 [node name="RayCast" type="RayCast" parent="."]
 enabled = true
 cast_to = Vector3( 0, -0.3, 0 )
 
+[node name="sticker_cast" type="RayCast" parent="."]
+enabled = true
+cast_to = Vector3( 0, -0.1, 0 )
+
 [node name="debugtime" type="Timer" parent="."]
+wait_time = 0.5
 autostart = true
 
 [node name="temp_bud" type="Timer" parent="."]
-wait_time = 15.0
-autostart = true
+wait_time = 30.0
+
+[node name="random_start" type="Timer" parent="."]
+one_shot = true
 
 [connection signal="timeout" from="stress_tick" to="." method="_on_stress_tick_timeout"]
 [connection signal="timeout" from="neighbor_timer" to="." method="_on_neighbor_timer_timeout"]
 [connection signal="timeout" from="debugtime" to="." method="_on_debugtime_timeout"]
 [connection signal="timeout" from="temp_bud" to="." method="_on_temp_bud_timeout"]
+[connection signal="timeout" from="random_start" to="." method="_on_random_start_timeout"]

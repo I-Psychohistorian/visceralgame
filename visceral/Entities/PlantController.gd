@@ -126,11 +126,14 @@ func spawn_moss():
 				moss_spawn = moss.grow_coords
 				var m = moss_unit.instance()
 				add_child(m)
+				print('From PC, moss_spawn is ', moss_spawn)
 				m.start_point = moss_spawn
 				m.set_controls()
 				m.spawned_in = true
 				moss.budding = false
-				print(m.global_transform.origin)
+				#print(m.global_transform.origin)
+
+
 
 func _on_RigidSeed_sprout():
 	pass # Replace with function body.
