@@ -1,5 +1,9 @@
 extends KinematicBody
 
+#to dod
+#make them sticky
+#allow tilting with player placement
+#set lifespan to reasonable level
 
 var interactable = true
 var item_id = "Algae"
@@ -227,11 +231,11 @@ func check_neighbors():
 				p.stress -= 1
 				print('fertilized nearby flowers')
 	if neighbors >= stress_limit:
-		print('stressed by ', String(neighbors - stress_limit + 1),  ' neighbor moss')
+		#print('stressed by ', String(neighbors - stress_limit + 1),  ' neighbor moss')
 		stress += 1 + ((neighbors - stress_limit))
 	if flower_neighbors > 0:
 		stress += flower_neighbors
-		print('stressed by neighboring flowers')
+		#print('stressed by neighboring flowers')
 	#print(neighbors, ' moss bois adjacent. ', flower_neighbors, ' flower bois adjacent')
 
 
@@ -293,6 +297,7 @@ func _on_stress_tick_timeout():
 			if dead == false:
 				dead = true
 				model.rot()
+				$Decay.start()
 				print('moss died')
 				interact_label = "Press E to take dead algal mass"
 		else:
@@ -330,7 +335,7 @@ func _on_debugtime_timeout():
 	if spawned_in == false:
 		connect("moss_bud", get_parent(), "spawn_moss")
 		spawned_in = true
-		print('connected non_spawned moss')
+		#print('connected non_spawned moss')
 	#set_size()
 	#self.global_rotation.z = angle.z
 	#self.global_rotation.x = angle.x
@@ -355,7 +360,8 @@ func _on_random_start_timeout():
 	$stress_tick.start()
 	$neighbor_timer.start()
 	$temp_bud.start()
-	$Decay.start()
+	if dead == true:
+		$Decay.start()
 	print('moss metabolism started')
 
 

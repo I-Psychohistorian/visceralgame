@@ -218,6 +218,7 @@ func Right():
 			e.viable = viability
 			e.check_viable()
 			e.reparent()
+			$centre/egg.visible = false
 		if item_id == "Crabmeat":
 			var m = crabmeat.instance()
 			seed_coord = $centre/Pointer/DebugPointer.global_transform.origin
@@ -298,6 +299,8 @@ func Eat():
 					elif hunger_level == 1:
 						hud.notif_text = "you are poisoned, but at least no longer hungry"
 					hud.notif_n = String(item_nutrition)
+				if item_id == "Egg":
+					hunger_level = 1 #means eggs will always sate hunger
 				else:
 					if hunger_level == 0:
 						hud.notif_text = "food provided nutrition, but not enough to sate hunger"
@@ -311,6 +314,7 @@ func Eat():
 				$centre/CrabGib1.visible = false
 				$centre/Crabgib2.visible = false
 				$centre/PoisonSpore.visible = false
+				$centre/egg.visible = false
 				algae.visible = false
 			elif cant_eat == true:
 				hud.notif_text = "You can't eat just yet"
@@ -382,6 +386,7 @@ func interaction():
 										$centre/egg/yolk.visible = false
 									elif pointed_object.viable == true:
 										$centre/egg/yolk.visible = true
+									$centre/egg.visible = true
 							elif item_id == "Crabmeat":
 								if holding_item == true:
 									animator.play("generichold")

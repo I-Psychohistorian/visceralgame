@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Terrain/SmallPool.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Entities/RandomFlower.tscn" type="PackedScene" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://Entities/CrabParasiteBeta.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Entities/signal emitters/gene_override.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Entities/AdultWurm.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Entities/moss_unit.tscn" type="PackedScene" id=16]
 
 [sub_resource type="SpatialMaterial" id=4]
 flags_transparent = true
@@ -334,6 +335,15 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.52406 )
 
 [node name="Test_Hostile3" parent="PlantController2" instance=ExtResource( 13 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.27985, 0, 2.34234 )
+
+[node name="moss_unit" parent="PlantController2" instance=ExtResource( 16 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.0404, -0.6614, -15.5811 )
+
+[node name="moss_unit2" parent="PlantController2" instance=ExtResource( 16 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.0404, -0.701391, -15.1388 )
+
+[node name="moss_unit3" parent="PlantController2" instance=ExtResource( 16 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.56953, -0.6614, -15.5811 )
 
 [node name="gene_override" parent="." instance=ExtResource( 14 )]
 

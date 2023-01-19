@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Textures/darkgreen.tres" type="Material" id=1]
+
+[node name="detrivoremodel" type="Spatial"]
+
+[node name="Body" type="CSGSphere" parent="."]
+radius = 0.2
+material = ExtResource( 1 )
+
+[node name="Body2" type="CSGSphere" parent="."]
+radius = 0.2
+material = ExtResource( 1 )

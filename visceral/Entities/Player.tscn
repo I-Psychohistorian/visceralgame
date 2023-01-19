@@ -539,7 +539,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0325747, -0.130425, -0.7861
 
 [node name="white" type="CSGSphere" parent="centre/egg"]
 transform = Transform( 1, 0, 0, 0, 0.7, 0, 0, 0, 1, 0, 0, 0 )
-visible = false
 radius = 0.11
 material = ExtResource( 9 )
 

@@ -39,6 +39,12 @@ transform = Transform( 1, -1.74846e-07, 0, 1.74846e-07, 1, 0, 0, 0, 1, 1.19576, 
 [node name="moss_unit13" parent="PlantController" instance=ExtResource( 3 )]
 transform = Transform( 1, -1.74846e-07, 0, 1.74846e-07, 1, 0, 0, 0, 1, 1.19576, -1.2392, -0.825875 )
 
+[node name="moss_unit14" parent="PlantController" instance=ExtResource( 3 )]
+transform = Transform( 1, -1.74846e-07, 0, 1.74846e-07, 1, 0, 0, 0, 1, 1.67963, -1.2392, 2.29615 )
+
+[node name="moss_unit15" parent="PlantController" instance=ExtResource( 3 )]
+transform = Transform( 1, -1.74846e-07, 0, 1.74846e-07, 1, 0, 0, 0, 1, 1.67963, -1.2392, 2.7391 )
+
 [node name="CSGCombiner" type="CSGCombiner" parent="."]
 use_collision = true
 

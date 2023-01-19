@@ -15,7 +15,7 @@ var gravity = 0
 var grav_vec = Vector3()
 
 var viable = true
-var nutrition = 2
+var nutrition = 3
 var ichor = 1
 onready var hatchpoint = $HatchPoint
 var spawn_coords = Vector3()
