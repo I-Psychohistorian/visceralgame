@@ -1,13 +1,246 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Textures/darkgreen.tres" type="Material" id=1]
+[ext_resource path="res://Textures/yellowyanimated.tres" type="Material" id=1]
+[ext_resource path="res://Textures/buglight.tres" type="Material" id=2]
+[ext_resource path="res://Textures/bugdark.tres" type="Material" id=3]
+[ext_resource path="res://Textures/buglimb.tres" type="Material" id=4]
 
 [node name="detrivoremodel" type="Spatial"]
 
-[node name="Body" type="CSGSphere" parent="."]
-radius = 0.2
+[node name="BodyDark" type="CSGSphere" parent="."]
+transform = Transform( 1.1, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 0, 0 )
+visible = false
+radius = 0.12
+material = ExtResource( 3 )
+
+[node name="mouth" type="CSGTorus" parent="BodyDark"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 1, -0.133026, 0, 0 )
+operation = 2
+inner_radius = 0.01
+outer_radius = 0.03
 material = ExtResource( 1 )
 
-[node name="Body2" type="CSGSphere" parent="."]
-radius = 0.2
+[node name="BodyLight" type="CSGSphere" parent="."]
+transform = Transform( 1.1, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 0, 0 )
+radius = 0.12
+material = ExtResource( 2 )
+
+[node name="mouth" type="CSGTorus" parent="BodyLight"]
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 1, -0.133026, 0, 0 )
+operation = 2
+inner_radius = 0.01
+outer_radius = 0.03
 material = ExtResource( 1 )
+
+[node name="front" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0 )
+
+[node name="ShortTail" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, 0 )
+
+[node name="seg1" type="CSGCylinder" parent="ShortTail"]
+transform = Transform( -5.24537e-08, -1, 0, -5.24537e-08, 1.91069e-15, -0.8, 1.2, -4.37114e-08, -3.49691e-08, 0.1, 0, 0 )
+radius = 0.04
+height = 0.2
+material = ExtResource( 4 )
+
+[node name="joint" type="Spatial" parent="ShortTail/seg1"]
+transform = Transform( 1, 3.55271e-15, 0, 0, 1, 1.05879e-22, 0, 2.11758e-22, 1, -4.44089e-16, -0.1, -2.64698e-23 )
+
+[node name="seg2" type="CSGCylinder" parent="ShortTail/seg1/joint"]
+transform = Transform( -1, 8.74228e-08, 8.74228e-08, -8.74228e-08, -1, 8.74228e-08, 8.74228e-08, 8.74228e-08, 1, 4.44089e-16, -0.1, -7.94093e-23 )
+radius = 0.04
+height = 0.2
+cone = true
+material = ExtResource( 4 )
+
+[node name="LongTail" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, 0 )
+
+[node name="seg1" type="CSGCylinder" parent="LongTail"]
+transform = Transform( -5.24537e-08, -1, 0, -5.24537e-08, 1.91069e-15, -0.8, 1.2, -4.37114e-08, -3.49691e-08, 0.113, 0, 0 )
+radius = 0.04
+height = 0.25
+material = ExtResource( 4 )
+
+[node name="joint" type="Spatial" parent="LongTail/seg1"]
+transform = Transform( 1, 3.55271e-15, 0, 0, 1, 1.05879e-22, 0, 2.11758e-22, 1, 0, -0.125, 0 )
+
+[node name="seg2" type="CSGCylinder" parent="LongTail/seg1/joint"]
+transform = Transform( -1, 8.74228e-08, 8.74228e-08, -8.74228e-08, -1, 8.74228e-08, 8.74228e-08, 8.74228e-08, 1, 0, -0.125, 0 )
+radius = 0.04
+height = 0.25
+cone = true
+material = ExtResource( 4 )
+
+[node name="SegmentedTail" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, 0 )
+
+[node name="seg1" type="CSGCylinder" parent="SegmentedTail"]
+transform = Transform( -2.18557e-08, -1, 0, 0.5, -4.37114e-08, 0, 0, 0, 1.2, 0.08, 0, 0 )
+radius = 0.045
+height = 0.16
+material = ExtResource( 4 )
+
+[node name="segment" type="CSGBox" parent="SegmentedTail/seg1"]
+transform = Transform( 3, 0, 0, 0, 1.87939, 0.410424, 0, -0.68404, 1.12763, 0, -0.07, -0.04 )
+operation = 2
+width = 0.025
+height = 0.04
+depth = 0.015
+material = ExtResource( 2 )
+
+[node name="segment2" type="CSGBox" parent="SegmentedTail/seg1"]
+transform = Transform( 3, 0, 0, 0, 1.87939, -0.410424, 0, 0.68404, 1.12763, 0, -0.07, 0.04 )
+operation = 2
+width = 0.025
+height = 0.04
+depth = 0.015
+material = ExtResource( 2 )
+
+[node name="segment3" type="CSGBox" parent="SegmentedTail/seg1"]
+transform = Transform( 3, 0, 0, 0, 1.87939, -0.410424, 0, 0.68404, 1.12763, 0, 0.07, -0.04 )
+operation = 2
+width = 0.025
+height = 0.04
+depth = 0.015
+material = ExtResource( 2 )
+
+[node name="segment4" type="CSGBox" parent="SegmentedTail/seg1"]
+transform = Transform( 3, 0, 0, 0, 1.87939, 0.410424, 0, -0.68404, 1.12763, 0, 0.07, 0.04 )
+operation = 2
+width = 0.025
+height = 0.04
+depth = 0.015
+material = ExtResource( 2 )
+
+[node name="joint1" type="Spatial" parent="SegmentedTail/seg1"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.77636e-15, -0.08, 0 )
+
+[node name="seg2" type="CSGCylinder" parent="SegmentedTail/seg1/joint1"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.08, 0 )
+radius = 0.045
+height = 0.16
+material = ExtResource( 4 )
+
+[node name="segment" type="CSGBox" parent="SegmentedTail/seg1/joint1/seg2"]
+transform = Transform( 3, 0, 0, 0, 1.87939, 0.410424, 0, -0.68404, 1.12763, 0, -0.07, -0.04 )
+operation = 2
+width = 0.025
+height = 0.04
+depth = 0.015
+material = ExtResource( 2 )
+
+[node name="segment2" type="CSGBox" parent="SegmentedTail/seg1/joint1/seg2"]
+transform = Transform( 3, 0, 0, 0, 1.87939, -0.410424, 0, 0.68404, 1.12763, 0, -0.07, 0.04 )
+operation = 2
+width = 0.025
+height = 0.04
+depth = 0.015
+material = ExtResource( 2 )
+
+[node name="segment3" type="CSGBox" parent="SegmentedTail/seg1/joint1/seg2"]
+transform = Transform( 3, 0, 0, 0, 1.87939, -0.410424, 0, 0.68404, 1.12763, 0, 0.07, -0.04 )
+operation = 2
+width = 0.025
+height = 0.04
+depth = 0.015
+material = ExtResource( 2 )
+
+[node name="segment4" type="CSGBox" parent="SegmentedTail/seg1/joint1/seg2"]
+transform = Transform( 3, 0, 0, 0, 1.87939, 0.410424, 0, -0.68404, 1.12763, 0, 0.07, 0.04 )
+operation = 2
+width = 0.025
+height = 0.04
+depth = 0.015
+material = ExtResource( 2 )
+
+[node name="joint2" type="Spatial" parent="SegmentedTail/seg1/joint1/seg2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.77636e-15, -0.08, -5.29396e-22 )
+
+[node name="seg3" type="CSGCylinder" parent="SegmentedTail/seg1/joint1/seg2/joint2"]
+transform = Transform( -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, -0.08, 0 )
+radius = 0.04
+height = 0.16
+cone = true
+material = ExtResource( 4 )
+
+[node name="segment3" type="CSGBox" parent="SegmentedTail/seg1/joint1/seg2/joint2/seg3"]
+transform = Transform( 3, 0, 0, 0, 1.87939, 0.410424, 0, -0.68404, 1.12763, 0, -0.07, -0.04 )
+operation = 2
+width = 0.025
+height = 0.04
+depth = 0.015
+material = ExtResource( 2 )
+
+[node name="segment4" type="CSGBox" parent="SegmentedTail/seg1/joint1/seg2/joint2/seg3"]
+transform = Transform( 3, 0, 0, 0, 1.87939, -0.410424, 0, 0.68404, 1.12763, 0, -0.07, 0.04 )
+operation = 2
+width = 0.025
+height = 0.04
+depth = 0.015
+material = ExtResource( 2 )
+
+[node name="normalwings" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.06, 0 )
+
+[node name="wing1" type="Spatial" parent="normalwings"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.12 )
+
+[node name="CSGSphere" type="CSGSphere" parent="normalwings/wing1"]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 1.2, 0, 0, 0.09 )
+radius = 0.12
+material = ExtResource( 4 )
+
+[node name="wing2" type="Spatial" parent="normalwings"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.12 )
+
+[node name="CSGSphere" type="CSGSphere" parent="normalwings/wing2"]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 1.2, 0, 0, -0.09 )
+radius = 0.12
+material = ExtResource( 4 )
+
+[node name="foldedwings" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.06, 0 )
+
+[node name="wing1" type="Spatial" parent="foldedwings"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.12 )
+
+[node name="CSGSphere" type="CSGSphere" parent="foldedwings/wing1"]
+transform = Transform( 0.6, 0, 0, 0, 0.0965926, -0.310583, 0, 0.0258819, 1.15911, 0, -0.01, 0.085 )
+radius = 0.06
+material = ExtResource( 4 )
+
+[node name="winghole" type="CSGSphere" parent="foldedwings/wing1/CSGSphere"]
+transform = Transform( 2, 0, -1.73847e-08, 0, 4, 0, 4.96705e-08, 0, 0.7, 0, 0, -0.055 )
+operation = 2
+radius = 0.06
+material = ExtResource( 2 )
+
+[node name="CSGSphere2" type="CSGSphere" parent="foldedwings/wing1"]
+transform = Transform( 0.8, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0.01 )
+radius = 0.06
+material = ExtResource( 4 )
+
+[node name="wing2" type="Spatial" parent="foldedwings"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.12 )
+
+[node name="CSGSphere" type="CSGSphere" parent="foldedwings/wing2"]
+transform = Transform( -0.6, -2.26267e-09, -1.01333e-07, 0, 0.0965926, -0.310583, 5.24537e-08, -0.0258819, -1.15911, 0, -0.01, -0.085 )
+radius = 0.06
+material = ExtResource( 4 )
+
+[node name="winghole" type="CSGSphere" parent="foldedwings/wing2/CSGSphere"]
+transform = Transform( 2, 0, -1.73847e-08, 0, 4, 0, 4.96705e-08, 0, 0.7, 0, 0, -0.055 )
+operation = 2
+radius = 0.06
+material = ExtResource( 2 )
+
+[node name="CSGSphere2" type="CSGSphere" parent="foldedwings/wing2"]
+transform = Transform( 0.8, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, -0.01 )
+radius = 0.06
+material = ExtResource( 4 )
+
+[node name="TailAnim" type="AnimationPlayer" parent="."]
+
+[node name="WingAnim" type="AnimationPlayer" parent="."]
