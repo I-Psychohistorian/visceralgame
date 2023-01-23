@@ -1,15 +1,443 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Textures/yellowyanimated.tres" type="Material" id=1]
 [ext_resource path="res://Textures/buglight.tres" type="Material" id=2]
 [ext_resource path="res://Textures/bugdark.tres" type="Material" id=3]
 [ext_resource path="res://Textures/buglimb.tres" type="Material" id=4]
+[ext_resource path="res://Entities/Components/detrivoremodel.gd" type="Script" id=5]
+
+[sub_resource type="Animation" id=1]
+resource_name = "LongCrawl"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("LongTail:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 15 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("LongTail/seg1/joint:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 1.21328e-20, 0, 0 ), Vector3( -51.3402, 2.20063e-06, 1.99276e-06 ), Vector3( 1.21328e-20, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "LongJump"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("LongTail:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 60 ), Vector3( 0, 0, 60 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("LongTail/seg1/joint:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 1.21328e-20, 0, 0 ), Vector3( -135, 0, 0 ), Vector3( -135, 0, 0 ), Vector3( 1.21328e-20, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.8, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 0, -45 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:translation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.8, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 0.5, 0 ), Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("ShortTail:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ShortTail/seg1/joint:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 1.21328e-20, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:translation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("LongTail:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("LongTail/seg1/joint:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 1.21328e-20, 0, 0 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("SegmentedTail:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("SegmentedTail/seg1/joint1:rotation_degrees")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 90, 0 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("SegmentedTail/seg1/joint1/seg2/joint2:rotation_degrees")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("SegmentedTail/seg1/joint1:scale")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 1, 1, 1 ) ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("SegmentedTail/seg1/joint1/seg2/joint2:scale")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "SegCrawl"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("SegmentedTail:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 15 ), Vector3( 0, 0, 30 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("SegmentedTail/seg1/joint1:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 90, 0 ), Vector3( 49.1066, 90, 9.56413e-07 ), Vector3( 73.8979, 90, 3.56088e-06 ), Vector3( 0, 90, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("SegmentedTail/seg1/joint1/seg2/joint2:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 2.52429e-06, 2.58259e-06, 19.4156 ), Vector3( -2.48296e-07, 4.86145e-06, 48.5989 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("SegmentedTail/seg1/joint1:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 1, 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("SegmentedTail/seg1/joint1/seg2/joint2:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "SegJump"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("SegmentedTail:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 60 ), Vector3( 0, 0, 60 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("SegmentedTail/seg1/joint1:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 90, 0 ), Vector3( 90, 90, 0 ), Vector3( 90, 90, 0 ), Vector3( 0, 90, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("SegmentedTail/seg1/joint1/seg2/joint2:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( -1.00179e-05, -5.00896e-06, 90 ), Vector3( -1.00179e-05, -5.00896e-06, 90 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 0, -45 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath(".:translation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 0.5, 0 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "ShortCrawl"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("ShortTail:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 15 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ShortTail/seg1/joint:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 1.21328e-20, 0, 0 ), Vector3( -51.3402, 2.20064e-06, 1.99276e-06 ), Vector3( 1.21328e-20, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "ShortJump"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("ShortTail:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 30 ), Vector3( 0, 0, 45 ), Vector3( 0, 0, 45 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ShortTail/seg1/joint:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 1.21328e-20, 0, 0 ), Vector3( -77.9012, 3.26214e-06, 3.22257e-06 ), Vector3( -110, 0, 0 ), Vector3( -110, 0, 0 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.8, 1, 1.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 0, -45 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:translation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.8, 1, 1.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 0.4, 0 ), Vector3( 0, 0, 0 ) ]
+}
 
 [node name="detrivoremodel" type="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+script = ExtResource( 5 )
 
 [node name="BodyDark" type="CSGSphere" parent="."]
 transform = Transform( 1.1, 0, 0, 0, 0.8, 0, 0, 0, 1, 0, 0, 0 )
-visible = false
 radius = 0.12
 material = ExtResource( 3 )
 
@@ -37,6 +465,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0 )
 
 [node name="ShortTail" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, 0 )
+visible = false
 
 [node name="seg1" type="CSGCylinder" parent="ShortTail"]
 transform = Transform( -5.24537e-08, -1, 0, -5.24537e-08, 1.91069e-15, -0.8, 1.2, -4.37114e-08, -3.49691e-08, 0.1, 0, 0 )
@@ -45,7 +474,7 @@ height = 0.2
 material = ExtResource( 4 )
 
 [node name="joint" type="Spatial" parent="ShortTail/seg1"]
-transform = Transform( 1, 3.55271e-15, 0, 0, 1, 1.05879e-22, 0, 2.11758e-22, 1, -4.44089e-16, -0.1, -2.64698e-23 )
+transform = Transform( 1, 0, 0, 0, 1.52248, -1.71019e-22, 0, 3.22398e-22, 0.807614, 9.10383e-15, -0.0999999, 2.98023e-08 )
 
 [node name="seg2" type="CSGCylinder" parent="ShortTail/seg1/joint"]
 transform = Transform( -1, 8.74228e-08, 8.74228e-08, -8.74228e-08, -1, 8.74228e-08, 8.74228e-08, 8.74228e-08, 1, 4.44089e-16, -0.1, -7.94093e-23 )
@@ -55,21 +484,22 @@ cone = true
 material = ExtResource( 4 )
 
 [node name="LongTail" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, 0 )
+transform = Transform( 0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 1, 0.0999999, 0, 0 )
+visible = false
 
 [node name="seg1" type="CSGCylinder" parent="LongTail"]
-transform = Transform( -5.24537e-08, -1, 0, -5.24537e-08, 1.91069e-15, -0.8, 1.2, -4.37114e-08, -3.49691e-08, 0.113, 0, 0 )
+transform = Transform( -5.24537e-08, -1, 0, -5.24537e-08, 1.91069e-15, -0.8, 1.2, -4.37114e-08, -3.49691e-08, 0.15, 0, 0 )
 radius = 0.04
-height = 0.25
+height = 0.3
 material = ExtResource( 4 )
 
 [node name="joint" type="Spatial" parent="LongTail/seg1"]
-transform = Transform( 1, 3.55271e-15, 0, 0, 1, 1.05879e-22, 0, 2.11758e-22, 1, 0, -0.125, 0 )
+transform = Transform( 1, 0, 0, 0, 1.4149, -1.53404e-22, 0, 2.99617e-22, 0.724431, 8.88178e-16, -0.15, -3.72529e-08 )
 
 [node name="seg2" type="CSGCylinder" parent="LongTail/seg1/joint"]
-transform = Transform( -1, 8.74228e-08, 8.74228e-08, -8.74228e-08, -1, 8.74228e-08, 8.74228e-08, 8.74228e-08, 1, 0, -0.125, 0 )
+transform = Transform( -1, 8.74228e-08, 8.74228e-08, -8.74228e-08, -1, 8.74228e-08, 8.74228e-08, 8.74228e-08, 1, 0, -0.15, 0 )
 radius = 0.04
-height = 0.25
+height = 0.3
 cone = true
 material = ExtResource( 4 )
 
@@ -77,13 +507,13 @@ material = ExtResource( 4 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0, 0 )
 
 [node name="seg1" type="CSGCylinder" parent="SegmentedTail"]
-transform = Transform( -2.18557e-08, -1, 0, 0.5, -4.37114e-08, 0, 0, 0, 1.2, 0.08, 0, 0 )
+transform = Transform( -2.18557e-08, -1, 0, 0.5, -4.37114e-08, 0, 0, 0, 1.2, 0.1, 0, 0 )
 radius = 0.045
-height = 0.16
+height = 0.2
 material = ExtResource( 4 )
 
 [node name="segment" type="CSGBox" parent="SegmentedTail/seg1"]
-transform = Transform( 3, 0, 0, 0, 1.87939, 0.410424, 0, -0.68404, 1.12763, 0, -0.07, -0.04 )
+transform = Transform( 3, 0, 0, 0, 1.87939, 0.410424, 0, -0.68404, 1.12763, 0, -0.1, -0.04 )
 operation = 2
 width = 0.025
 height = 0.04
@@ -91,7 +521,7 @@ depth = 0.015
 material = ExtResource( 2 )
 
 [node name="segment2" type="CSGBox" parent="SegmentedTail/seg1"]
-transform = Transform( 3, 0, 0, 0, 1.87939, -0.410424, 0, 0.68404, 1.12763, 0, -0.07, 0.04 )
+transform = Transform( 3, 0, 0, 0, 1.87939, -0.410424, 0, 0.68404, 1.12763, 0, -0.1, 0.04 )
 operation = 2
 width = 0.025
 height = 0.04
@@ -99,7 +529,7 @@ depth = 0.015
 material = ExtResource( 2 )
 
 [node name="segment3" type="CSGBox" parent="SegmentedTail/seg1"]
-transform = Transform( 3, 0, 0, 0, 1.87939, -0.410424, 0, 0.68404, 1.12763, 0, 0.07, -0.04 )
+transform = Transform( 3, 0, 0, 0, 1.87939, -0.410424, 0, 0.68404, 1.12763, 0, 0.08, -0.04 )
 operation = 2
 width = 0.025
 height = 0.04
@@ -107,7 +537,7 @@ depth = 0.015
 material = ExtResource( 2 )
 
 [node name="segment4" type="CSGBox" parent="SegmentedTail/seg1"]
-transform = Transform( 3, 0, 0, 0, 1.87939, 0.410424, 0, -0.68404, 1.12763, 0, 0.07, 0.04 )
+transform = Transform( 3, 0, 0, 0, 1.87939, 0.410424, 0, -0.68404, 1.12763, 0, 0.08, 0.04 )
 operation = 2
 width = 0.025
 height = 0.04
@@ -115,16 +545,16 @@ depth = 0.015
 material = ExtResource( 2 )
 
 [node name="joint1" type="Spatial" parent="SegmentedTail/seg1"]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.77636e-15, -0.08, 0 )
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.98023e-08, -0.0999999, 0 )
 
 [node name="seg2" type="CSGCylinder" parent="SegmentedTail/seg1/joint1"]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.08, 0 )
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.1, 0 )
 radius = 0.045
-height = 0.16
+height = 0.2
 material = ExtResource( 4 )
 
 [node name="segment" type="CSGBox" parent="SegmentedTail/seg1/joint1/seg2"]
-transform = Transform( 3, 0, 0, 0, 1.87939, 0.410424, 0, -0.68404, 1.12763, 0, -0.07, -0.04 )
+transform = Transform( 3, 0, 0, 0, 1.41422, 0.848527, 0, -1.41422, 0.848527, 0, -0.1, -0.04 )
 operation = 2
 width = 0.025
 height = 0.04
@@ -132,7 +562,7 @@ depth = 0.015
 material = ExtResource( 2 )
 
 [node name="segment2" type="CSGBox" parent="SegmentedTail/seg1/joint1/seg2"]
-transform = Transform( 3, 0, 0, 0, 1.87939, -0.410424, 0, 0.68404, 1.12763, 0, -0.07, 0.04 )
+transform = Transform( 3, 0, 0, 0, 1.41422, -0.848527, 0, 1.41422, 0.848527, 0, -0.1, 0.04 )
 operation = 2
 width = 0.025
 height = 0.04
@@ -140,7 +570,7 @@ depth = 0.015
 material = ExtResource( 2 )
 
 [node name="segment3" type="CSGBox" parent="SegmentedTail/seg1/joint1/seg2"]
-transform = Transform( 3, 0, 0, 0, 1.87939, -0.410424, 0, 0.68404, 1.12763, 0, 0.07, -0.04 )
+transform = Transform( 3, 0, 0, 0, 1.87939, -0.410424, 0, 0.68404, 1.12763, 0, 0.08, -0.05 )
 operation = 2
 width = 0.025
 height = 0.04
@@ -148,7 +578,7 @@ depth = 0.015
 material = ExtResource( 2 )
 
 [node name="segment4" type="CSGBox" parent="SegmentedTail/seg1/joint1/seg2"]
-transform = Transform( 3, 0, 0, 0, 1.87939, 0.410424, 0, -0.68404, 1.12763, 0, 0.07, 0.04 )
+transform = Transform( 3, 0, 0, 0, 1.87939, 0.410424, 0, -0.68404, 1.12763, 0, 0.08, 0.05 )
 operation = 2
 width = 0.025
 height = 0.04
@@ -156,12 +586,12 @@ depth = 0.015
 material = ExtResource( 2 )
 
 [node name="joint2" type="Spatial" parent="SegmentedTail/seg1/joint1/seg2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.77636e-15, -0.08, -5.29396e-22 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 3.55271e-15 )
 
 [node name="seg3" type="CSGCylinder" parent="SegmentedTail/seg1/joint1/seg2/joint2"]
-transform = Transform( -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, -0.08, 0 )
+transform = Transform( -1, 1.50996e-07, 0, -1.50996e-07, -1, 0, 0, 0, 1.3, 0, -0.1, 0 )
 radius = 0.04
-height = 0.16
+height = 0.2
 cone = true
 material = ExtResource( 4 )
 
@@ -183,6 +613,7 @@ material = ExtResource( 2 )
 
 [node name="normalwings" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.06, 0 )
+visible = false
 
 [node name="wing1" type="Spatial" parent="normalwings"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.12 )
@@ -202,6 +633,7 @@ material = ExtResource( 4 )
 
 [node name="foldedwings" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.06, 0 )
+visible = false
 
 [node name="wing1" type="Spatial" parent="foldedwings"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.12 )
@@ -242,5 +674,12 @@ radius = 0.06
 material = ExtResource( 4 )
 
 [node name="TailAnim" type="AnimationPlayer" parent="."]
+anims/LongCrawl = SubResource( 1 )
+anims/LongJump = SubResource( 2 )
+anims/RESET = SubResource( 3 )
+anims/SegCrawl = SubResource( 4 )
+anims/SegJump = SubResource( 5 )
+anims/ShortCrawl = SubResource( 6 )
+anims/ShortJump = SubResource( 7 )
 
 [node name="WingAnim" type="AnimationPlayer" parent="."]
