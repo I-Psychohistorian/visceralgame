@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Textures/yellowyanimated.tres" type="Material" id=1]
 [ext_resource path="res://Textures/buglight.tres" type="Material" id=2]
@@ -432,6 +432,173 @@ tracks/3/keys = {
 "values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, 0 ), Vector3( 0, 0.4, 0 ), Vector3( 0, 0, 0 ) ]
 }
 
+[sub_resource type="Animation" id=8]
+resource_name = "BentFly"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("foldedwings/wing1:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 12.9525, 59.1325, -7.63074 ), Vector3( -25.6589, 56.3099, 16.1021 ), Vector3( 12.9525, 59.1325, -7.63074 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("foldedwings/wing2:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -12.9525, -59.1325, -7.63074 ), Vector3( 25.6589, -56.3099, 16.1021 ), Vector3( -12.9525, -59.1325, -7.63074 ) ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "IdleBent"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("foldedwings/wing1:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 60, 0 ), Vector3( 0, 45, 0 ), Vector3( 0, 60, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("foldedwings/wing2:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, -60, 0 ), Vector3( 0, -45, 0 ), Vector3( 0, -60, 0 ) ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "IdleWing"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("normalwings/wing1:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 3.84096, 75.4892, 14.5108 ), Vector3( 3.84096, 60.4892, 14.5108 ), Vector3( 3.84096, 75.4892, 14.5108 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("normalwings/wing2:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -3.84096, -75.4892, 14.5108 ), Vector3( -3.84096, -60.4892, 14.5108 ), Vector3( -3.84096, -75.4892, 14.5108 ) ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "NormalFly"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("normalwings/wing1:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 12.9525, 30.8675, 7.63074 ), Vector3( -12.9525, 30.8675, -7.63074 ), Vector3( 12.9525, 30.8675, 7.63074 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("normalwings/wing2:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -12.9525, -30.8675, 7.63074 ), Vector3( 12.9525, -30.8675, -7.63074 ), Vector3( -12.9525, -30.8675, 7.63074 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("normalwings/wing1:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 75, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("normalwings/wing2:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, -75, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("foldedwings/wing1:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 60, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("foldedwings/wing2:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, -60, 0 ) ]
+}
+
 [node name="detrivoremodel" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 script = ExtResource( 5 )
@@ -474,7 +641,7 @@ height = 0.2
 material = ExtResource( 4 )
 
 [node name="joint" type="Spatial" parent="ShortTail/seg1"]
-transform = Transform( 1, 0, 0, 0, 1.52248, -1.71019e-22, 0, 3.22398e-22, 0.807614, 9.10383e-15, -0.0999999, 2.98023e-08 )
+transform = Transform( 1, 0, 0, 0, 1.52248, -1.71018e-22, 0, 3.22396e-22, 0.807614, 9.10383e-15, -0.0999999, 2.98023e-08 )
 
 [node name="seg2" type="CSGCylinder" parent="ShortTail/seg1/joint"]
 transform = Transform( -1, 8.74228e-08, 8.74228e-08, -8.74228e-08, -1, 8.74228e-08, 8.74228e-08, 8.74228e-08, 1, 4.44089e-16, -0.1, -7.94093e-23 )
@@ -494,7 +661,7 @@ height = 0.3
 material = ExtResource( 4 )
 
 [node name="joint" type="Spatial" parent="LongTail/seg1"]
-transform = Transform( 1, 0, 0, 0, 1.4149, -1.53404e-22, 0, 2.99617e-22, 0.724431, 8.88178e-16, -0.15, -3.72529e-08 )
+transform = Transform( 1, 0, 0, 0, 1.4149, -1.53404e-22, 0, 2.99615e-22, 0.724431, 8.88178e-16, -0.15, -3.72529e-08 )
 
 [node name="seg2" type="CSGCylinder" parent="LongTail/seg1/joint"]
 transform = Transform( -1, 8.74228e-08, 8.74228e-08, -8.74228e-08, -1, 8.74228e-08, 8.74228e-08, 8.74228e-08, 1, 0, -0.15, 0 )
@@ -613,10 +780,9 @@ material = ExtResource( 2 )
 
 [node name="normalwings" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.06, 0 )
-visible = false
 
 [node name="wing1" type="Spatial" parent="normalwings"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.12 )
+transform = Transform( 0.258818, 0, 0.965924, 0, 0.999999, 0, -0.965924, 0, 0.258818, -3.72529e-09, 0, 0.11 )
 
 [node name="CSGSphere" type="CSGSphere" parent="normalwings/wing1"]
 transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 1.2, 0, 0, 0.09 )
@@ -624,7 +790,7 @@ radius = 0.12
 material = ExtResource( 4 )
 
 [node name="wing2" type="Spatial" parent="normalwings"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.12 )
+transform = Transform( 0.258818, 0, -0.965923, 0, 1, 0, 0.965923, 0, 0.258818, -3.72529e-09, 0, -0.11 )
 
 [node name="CSGSphere" type="CSGSphere" parent="normalwings/wing2"]
 transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 1.2, 0, 0, -0.09 )
@@ -633,10 +799,9 @@ material = ExtResource( 4 )
 
 [node name="foldedwings" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.06, 0 )
-visible = false
 
 [node name="wing1" type="Spatial" parent="foldedwings"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.12 )
+transform = Transform( 0.499999, 0, 0.866024, 0, 1, 0, -0.866024, 0, 0.499999, 0, 0, 0.11 )
 
 [node name="CSGSphere" type="CSGSphere" parent="foldedwings/wing1"]
 transform = Transform( 0.6, 0, 0, 0, 0.0965926, -0.310583, 0, 0.0258819, 1.15911, 0, -0.01, 0.085 )
@@ -655,7 +820,7 @@ radius = 0.06
 material = ExtResource( 4 )
 
 [node name="wing2" type="Spatial" parent="foldedwings"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.12 )
+transform = Transform( 0.499999, 0, -0.866024, 0, 1, 0, 0.866024, 0, 0.499999, 0, -3.72529e-09, -0.11 )
 
 [node name="CSGSphere" type="CSGSphere" parent="foldedwings/wing2"]
 transform = Transform( -0.6, -2.26267e-09, -1.01333e-07, 0, 0.0965926, -0.310583, 5.24537e-08, -0.0258819, -1.15911, 0, -0.01, -0.085 )
@@ -683,3 +848,8 @@ anims/ShortCrawl = SubResource( 6 )
 anims/ShortJump = SubResource( 7 )
 
 [node name="WingAnim" type="AnimationPlayer" parent="."]
+anims/BentFly = SubResource( 8 )
+anims/IdleBent = SubResource( 9 )
+anims/IdleWing = SubResource( 10 )
+anims/NormalFly = SubResource( 11 )
+anims/RESET = SubResource( 12 )
