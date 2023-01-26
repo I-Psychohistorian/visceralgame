@@ -29,7 +29,8 @@ export var jumping = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	blank_models()
+	#blank_models()
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -45,7 +46,7 @@ func blank_models():
 	normal_wings.visible = false
 	folded_wings.visible = false
 	pilus.visible = false
-	eggs.visible = false
+	side_eggs.visible = false
 
 func set_phenotype():
 	#body
