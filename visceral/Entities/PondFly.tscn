@@ -42,3 +42,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.116475, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Mouth"]
 shape = SubResource( 4 )
+
+[node name="GroundCast" type="RayCast" parent="."]
+enabled = true
+cast_to = Vector3( 0, -0.15, 0 )

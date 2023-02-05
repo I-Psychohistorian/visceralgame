@@ -1,5 +1,8 @@
 extends KinematicBody
 
+#FOR FLIES
+var nutrition = 1
+
 var seeding = false
 
 var gravity = 2
