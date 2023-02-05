@@ -12,6 +12,10 @@ var body_gene = []
 var body_score = 0
 
 #phenotype
+onready var model = $detrivoremodel
+
+var normal_metabolism = false
+signal set_pheno
 
 var tail_types = ['Short', 'Long', 'Segmented', 'None']
 var tail = ''
@@ -60,6 +64,7 @@ var jumps = 3
 func _ready():
 	rng.randomize()
 	generate_random_genome()
+	set_phenotype()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -70,7 +75,7 @@ func generate_random_genome():
 	rand_metabolism()
 	var body1 = rng.randi_range(0,4)
 	for i in body1:
-		body_gene.append('b')
+		body_gene.append('t')
 	print(meta_gene, body_gene)
 
 func rand_metabolism():
@@ -78,11 +83,59 @@ func rand_metabolism():
 	if meta == 1:
 		meta_gene.append('D')
 	elif meta == 2:
-		meta_gene.append('d')
+		meta_gene.append('l')
 
 func set_phenotype():
-	pass
-
+	body_score = 0
+	for i in meta_gene:
+		if i == "D":
+			normal_metabolism = true
+			model.lightbody = false
+	if normal_metabolism == false:
+		model.lightbody = true
+	for i in body_gene:
+		if i == 't':
+			body_score += 1
+	if normal_metabolism == true:
+		model.lightbody = false
+	elif normal_metabolism == false:
+		model.lightbody = true
+	
+	if body_score == 0:
+		model.wings = 'None'
+		model.tail = 'None'
+		tail = 'None'
+		wings = 'None'
+		#no wings and no tail
+	elif body_score == 1:
+		model.wings = 'Normal'
+		model.tail = 'Short'
+		tail = 'Short'
+		wings = 'Normal'
+		#normal wings short tail
+	elif body_score == 2:
+		model.wings = 'Normal'
+		model.tail = 'Long'
+		tail = 'Long'
+		wings = 'Normal'
+		#normal wings long tail
+	elif body_score == 3:
+		if normal_metabolism == true:
+			model.wings = 'Normal'
+			wings = 'Normal'
+		else:
+			model.wings = 'Bent'
+			wings = 'Bent'
+		model.tail = 'Segmented'
+		tail = 'Segmented'
+	elif body_score >= 4:
+		model.tail = 'Segmented'
+		model.wings = 'Bent'
+		wings = 'Bent'
+		tail = 'Segmented'
+	emit_signal("set_pheno")
+	print(tail, wings)
+	
 func handle_behaviors():
 	pass
 	

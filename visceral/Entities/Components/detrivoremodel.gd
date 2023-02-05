@@ -128,3 +128,8 @@ func fly():
 		$WingAnim.play("NormalFly")
 	elif wings == 'Bent':
 		$WingAnim.play("BentFly")
+
+
+func _on_PondFly_set_pheno():
+	blank_models()
+	set_phenotype()

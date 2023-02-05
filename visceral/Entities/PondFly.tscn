@@ -46,3 +46,9 @@ shape = SubResource( 4 )
 [node name="GroundCast" type="RayCast" parent="."]
 enabled = true
 cast_to = Vector3( 0, -0.15, 0 )
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Timer2" type="Timer" parent="."]
+
+[connection signal="set_pheno" from="." to="detrivoremodel" method="_on_PondFly_set_pheno"]
