@@ -1,7 +1,8 @@
 extends KinematicBody
 
 #interaction and background
-
+var interactable = true
+var interact_label = 'wip, do not use'
 
 #genetics
 
@@ -49,13 +50,21 @@ var pregnant = false
 var newborn = false
 var old = false
 
+
+var behavior = ['Turning', 'Moving']
+###get jumping state from model!!
+onready var sight_range = $Sight
+onready var fear_range = $Fear
+
 var hungry = false
+onready var fuck_range = $Mouth
+
 
 var scared = false
 
 var pred_seen = {}
-var pred_location = Vector3()
 
+var pred_location = Vector3()
 var food_location = Vector3()
 var mate_location = Vector3()
 
@@ -67,8 +76,32 @@ func _ready():
 	set_phenotype()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	pass
+
+func see_nearby():
+	var sight = sight_range.get_overlapping_bodies()
+	var enemy_spotted = false
+	for b in sight:
+		if b.is_in_group('Predator'):
+			pred_location = b.global_transform.origin
+			scared = true
+			enemy_spotted = true
+			break
+	if enemy_spotted == false:
+		scared = false
+			#set flee
+	for b in sight:
+		if b.is_in_group('Moss'):
+			food_location = b.global_transform.origin
+			break
+
+	for b in sight:
+		if male == true:
+			if b.is_in_group('Fly'):
+				mate_location = b.global_transform.origin
+				break
+		
 
 func generate_random_genome():
 	rand_metabolism()
@@ -139,6 +172,12 @@ func set_phenotype():
 func handle_behaviors():
 	pass
 	
+func breeding():
+	pass
+
+func turning():
+	pass
+
 func movement():
 	pass
 	
@@ -147,3 +186,13 @@ func animations():
 	
 func take_damage(damage):
 	pass
+
+
+func _on_Sight_body_entered(body):
+	pass # Replace with function body.
+
+
+func _on_SightTimer_timeout():
+	see_nearby()
+	print(food_location, pred_location, mate_location)
+	print('scared is', scared)

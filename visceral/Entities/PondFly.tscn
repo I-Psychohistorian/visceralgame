@@ -17,7 +17,7 @@ radius = 1.5
 [sub_resource type="BoxShape" id=4]
 extents = Vector3( 0.15, 0.1, 0.1 )
 
-[node name="PondFly" type="KinematicBody"]
+[node name="PondFly" type="KinematicBody" groups=["Destructible", "Fly", "Interactable"]]
 script = ExtResource( 2 )
 
 [node name="detrivoremodel" parent="." instance=ExtResource( 1 )]
@@ -47,8 +47,14 @@ shape = SubResource( 4 )
 enabled = true
 cast_to = Vector3( 0, -0.15, 0 )
 
-[node name="Timer" type="Timer" parent="."]
+[node name="metabolism" type="Timer" parent="."]
+wait_time = 20.0
+autostart = true
 
-[node name="Timer2" type="Timer" parent="."]
+[node name="SightTimer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
 
 [connection signal="set_pheno" from="." to="detrivoremodel" method="_on_PondFly_set_pheno"]
+[connection signal="body_entered" from="Sight" to="." method="_on_Sight_body_entered"]
+[connection signal="timeout" from="SightTimer" to="." method="_on_SightTimer_timeout"]

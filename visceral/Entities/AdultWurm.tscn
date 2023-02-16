@@ -1143,17 +1143,17 @@ cone = true
 material = ExtResource( 2 )
 
 [node name="Section1" type="CSGSphere" parent="TongueCollide/Spike"]
-transform = Transform( -1, -6.99384e-07, -1.50996e-07, -1.74846e-07, 4, -8.63752e-15, 1.50996e-07, 7.1054e-14, -1, 5.57031e-08, -0.637169, -1.39698e-09 )
+transform = Transform( -1, -6.99384e-07, -1.50996e-07, -1.74846e-07, 4, -8.63755e-15, 1.50996e-07, 7.10539e-14, -1, 5.57031e-08, -0.637169, -1.39698e-09 )
 radius = 0.12
 material = ExtResource( 2 )
 
 [node name="Section2" type="CSGSphere" parent="TongueCollide/Spike"]
-transform = Transform( -1, -6.99384e-07, -1.50996e-07, -1.74846e-07, 4, -8.63752e-15, 1.50996e-07, 7.1054e-14, -1, 1.0879e-07, -1.24441, 0 )
+transform = Transform( -1, -6.99384e-07, -1.50996e-07, -1.74846e-07, 4, -8.63755e-15, 1.50996e-07, 7.10539e-14, -1, 1.0879e-07, -1.24441, 0 )
 radius = 0.12
 material = ExtResource( 2 )
 
 [node name="Section3" type="CSGSphere" parent="TongueCollide/Spike"]
-transform = Transform( -1, -6.99384e-07, -1.50996e-07, -1.74846e-07, 4, -1.57429e-14, 1.50996e-07, 4.26324e-14, -1, 1.57893e-07, -1.80608, 2.45515e-08 )
+transform = Transform( -1, -6.99384e-07, -1.50996e-07, -1.74846e-07, 4, -1.57429e-14, 1.50996e-07, 4.26323e-14, -1, 1.57893e-07, -1.80608, 2.45515e-08 )
 radius = 0.12
 material = ExtResource( 2 )
 
