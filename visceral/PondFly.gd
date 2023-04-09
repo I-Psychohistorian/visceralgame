@@ -43,24 +43,35 @@ var movement = Vector3()
 
 var water_gravity = 1
 
-#states
+#life states
 
 var male = false
 var pregnant = false
 var newborn = false
 var old = false
 
+var mood_state = ['Eating', 'Fleeing', 'Breeding', 'Idle']
 
-var behavior = ['Turning', 'Moving']
+var behavior = ['Turning', 'Moving', 'Jumping', 'Static']
+## jumping only happens when scared or horny
+#npc modelside jumping bool
+var airborne = false
+
+
 ###get jumping state from model!!
 onready var sight_range = $Sight
 onready var fear_range = $Fear
 
+
+##mood booleans
+var scared = false
+var food_seen = false
 var hungry = false
+var scorny = false
+
 onready var fuck_range = $Mouth
 
 
-var scared = false
 
 var pred_seen = {}
 
@@ -77,7 +88,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	handle_behaviors()
 
 func see_nearby():
 	var sight = sight_range.get_overlapping_bodies()
@@ -93,12 +104,13 @@ func see_nearby():
 			#set flee
 	for b in sight:
 		if b.is_in_group('Moss'):
+			food_seen = true
 			food_location = b.global_transform.origin
 			break
-
 	for b in sight:
 		if male == true:
 			if b.is_in_group('Fly'):
+				scorny = true
 				mate_location = b.global_transform.origin
 				break
 		
@@ -193,6 +205,19 @@ func _on_Sight_body_entered(body):
 
 
 func _on_SightTimer_timeout():
+	scared = false
+	food_seen = false
+	scorny = false
 	see_nearby()
+	
+	###this is to set moods, remember to integrate genetics/conditioning to moods
+	if scared == true:
+		pass
+	elif food_seen == true:
+		pass
+	elif scorny == true:
+		pass
+	else:
+		pass
 	print(food_location, pred_location, mate_location)
 	print('scared is', scared)
