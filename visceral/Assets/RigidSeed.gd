@@ -12,7 +12,8 @@ var item_id = "Seed"
 var interact_label = "Press E to take seed"
 
 var rng = RandomNumberGenerator.new()
-var grow_time = 30
+#default grow_time is 30
+var grow_time = 2
 onready var sprout_timer = $Timer
 
 signal sprout

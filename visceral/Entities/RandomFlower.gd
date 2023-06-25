@@ -95,7 +95,7 @@ func generate_plant():
 	start_rotation = rng.randi_range(0,-360)
 	rotate_y(deg2rad(start_rotation))
 	#for random blooming and wilting time
-	grow_time = rng.randi_range(50,100) #30 and 60 for earlier itteration
+	grow_time = rng.randi_range(10,30) #30 and 60 for earlier itteration, 50, 100 for longer (realism)
 	wilt_time = rng.randi_range(30,60)  #20, 40 for earlier itteration
 	#for random genome
 	for allele in gene:
