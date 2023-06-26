@@ -26,10 +26,11 @@ var wings = ''
 
 #stats
 var crawl = 1
-var jump_power = 1
-var fly_thrust = 1
+var jump_power = 0
+var fly_thrust = 0
 
 var ichor = 5
+
 
 var lifespan = 30
 
@@ -44,6 +45,7 @@ var movement = Vector3()
 var water_gravity = 1
 
 #life states
+var friendly = false
 
 var male = false
 var pregnant = false
@@ -51,8 +53,9 @@ var newborn = false
 var old = false
 
 var mood_state = ['Eating', 'Fleeing', 'Breeding', 'Idle']
-
+var mood = ''
 var behavior = ['Turning', 'Moving', 'Jumping', 'Static']
+var behave = ''
 ## jumping only happens when scared or horny
 #npc modelside jumping bool
 var airborne = false
@@ -95,10 +98,20 @@ func see_nearby():
 	var enemy_spotted = false
 	for b in sight:
 		if b.is_in_group('Predator'):
-			pred_location = b.global_transform.origin
-			scared = true
-			enemy_spotted = true
-			break
+			if b.is_in_group('Player'):
+				if friendly == true:
+					pass
+				else:
+					pred_location = b.global_transform.origin
+					scared = true
+					enemy_spotted = true
+					break
+			else:
+					
+				pred_location = b.global_transform.origin
+				scared = true
+				enemy_spotted = true
+				break
 	if enemy_spotted == false:
 		scared = false
 			#set flee
@@ -158,26 +171,43 @@ func set_phenotype():
 		tail = 'Short'
 		wings = 'Normal'
 		#normal wings short tail
+		crawl = 3
+		jump_power = 1
+		fly_thrust = 2
+
 	elif body_score == 2:
 		model.wings = 'Normal'
 		model.tail = 'Long'
 		tail = 'Long'
 		wings = 'Normal'
 		#normal wings long tail
+		crawl = 4
+		jump_power = 2
+		fly_thrust = 2
+		
 	elif body_score == 3:
 		if normal_metabolism == true:
 			model.wings = 'Normal'
 			wings = 'Normal'
+			fly_thrust = 2
 		else:
 			model.wings = 'Bent'
 			wings = 'Bent'
+			fly_thrust = 1
 		model.tail = 'Segmented'
 		tail = 'Segmented'
+		crawl = 2
+		jump_power = 4
+		
 	elif body_score >= 4:
 		model.tail = 'Segmented'
 		model.wings = 'Bent'
 		wings = 'Bent'
 		tail = 'Segmented'
+		crawl = 2
+		jump_power = 4
+		fly_thrust = 1
+
 	emit_signal("set_pheno")
 	print(tail, wings)
 	
@@ -198,6 +228,15 @@ func animations():
 	
 func take_damage(damage):
 	pass
+
+func decide_mood():
+	if scared == true:
+		pass
+	elif scorny == true:
+		pass
+	elif food_seen == true:
+		pass
+	
 
 
 func _on_Sight_body_entered(body):

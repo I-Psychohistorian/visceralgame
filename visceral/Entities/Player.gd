@@ -378,7 +378,7 @@ func interaction():
 										held_seed.show_pollen()
 									elif item_pollinated == false:
 										held_seed.hide_pollen()
-								animator.play("seedhold")
+									animator.play("seedhold")
 							elif item_id == "Egg":
 								if holding_item == true:
 									animator.play("egghold")
